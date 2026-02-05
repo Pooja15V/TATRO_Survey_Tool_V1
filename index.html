@@ -92,6 +92,11 @@
         display: block;
         overflow-x: auto;
     }
+    input[type="checkbox"],
+    input[type="radio"] {
+    transform: scale(1.2);
+    margin-right: 6px;
+    }
 
     /* ---------- CHECKBOX TABLE ---------- */
     .checkbox-table {
@@ -133,6 +138,17 @@
         content: counter(row, upper-alpha) ") ";
         font-weight: normal;
     }
+
+    .options label {
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .options input[type="checkbox"],
+    .options input[type="radio"] {
+        margin-right: 8px;
+    }
+
 
     /* ---------- PROGRESS BAR ---------- */
     #progressContainer {
@@ -262,12 +278,11 @@
           <a href="#" onclick="event.preventDefault(); goToSection('sectionF')">Section F</a>
         </nav>
 
-        <div id="progressContainer"  style="position: sticky; top: 60px;z-index: 1000; background:#f2f2f2;  padding: 12px 20px;border-bottom: 1px solid #ddd;">
-           <div id="progressContainer">
+        <div id="progressContainer">
             <div id="progressText"></div>
-                <div id="progressBarOuter">
-                    <div id="progressBar"></div>
-                </div>
+            <div id="progressBarOuter">
+                <div id="progressBar"></div>
+            </div>
         </div>
 
         <section id="intro" class="active">
@@ -326,7 +341,17 @@
 
             <!-- Q1 -->
             <div class="question">
-                <label><strong>1.Years of experience in stroke rehabilitation:</strong></label>
+                <label><strong>1.Please indicate your professional background.</strong></label>
+                <div class="options">
+                <label><input type="radio" name="background" value="OT">Occupational Therapist</label>
+                <label><input type="radio" name="background" value="PT">Physiotherapist</label>
+                </div>
+            </div>
+
+            
+             <!-- Q2 -->
+            <div class="question">
+                <label><strong>2.Years of experience in stroke rehabilitation:</strong></label>
                 <div class="options">
                 <label><input type="radio" name="experience" value="0–2 years">0–2 years</label>
                 <label><input type="radio" name="experience" value="3–5 years">3–5 years</label>
@@ -335,21 +360,22 @@
                 </div>
             </div>
 
-            <!-- Q2 -->
+
+            <!-- Q3 -->
             <div class="question">
-                <label><strong>2.Have you had any post-graduate qualifications in stroke rehabilitation?</strong></label>
+                <label><strong>3.Have you had any post-graduate qualifications in stroke rehabilitation?</strong></label>
                 <div class="options">
                 <label><input type="radio" id="pg_yes" name="pg" onclick="togglePGQualificationBox()"> Yes</label>
                 <label><input type="radio" id="pg_no" name="pg" onclick="togglePGQualificationBox()"> No</label>
                 <div id="pg_text" style="display:none; margin-top:10px;">
-                    <input type="text" placeholder="Please specify...">
+                    <input type="text" name="pg_text" placeholder="Please specify...">
                 </div>
                 </div>
             </div>
 
-            <!-- Q3 -->
+            <!-- Q4 -->
             <div class="question">
-                <label><strong>3.What percentage of your caseload includes stroke survivors with upper-limb impairment?</strong></label>
+                <label><strong>4.What percentage of your caseload includes stroke survivors with upper-limb impairment?</strong></label>
                 <div class="options">
                 <label><input type="radio" name="caseload" value="Less than 25%">Less than 25%</label>
                 <label><input type="radio" name="caseload"value= "25–50%">25–50%</label>
@@ -358,10 +384,10 @@
                 </div>
             </div>
 
-            <!-- Q4 -->
+            <!-- Q5 -->
             <div class="question">
-                <label><strong>4.What best describes your current clinical setting for delivering upper-limb stroke rehabilitation?<br>(Please select all that apply)<br></strong></label>
-                <div class="options" id="q4-options">
+                <label><strong>5.What best describes your current clinical setting for delivering upper-limb stroke rehabilitation?<br>(Please select all that apply)<br></strong></label>
+                <div class="options" id="q5-options">
                     <label><input type="checkbox" name="clinical_setting[]" value="Inpatient"> Inpatient rehabilitation unit</label>
                     <label><input type="checkbox" name="clinical_setting[]" value="Outpatient"> Outpatient clinic</label>
                     <label><input type="checkbox" name="clinical_setting[]" value="Community"> Community rehabilitation centre</label>
@@ -370,18 +396,18 @@
                     <label><input type="checkbox" name="clinical_setting[]" value="Tele"> Tele-rehabilitation / virtual sessions</label>
                 </div>
             </div>
-            <button type="button" onclick="addQ4Row()">+ Add Row</button>
+            <button type="button" onclick="addQ5Row()">+ Add Row</button>
             
             <script>
-            function addQ4Row() {
-                const container = document.getElementById("q4-options");
+            function addQ5Row() {
+                const container = document.getElementById("q5-options");
                 const index = container.children.length;
 
                 const div = document.createElement("div");
                 div.innerHTML = `
                     <label>
                         <input type="checkbox" name="clinical_setting[]" value="other_${index}">
-                        <input type="text" placeholder="Other setting">
+                        <input type="text" name="q5_other_text" placeholder="Other setting">
                     </label>
                     <button type="button" onclick="this.parentElement.remove()">❌</button>
                 `;
@@ -389,9 +415,9 @@
             }
             </script>
 
-            <!-- Q5 -->
+            <!-- Q6 -->
             <div class="question">
-                <label><strong>5.How frequently do you use tabletop-based upper-limb task training in each stroke recovery phase?<br>(Please select all that apply)<br></strong></label>
+                <label><strong>6.How frequently do you use tabletop-based upper-limb task training in each stroke recovery phase?<br>(Please select all that apply)<br></strong></label>
                 <table>
                 <tr>
                     <th>Phases of stroke recovery</th>
@@ -438,9 +464,9 @@
         <section id="sectionB">
             <h2>SECTION B:Clinical Use of Tabletop-Tasks</h2>
 
-            <!-- Q6 -->
-            <h3>6.For which upper-limb impairment level (based on Fugl Meyer Assessment for Upper Extremity (FMA-UE))do you usually prescribe the following types of tasks?<br>(Please select all that apply)<br></h3>
-            <table id="q6-table" border="1" class="alpha-table">
+            <!-- Q7 -->
+            <h3>7.For which upper-limb impairment level (based on Fugl Meyer Assessment for Upper Extremity (FMA-UE))do you usually prescribe the following types of tasks?<br>(Please select all that apply)<br></h3>
+            <table id="q7-table" border="1" class="alpha-table">
             <tr>
                 <th>Task Type</th>
                 <th>Mild(FMA-UE score: 50-66)</th>
@@ -450,42 +476,42 @@
             </tr>
             <tr>
                 <td>Non-Function-Oriented Upper Limb and Hand Strengthening</td>
-                <td><input type="checkbox" name="q6_task1[]" value="Mild"onchange="toggleQ6Row(this.closest('tr'), this)"></td>
-                <td><input type="checkbox" name="q6_task1[]" value="Moderate"onchange="toggleQ6Row(this.closest('tr'), this)"></td>
-                <td><input type="checkbox" name="q6_task1[]" value="Severe"onchange="toggleQ6Row(this.closest('tr'), this)"></td>
-                <td><input type="checkbox" name="q6_task1[]" value="Not Used"onchange="toggleQ6Row(this.closest('tr'), this)"></td>                
+                <td><input type="checkbox" name="q7_task1[]" value="Mild"onchange="toggleq7Row(this.closest('tr'), this)"></td>
+                <td><input type="checkbox" name="q7_task1[]" value="Moderate"onchange="toggleq7Row(this.closest('tr'), this)"></td>
+                <td><input type="checkbox" name="q7_task1[]" value="Severe"onchange="toggleq7Row(this.closest('tr'), this)"></td>
+                <td><input type="checkbox" name="q7_task1[]" value="Not Used"onchange="toggleq7Row(this.closest('tr'), this)"></td>                
             </tr>
             <tr>
                 <td>Functional Gross Motor Reach without Hand Grasp<br>(reaching the arm toward specified targets at different locations)<br></td>
-                <td><input type="checkbox" name="q6_task2[]" value="Mild"onchange="toggleQ6Row(this.closest('tr'), this)"></td>
-                <td><input type="checkbox" name="q6_task2[]" value="Moderate"onchange="toggleQ6Row(this.closest('tr'), this)"></td>
-                <td><input type="checkbox" name="q6_task2[]" value="Severe"onchange="toggleQ6Row(this.closest('tr'), this)"></td>
-                <td><input type="checkbox" name="q6_task2[]" value="Not Used"onchange="toggleQ6Row(this.closest('tr'), this)"></td>                
+                <td><input type="checkbox" name="q7_task2[]" value="Mild"onchange="toggleq7Row(this.closest('tr'), this)"></td>
+                <td><input type="checkbox" name="q7_task2[]" value="Moderate"onchange="toggleq7Row(this.closest('tr'), this)"></td>
+                <td><input type="checkbox" name="q7_task2[]" value="Severe"onchange="toggleq7Row(this.closest('tr'), this)"></td>
+                <td><input type="checkbox" name="q7_task2[]" value="Not Used"onchange="toggleq7Row(this.closest('tr'), this)"></td>                
             </tr>
             <tr>
                 <td>Functional Gross Motor Reach with hand grasp and release without object manipulation</td>
-                <td><input type="checkbox" name="q6_task3[]" value="Mild"onchange="toggleQ6Row(this.closest('tr'), this)"></td>
-                <td><input type="checkbox" name="q6_task3[]" value="Moderate"onchange="toggleQ6Row(this.closest('tr'), this)"></td>
-                <td><input type="checkbox" name="q6_task3[]" value="Severe"onchange="toggleQ6Row(this.closest('tr'), this)"></td>
-                <td><input type="checkbox" name="q6_task3[]" value="Not Used"onchange="toggleQ6Row(this.closest('tr'), this)"></td>                
+                <td><input type="checkbox" name="q7_task3[]" value="Mild"onchange="toggleq7Row(this.closest('tr'), this)"></td>
+                <td><input type="checkbox" name="q7_task3[]" value="Moderate"onchange="toggleq7Row(this.closest('tr'), this)"></td>
+                <td><input type="checkbox" name="q7_task3[]" value="Severe"onchange="toggleq7Row(this.closest('tr'), this)"></td>
+                <td><input type="checkbox" name="q7_task3[]" value="Not Used"onchange="toggleq7Row(this.closest('tr'), this)"></td>                
             </tr>
             <tr>
                 <td>Advance Object manipulation<br>(In-hand manipulation using objects of different shapes/sizes/textures)<br></td>
-                <td><input type="checkbox" name="q6_task4[]" value="Mild"onchange="toggleQ6Row(this.closest('tr'), this)"></td>
-                <td><input type="checkbox" name="q6_task4[]" value="Moderate"onchange="toggleQ6Row(this.closest('tr'), this)"></td>
-                <td><input type="checkbox" name="q6_task4[]" value="Severe"onchange="toggleQ6Row(this.closest('tr'), this)"></td>
-                <td><input type="checkbox" name="q6_task4[]" value="Not Used"onchange="toggleQ6Row(this.closest('tr'), this)"></td>                
+                <td><input type="checkbox" name="q7_task4[]" value="Mild"onchange="toggleq7Row(this.closest('tr'), this)"></td>
+                <td><input type="checkbox" name="q7_task4[]" value="Moderate"onchange="toggleq7Row(this.closest('tr'), this)"></td>
+                <td><input type="checkbox" name="q7_task4[]" value="Severe"onchange="toggleq7Row(this.closest('tr'), this)"></td>
+                <td><input type="checkbox" name="q7_task4[]" value="Not Used"onchange="toggleq7Row(this.closest('tr'), this)"></td>                
             </tr>
             <tr>
                 <td>Patient-Specific Functional Tasks <br>(ADL, IADL, Vocational, Recreational etc..)<br></td>
-                <td><input type="checkbox" name="q6_task5[]" value="Mild"onchange="toggleQ6Row(this.closest('tr'), this)"></td>
-                <td><input type="checkbox" name="q6_task5[]" value="Moderate"onchange="toggleQ6Row(this.closest('tr'), this)"></td>
-                <td><input type="checkbox" name="q6_task5[]" value="Severe"onchange="toggleQ6Row(this.closest('tr'), this)"></td>
-                <td><input type="checkbox" name="q6_task5[]" value="Not Used"onchange="toggleQ6Row(this.closest('tr'), this)"></td>
+                <td><input type="checkbox" name="q7_task5[]" value="Mild"onchange="toggleq7Row(this.closest('tr'), this)"></td>
+                <td><input type="checkbox" name="q7_task5[]" value="Moderate"onchange="toggleq7Row(this.closest('tr'), this)"></td>
+                <td><input type="checkbox" name="q7_task5[]" value="Severe"onchange="toggleq7Row(this.closest('tr'), this)"></td>
+                <td><input type="checkbox" name="q7_task5[]" value="Not Used"onchange="toggleq7Row(this.closest('tr'), this)"></td>
             </tr>
             <script>
-            function addQ6Row() {
-              const table = document.getElementById("q6-table");
+            function addq7Row() {
+              const table = document.getElementById("q7-table");
               const rowIndex = table.rows.length;
 
               const row = table.insertRow(-1);
@@ -493,7 +519,7 @@
               // Task name
               row.insertCell(0).innerHTML =
                 `<input type="text"
-                        name="q6_task_name_${rowIndex}"
+                        name="q7_task_name_${rowIndex}"
                         placeholder="Enter task name"
                         required>`;
 
@@ -501,13 +527,13 @@
               ["Mild", "Moderate", "Severe", "Not Used"].forEach(level => {
                 row.insertCell(-1).innerHTML =
                   `<input type="checkbox"
-                          name="q6_task_${rowIndex}[]"
-                          value="${level}" onchange="toggleQ6Row(this.closest('tr'), this)">`;
+                          name="q7_task_${rowIndex}[]"
+                          value="${level}" onchange="toggleq7Row(this.closest('tr'), this)">`;
               });
             }
             </script>
             <script>
-            function toggleQ6Row(row, changedCheckbox) {
+            function toggleq7Row(row, changedCheckbox) {
               const checkboxes = row.querySelectorAll('input[type="checkbox"]');
               const notUsed = row.querySelector('input[value="Not Used"]');
               const severities = Array.from(checkboxes).filter(cb => cb !== notUsed);
@@ -530,12 +556,12 @@
             </script>
 
             </table>
-            <button type="button" onclick="addQ6Row()">+ Add another task</button>
+            <button type="button" onclick="addq7Row()">+ Add another task</button>
 
 
-            <!-- Q7 -->
-            <h3>7.What roles do you typically perform when delivering therapy involving the following tasks?</h3>
-            <table id="q7-table" border="1" class="alpha-table">
+            <!-- Q8 -->
+            <h3>8.What roles do you typically perform when delivering therapy involving the following tasks?</h3>
+            <table id="q8-table" border="1" class="alpha-table">
             <tr>
                 <th>Task Type</th>
                 <th>Provide instruction as the task happens<br>(Verbal cues and guidance)<br></th>
@@ -545,66 +571,66 @@
             </tr>            
             <tr>
                 <td>Non-Function-Oriented Upper Limb and Hand Strengthening</td>
-                <td><input type="checkbox" name="role1" value="Instruction"></td>
-                <td><input type="checkbox" name="role1" value="Demonstrate"></td>
-                <td><input type="checkbox" name="role1" value="Assist"></td>
-                <td><input type="checkbox" name="role1" value="Train"></td>
+                <td><input type="checkbox" name="role1[]" value="Instruction"></td>
+                <td><input type="checkbox" name="role1[]" value="Demonstrate"></td>
+                <td><input type="checkbox" name="role1[]" value="Assist"></td>
+                <td><input type="checkbox" name="role1[]" value="Train"></td>
                 
             </tr>
             <tr>
                 <td>Functional Gross Motor Reach without Hand Grasp<br>(reaching the arm toward specified targets at different locations)<br></td>
-                <td><input type="checkbox" name="role2" value="Instruction"></td>
-                <td><input type="checkbox" name="role2" value="Demonstrate"></td>
-                <td><input type="checkbox" name="role2" value="Assist"></td>
-                <td><input type="checkbox" name="role2" value="Train"></td>
+                <td><input type="checkbox" name="role2[]" value="Instruction"></td>
+                <td><input type="checkbox" name="role2[]" value="Demonstrate"></td>
+                <td><input type="checkbox" name="role2[]" value="Assist"></td>
+                <td><input type="checkbox" name="role2[]" value="Train"></td>
                 
             </tr>
             <tr>
                 <td>Functional Gross Motor Reach with hand grasp and release without object manipulation</td>
-                <td><input type="checkbox" name="role3" value="Instruction"></td>
-                <td><input type="checkbox" name="role3" value="Demonstrate"></td>
-                <td><input type="checkbox" name="role3" value="Assist"></td>
-                <td><input type="checkbox" name="role3" value="Train"></td>
+                <td><input type="checkbox" name="role3[]" value="Instruction"></td>
+                <td><input type="checkbox" name="role3[]" value="Demonstrate"></td>
+                <td><input type="checkbox" name="role3[]" value="Assist"></td>
+                <td><input type="checkbox" name="role3[]" value="Train"></td>
                 
             </tr>
             <tr>
                 <td>Advance Object manipulation<br>(In-hand manipulation using objects of different shapes/sizes/textures)<br></td>
-                <td><input type="checkbox" name="role4" value="Instruction"></td>
-                <td><input type="checkbox" name="role4" value="Demonstrate"></td>
-                <td><input type="checkbox" name="role4" value="Assist"></td>
-                <td><input type="checkbox" name="role4" value="Train"></td>
+                <td><input type="checkbox" name="role4[]" value="Instruction"></td>
+                <td><input type="checkbox" name="role4[]" value="Demonstrate"></td>
+                <td><input type="checkbox" name="role4[]" value="Assist"></td>
+                <td><input type="checkbox" name="role4[]" value="Train"></td>
                 
             </tr>
             <tr>
                 <td>Patient-Specific Functional Tasks<br>(ADL, IADL, Vocational, Recreational etc..)<br></td>
-                <td><input type="checkbox" name="role5" value="Instruction"></td>
-                <td><input type="checkbox" name="role5" value="Demonstrate"></td>
-                <td><input type="checkbox" name="role5" value="Assist"></td>
-                <td><input type="checkbox" name="role5" value="Train"></td>
+                <td><input type="checkbox" name="role5[]" value="Instruction"></td>
+                <td><input type="checkbox" name="role5[]" value="Demonstrate"></td>
+                <td><input type="checkbox" name="role5[]" value="Assist"></td>
+                <td><input type="checkbox" name="role5[]" value="Train"></td>
                 
             </tr>
             <script>
-            function addQ7Row() {
-              const table = document.getElementById("q7-table");
+            function addq8Row() {
+              const table = document.getElementById("q8-table");
               const rowIndex = table.rows.length;
 
               const row = table.insertRow(-1);
 
               row.insertCell(0).innerHTML =
                 `<input type="text"
-                        name="q7_task_${rowIndex}"
+                        name="q8_task_${rowIndex}"
                         placeholder="Enter task name"
                         required>`;
 
               for (let i = 1; i <= 4; i++) {
                 row.insertCell(-1).innerHTML =
                   `<input type="checkbox"
-                          name="q7_role_${rowIndex}_${i}">`;
+                          name="q8_role_${rowIndex}_${i}">`;
               }
             }
             </script>
             </table>
-            <button type="button" onclick="addQ7Row()">+ Add another role</button>
+            <button type="button" onclick="addq8Row()">+ Add another role</button>
             <button type="button" onclick="ValidateAndGo('sectionB','sectionC')">
                 Next
             </button>
@@ -615,12 +641,12 @@
         <!-- SECTION C -->
         <section id="sectionC">
             <h2>SECTION C: Activity Materials & Tools</h2>
-            <!-- Q8 -->
-            <h3>8.What types of activity-based training materials do you commonly employ for upper- limb tabletop task training, and for what levels of impairments are they best suited for?<br>
+            <!-- Q9 -->
+            <h3>9.What types of activity-based training materials do you commonly employ for upper- limb tabletop task training, and for what levels of impairments are they best suited for?<br>
                 (Please select all that apply)<br>       
                 (Note: Please consider therapeutic items used during training sessions, not formal assessment tools)<br> </h3>
 
-            <table id="q8-table" border="1" class="alpha-table">
+            <table id="q9-table" border="1" class="alpha-table">
             <tr>
                 <th>Category</th>
                 <th>Mild(FMA-UE score: 50-66)</th>
@@ -631,56 +657,56 @@
                 <td>ADL-based items<br>
                     Cup,Spoon,Towel,Bottle,Comb<br>
                 </td>
-                <td><input type="checkbox" name="adl_mild"></td>
-                <td><input type="checkbox" name="adl_moderate"></td>
-                <td><input type="checkbox" name="adl_severe"></td>
+                <td><input type="checkbox" name="adl_mild" value="adl_mild"></td>
+                <td><input type="checkbox" name="adl_moderate" value="adl_moderate"></td>
+                <td><input type="checkbox" name="adl_severe" value="adl_severe"></td>
             </tr>
             <tr>
                 <td>Therapy-specific tools<br>
                     Cones,Pegs,Marbles,Therapy putty,Weights<br>
                 </td>
-                <td><input type="checkbox" name="therapy_mild"></td>
-                <td><input type="checkbox" name="therapy_moderate"></td>
-                <td><input type="checkbox" name="therapy_severe"></td>
+                <td><input type="checkbox" name="therapy_mild" value="therapy_mild"></td>
+                <td><input type="checkbox" name="therapy_moderate" value="therapy_moderate"></td>
+                <td><input type="checkbox" name="therapy_severe" value="therapy_severe"></td>
             </tr>
             <tr>
                 <td>Fine motor/dexterity tools<br>
                     Coins,Tweezers,Nuts & Bolts,Clips<br>
                 </td>
-                <td><input type="checkbox" name="fine_mild"></td>
-                <td><input type="checkbox" name="fine_moderate"></td>
-                <td><input type="checkbox" name="fine_severe"></td>
+                <td><input type="checkbox" name="fine_mild" value="fine_mild"></td>
+                <td><input type="checkbox" name="fine_moderate" value="fine_moderate"></td>
+                <td><input type="checkbox" name="fine_severe" value="fine_severe"></td>
             </tr>
             <tr>
                 <td>Game-based tools<br>(Cognitive motor objects)<br>
                     Sorting trays, Pattern blocks, and Puzzles<br>
                 </td>
-                <td><input type="checkbox" name="game_mild"></td>
-                <td><input type="checkbox" name="game_moderate"></td>
-                <td><input type="checkbox" name="game_severe"></td>
+                <td><input type="checkbox" name="game_mild" value="game_mild"></td>
+                <td><input type="checkbox" name="game_moderate" value="game_moderate"></td>
+                <td><input type="checkbox" name="game_severe" value="game_severe"></td>
             </tr> 
 
             <script>
-            function addQ8Row() {
-              const table = document.getElementById("q8-table");
+            function addq9Row() {
+              const table = document.getElementById("q9-table");
               const rowIndex = table.rows.length;
               const row = table.insertRow(-1);
               // Category
               row.insertCell(0).innerHTML =
                 `<input type="text"
-                        name="q8_category_${rowIndex}"
+                        name="q9_category_${rowIndex}"
                         placeholder="Material / Tool category"
                         required>`;
               // Severity checkboxes
               for (let i = 1; i <= 3; i++) {
                 row.insertCell(-1).innerHTML =
                   `<input type="checkbox"
-                          name="q8_level_${rowIndex}_${i}">`;
+                          name="q9_level_${rowIndex}_${i}">`;
               }
             }
             </script>
             </table>
-            <button type="button" onclick="addQ8Row()">+ Add another material/tool</button>            
+            <button type="button" onclick="addq9Row()">+ Add another material/tool</button>            
             <button type="button" onclick="ValidateAndGo('sectionC','sectionD')">
                 Next
             </button>
@@ -691,15 +717,15 @@
         <section id="sectionD">
             <h2>SECTION D: Intervention Plan & Implementation</h2>
 
-            <!-- Q9 -->
-            <h3>9.How do you adjust (grading) during upper-limb function therapy?<br>
+            <!-- Q10 -->
+            <h3>10.How do you adjust (grading) during upper-limb function therapy?<br>
             (Please select all that apply)<br>
             </h3>
-            <table id="q9-table">
+            <table id="q10-table">
             <tr>
             <td>
             <label>
-            <input type="checkbox" name="q9[]" value="Increase repetitions">
+            <input type="checkbox" name="q10[]" value="Increase repetitions">
             Increasing the number of chosen movement/s repetitions
             </label>
             </td>
@@ -707,7 +733,7 @@
             <tr>
             <td>
             <label>
-            <input type="checkbox" name="q9[]" value="Increase duration">
+            <input type="checkbox" name="q10[]" value="Increase duration">
             Increasing the duration for which a movement is carried out or a body position is held
             </label>
             </td>
@@ -715,7 +741,7 @@
             <tr>
             <td>
             <label>
-            <input type="checkbox" name="q9[]" value="Tolerance fatigue">
+            <input type="checkbox" name="q10[]" value="Tolerance fatigue">
             Adjusting for the patient’s tolerance or fatigue
             </label>
             </td>
@@ -723,7 +749,7 @@
             <tr>
             <td>
             <label>
-            <input type="checkbox" name="q9[]" value="Motivation engagement">
+            <input type="checkbox" name="q10[]" value="Motivation engagement">
             Adapting to motivation or engagement levels
             </label>
             </td>
@@ -731,7 +757,7 @@
             <tr>
             <td>
             <label>
-            <input type="checkbox" name="q9[]" value="Assistance levels">
+            <input type="checkbox" name="q10[]" value="Assistance levels">
             Varying the levels of assistance offered <br>(e.g., verbal, physical)<br>
             </label>
             </td>
@@ -740,7 +766,7 @@
             <tr>
             <td>
             <label>
-            <input type="checkbox" name="q9[]" value="Goals preferences">
+            <input type="checkbox" name="q10[]" value="Goals preferences">
             Customizing to individual goals/preferences
             </label>
             </td>
@@ -749,7 +775,7 @@
             <tr>
             <td>
             <label>
-            <input type="checkbox" name="q9[]" value="Caregiver support">
+            <input type="checkbox" name="q10[]" value="Caregiver support">
             Considering the availability of caregiver support
             </label>
             </td>
@@ -758,7 +784,7 @@
             <tr>
             <td>
             <label>
-            <input type="checkbox" name="q9[]" value="Object parameters">
+            <input type="checkbox" name="q10[]" value="Object parameters">
             Using smaller/irregular objects <br>(e.g., changing size, shape, weight)<br>
             </label>
             </td>
@@ -767,7 +793,7 @@
             <tr>
             <td>
             <label>
-            <input type="checkbox" name="q9[]" value="Motor demand">
+            <input type="checkbox" name="q10[]" value="Motor demand">
             Altering motor demand<br> (e.g., overhead, midline crossing, fine vs. gross)<br>
             </label>
             </td>
@@ -776,7 +802,7 @@
             <tr>
             <td>
             <label>
-            <input type="checkbox" name="q9[]" value="Sequencing steps">
+            <input type="checkbox" name="q10[]" value="Sequencing steps">
             Sequencing tasks or adding steps <br>(reach + grasp + place)<br>
             </label>
             </td>
@@ -785,7 +811,7 @@
             <tr>
             <td>
             <label>
-            <input type="checkbox" name="q9[]" value="Speed precision">
+            <input type="checkbox" name="q10[]" value="Speed precision">
             Modifying the task performance speed or precision required
             </label>
             </td>
@@ -794,7 +820,7 @@
             <tr>
             <td>
             <label>
-            <input type="checkbox" name="q9[]" value="Posture">
+            <input type="checkbox" name="q10[]" value="Posture">
             Changing posture
             </label>
             </td>
@@ -803,7 +829,7 @@
             <tr>
             <td>
             <label>
-            <input type="checkbox" name="q9[]" value="Object placement">
+            <input type="checkbox" name="q10[]" value="Object placement">
             Varying object placement<br>(direction, distance, table height)<br>
             </label>
             </td>
@@ -812,19 +838,19 @@
             <tr>
             <td>
             <label>
-            <input type="checkbox" name="q9[]" value="Environmental distractions">
+            <input type="checkbox" name="q10[]" value="Environmental distractions">
             Modifying environmental distractions<br>(e.g., background noise)<br>
             </label>
             </td>
             </tr>
 
             </table>
-            <button type="button" onclick="addQ9Row()">+ Add Row</button>
+            <button type="button" onclick="addq10Row()">+ Add Row</button>
 
 
             <script>
-            function addQ9Row() {
-              const table = document.getElementById("q9-table");
+            function addq10Row() {
+              const table = document.getElementById("q10-table");
               const rowIndex = table.rows.length; // unique index
 
               const row = table.insertRow(-1);
@@ -832,9 +858,9 @@
               // Strategy text
               row.insertCell(0).innerHTML = `
                 <label>
-                    <input type="checkbox" name="q9[]" value="other_${rowIndex}">
+                    <input type="checkbox" name="q10[]" value="other_${rowIndex}">
                     <input type="text"
-                            name="q9_other_text_${rowIndex}"
+                            name="q10_other_text_${rowIndex}"
                             placeholder="Other strategy"
                             style="width:90%; margin-left:8px;">
                 </label>
@@ -843,9 +869,9 @@
           }
           </script>
 
-            <!-- Q10 -->
-            <h3>10.When do you typically tailor the activity?</h3>
-            <table border="1" cellpadding="6" cellspacing="0" id="q10-table" class="alpha-table">
+            <!-- Q11 -->
+            <h3>11.When do you typically tailor the activity?</h3>
+            <table border="1" cellpadding="6" cellspacing="0" id="q11-table" class="alpha-table">
                 <tr>
                 <th>Scenario</th>
                 <th>Never</th>
@@ -857,111 +883,111 @@
                 </tr>
                 <tr>
                 <td>Trunk compensation is observed</td>
-                <td><input type="radio" name="q10_a" value="Never"></td>
-                <td><input type="radio" name="q10_a" value="Rarely"></td>
-                <td><input type="radio" name="q10_a" value="Sometimes"></td>
-                <td><input type="radio" name="q10_a" value="Often"></td>
-                <td><input type="radio" name="q10_a" value="Always"></td>  
-                <td> <input type="text" name="q10_a_note" placeholder="How do you tailor?"></td>              
+                <td><input type="radio" name="q11_a" value="Never"></td>
+                <td><input type="radio" name="q11_a" value="Rarely"></td>
+                <td><input type="radio" name="q11_a" value="Sometimes"></td>
+                <td><input type="radio" name="q11_a" value="Often"></td>
+                <td><input type="radio" name="q11_a" value="Always"></td>  
+                <td> <input type="text" name="q11_a_note" placeholder="How do you tailor?"></td>              
                 </tr>
                 <tr>
                 <td>Delayed or hesitant movement</td>
-                <td><input type="radio" name="q10_b"value="Never"></td>
-                <td><input type="radio" name="q10_b"value="Rarely"></td>
-                <td><input type="radio" name="q10_b"value="Sometimes"></td>
-                <td><input type="radio" name="q10_b"value="Often"></td>
-                <td><input type="radio" name="q10_b"value="Always"></td> 
-                <td> <input type="text" name="q10_b_note" placeholder="How do you tailor?"></td>                             
+                <td><input type="radio" name="q11_b"value="Never"></td>
+                <td><input type="radio" name="q11_b"value="Rarely"></td>
+                <td><input type="radio" name="q11_b"value="Sometimes"></td>
+                <td><input type="radio" name="q11_b"value="Often"></td>
+                <td><input type="radio" name="q11_b"value="Always"></td> 
+                <td> <input type="text" name="q11_b_note" placeholder="How do you tailor?"></td>                             
                 </tr>
                 <tr>
                 <td>Limited shoulder or elbow ROM</td>
-                <td><input type="radio" name="q10_c"value="Never"></td>
-                <td><input type="radio" name="q10_c"value="Rarely"></td>
-                <td><input type="radio" name="q10_c"value="Sometimes"></td>
-                <td><input type="radio" name="q10_c"value="Often"></td>
-                <td><input type="radio" name="q10_c"value="Always"></td>    
-                <td> <input type="text" name="q10_c_note" placeholder="How do you tailor?"></td>                         
+                <td><input type="radio" name="q11_c"value="Never"></td>
+                <td><input type="radio" name="q11_c"value="Rarely"></td>
+                <td><input type="radio" name="q11_c"value="Sometimes"></td>
+                <td><input type="radio" name="q11_c"value="Often"></td>
+                <td><input type="radio" name="q11_c"value="Always"></td>    
+                <td> <input type="text" name="q11_c_note" placeholder="How do you tailor?"></td>                         
                 </tr>
                 <tr>
                 <td>Frequent object drops or slips</td>
-                <td><input type="radio" name="q10_d"value="Never"></td>
-                <td><input type="radio" name="q10_d"value="Rarely"></td>
-                <td><input type="radio" name="q10_d"value="Sometimes"></td>
-                <td><input type="radio" name="q10_d"value="Often"></td>
-                <td><input type="radio" name="q10_d"value="Always"></td>    
-                <td> <input type="text" name="q10_d_note" placeholder="How do you tailor?"></td>                          
+                <td><input type="radio" name="q11_d"value="Never"></td>
+                <td><input type="radio" name="q11_d"value="Rarely"></td>
+                <td><input type="radio" name="q11_d"value="Sometimes"></td>
+                <td><input type="radio" name="q11_d"value="Often"></td>
+                <td><input type="radio" name="q11_d"value="Always"></td>    
+                <td> <input type="text" name="q11_d_note" placeholder="How do you tailor?"></td>                          
                 </tr>
                 <tr>
                 <td>Poor hand pre-shaping</td>
-                <td><input type="radio" name="q10_e"value="Never"></td>
-                <td><input type="radio" name="q10_e"value="Rarely"></td>
-                <td><input type="radio" name="q10_e"value="Sometimes"></td>
-                <td><input type="radio" name="q10_e"value="Often"></td>
-                <td><input type="radio" name="q10_e"value="Always"></td>    
-                <td> <input type="text" name="q10_e_note" placeholder="How do you tailor?"></td>                        
+                <td><input type="radio" name="q11_e"value="Never"></td>
+                <td><input type="radio" name="q11_e"value="Rarely"></td>
+                <td><input type="radio" name="q11_e"value="Sometimes"></td>
+                <td><input type="radio" name="q11_e"value="Often"></td>
+                <td><input type="radio" name="q11_e"value="Always"></td>    
+                <td> <input type="text" name="q11_e_note" placeholder="How do you tailor?"></td>                        
                 </tr>
                 <tr>
                 <td>Difficulty with in-hand manipulation</td>
-                <td><input type="radio" name="q10_f"value="Never"></td>
-                <td><input type="radio" name="q10_f"value="Rarely"></td>
-                <td><input type="radio" name="q10_f"value="Sometimes"></td>
-                <td><input type="radio" name="q10_f"value="Often"></td>
-                <td><input type="radio" name="q10_f"value="Always"></td>    
-                <td> <input type="text" name="q10_f_note" placeholder="How do you tailor?"></td>                         
+                <td><input type="radio" name="q11_f"value="Never"></td>
+                <td><input type="radio" name="q11_f"value="Rarely"></td>
+                <td><input type="radio" name="q11_f"value="Sometimes"></td>
+                <td><input type="radio" name="q11_f"value="Often"></td>
+                <td><input type="radio" name="q11_f"value="Always"></td>    
+                <td> <input type="text" name="q11_f_note" placeholder="How do you tailor?"></td>                         
                 </tr>
                 <tr>
                 <td>Signs of fatigue or pain during activity</td>
-                <td><input type="radio" name="q10_g"value="Never"></td>
-                <td><input type="radio" name="q10_g"value="Rarely"></td>
-                <td><input type="radio" name="q10_g"value="Sometimes"></td>
-                <td><input type="radio" name="q10_g"value="Often"></td>
-                <td><input type="radio" name="q10_g"value="Always"></td>    
-                <td> <input type="text" name="q10_g_note" placeholder="How do you tailor?"></td>                         
+                <td><input type="radio" name="q11_g"value="Never"></td>
+                <td><input type="radio" name="q11_g"value="Rarely"></td>
+                <td><input type="radio" name="q11_g"value="Sometimes"></td>
+                <td><input type="radio" name="q11_g"value="Often"></td>
+                <td><input type="radio" name="q11_g"value="Always"></td>    
+                <td> <input type="text" name="q11_g_note" placeholder="How do you tailor?"></td>                         
                 </tr>
                 <tr>
                 <td>Poor sequencing or disorganized task flow</td>
-                <td><input type="radio" name="q10_h"value="Never"></td>
-                <td><input type="radio" name="q10_h"value="Rarely"></td>
-                <td><input type="radio" name="q10_h"value="Sometimes"></td>
-                <td><input type="radio" name="q10_h"value="Often"></td>
-                <td><input type="radio" name="q10_h"value="Always"></td>   
-                <td> <input type="text" name="q10_h_note" placeholder="How do you tailor?"></td>                           
+                <td><input type="radio" name="q11_h"value="Never"></td>
+                <td><input type="radio" name="q11_h"value="Rarely"></td>
+                <td><input type="radio" name="q11_h"value="Sometimes"></td>
+                <td><input type="radio" name="q11_h"value="Often"></td>
+                <td><input type="radio" name="q11_h"value="Always"></td>   
+                <td> <input type="text" name="q11_h_note" placeholder="How do you tailor?"></td>                           
                 </tr>
                 <tr>
                 <td>Unsafe handling of tools or objects</td>
-                <td><input type="radio" name="q10_i"value="Never"></td>
-                <td><input type="radio" name="q10_i"value="Rarely"></td>
-                <td><input type="radio" name="q10_i"value="Sometimes"></td>
-                <td><input type="radio" name="q10_i"value="Often"></td>
-                <td><input type="radio" name="q10_i"value="Always"></td>  
-                <td> <input type="text" name="q10_i_note" placeholder="How do you tailor?"></td>                           
+                <td><input type="radio" name="q11_i"value="Never"></td>
+                <td><input type="radio" name="q11_i"value="Rarely"></td>
+                <td><input type="radio" name="q11_i"value="Sometimes"></td>
+                <td><input type="radio" name="q11_i"value="Often"></td>
+                <td><input type="radio" name="q11_i"value="Always"></td>  
+                <td> <input type="text" name="q11_i_note" placeholder="How do you tailor?"></td>                           
                 </tr>
                 <tr>
                 <td>Inconsistent reach and grasp timing</td>
-                <td><input type="radio" name="q10_j"value="Never"></td>
-                <td><input type="radio" name="q10_j"value="Rarely"></td>
-                <td><input type="radio" name="q10_j"value="Sometimes"></td>
-                <td><input type="radio" name="q10_j"value="Often"></td>
-                <td><input type="radio" name="q10_j"value="Always"></td>     
-                <td> <input type="text" name="q10_j_note" placeholder="How do you tailor?"></td>                        
+                <td><input type="radio" name="q11_j"value="Never"></td>
+                <td><input type="radio" name="q11_j"value="Rarely"></td>
+                <td><input type="radio" name="q11_j"value="Sometimes"></td>
+                <td><input type="radio" name="q11_j"value="Often"></td>
+                <td><input type="radio" name="q11_j"value="Always"></td>     
+                <td> <input type="text" name="q11_j_note" placeholder="How do you tailor?"></td>                        
                 </tr>
                 <tr>
                 <td>Poor bilateral coordination</td>
-                <td><input type="radio" name="q10_k"value="Never"></td>
-                <td><input type="radio" name="q10_k"value="Rarely"></td>
-                <td><input type="radio" name="q10_k"value="Sometimes"></td>
-                <td><input type="radio" name="q10_k"value="Often"></td>
-                <td><input type="radio" name="q10_k"value="Always"></td>
-                <td> <input type="text" name="q10_k_note" placeholder="How do you tailor?"></td>              
+                <td><input type="radio" name="q11_k"value="Never"></td>
+                <td><input type="radio" name="q11_k"value="Rarely"></td>
+                <td><input type="radio" name="q11_k"value="Sometimes"></td>
+                <td><input type="radio" name="q11_k"value="Often"></td>
+                <td><input type="radio" name="q11_k"value="Always"></td>
+                <td> <input type="text" name="q11_k_note" placeholder="How do you tailor?"></td>              
                 </tr>               
             </table>
 
             <!-- Button to add more "Other" rows -->
-            <button type="button" onclick="addQ10Row()">+ Add Row</button>
+            <button type="button" onclick="addq11Row()">+ Add Row</button>
 
             <script>
-            function addQ10Row() {
-                const table = document.getElementById("q10-table");
+            function addq11Row() {
+                const table = document.getElementById("q11-table");
                 const rowIndex = table.rows.length;
 
                 const row = table.insertRow(-1);
@@ -969,8 +995,8 @@
                 // Scenario
                 row.insertCell(0).innerHTML =
                   `<input type="text"
-                          id="q10_other_scenario_${rowIndex}"
-                          name="q10_other_scenario_${rowIndex}"
+                          id="q11_other_scenario_${rowIndex}"
+                          name="q11_other_scenario_${rowIndex}"
                           placeholder="Other scenario"
                           data-optional>`;
 
@@ -979,38 +1005,38 @@
                 for (let i = 0; i < radioValues.length; i++) {
                   row.insertCell(i + 1).innerHTML =
                     `<input type="radio"
-                            name="q10_other_${rowIndex}"
+                            name="q11_other_${rowIndex}"
                             value="${radioValues[i]}"
-                            data-paired-text="q10_other_scenario_${rowIndex}"
-                            onchange="document.getElementById('q10_other_proxy_${rowIndex}').checked = true;">`;
+                            data-paired-text="q11_other_scenario_${rowIndex}"
+                            onchange="document.getElementById('q11_other_proxy_${rowIndex}').checked = true;">`;
                 }
 
                 // Adjustment text
                 row.insertCell(6).innerHTML =
                   `<input type="text"
-                          id="q10_other_adjustment_${rowIndex}"
-                          name="q10_other_adjustment_${rowIndex}"
+                          id="q11_other_adjustment_${rowIndex}"
+                          name="q11_other_adjustment_${rowIndex}"
                           placeholder="Describe adjustment"
                           data-optional>`;
 
                 // Hidden proxy
                 const proxy = document.createElement("input");
                 proxy.type = "checkbox";
-                proxy.id = `q10_other_proxy_${rowIndex}`;
+                proxy.id = `q11_other_proxy_${rowIndex}`;
                 proxy.style.display = "none";
-                proxy.setAttribute("data-paired-text", `q10_other_adjustment_${rowIndex}`);
+                proxy.setAttribute("data-paired-text", `q11_other_adjustment_${rowIndex}`);
                 row.appendChild(proxy);
               }
             </script>
 
-            <!-- Q11 -->
-            <h3>11.When delivering feedback, which phase(s) do you emphasize?</h3>
-            <label><input type="checkbox" name="q11[]"value="During"> Primarily during task execution</label><br>
-            <label><input type="checkbox" name="q11[]" value="After"> Primarily after task completion</label><br>
-
             <!-- Q12 -->
-            <h3>12.How often do you use the following types of feedback in upper-limb table-top functional training?</h3>
-            <table border="1" cellpadding="6" cellspacing="0" id="q12-table" class="alpha-table">
+            <h3>12.When delivering feedback, which phase(s) do you emphasize?</h3>
+            <label><input type="checkbox" name="q12[]"value="During"> Primarily during task execution</label><br>
+            <label><input type="checkbox" name="q12[]" value="After"> Primarily after task completion</label><br>
+
+            <!-- Q13 -->
+            <h3>13.How often do you use the following types of feedback in upper-limb table-top functional training?</h3>
+            <table border="1" cellpadding="6" cellspacing="0" id="q13-table" class="alpha-table">
                 <tr>
                 <th>Feedback Type</th>
                 <th>Never</th>
@@ -1021,68 +1047,68 @@
                 </tr>
                 <tr>
                 <td>Verbal feedback on performance<br>(e.g., lift your elbow, avoid leaning, open your fingers)<br></td>
-                <td><input type="radio" name="q12_a"value="Never"></td>
-                <td><input type="radio" name="q12_a"value="Rarely"></td>
-                <td><input type="radio" name="q12_a"value="Sometimes"></td>
-                <td><input type="radio" name="q12_a"value="Often"></td>
-                <td><input type="radio" name="q12_a"value="Always"></td>
+                <td><input type="radio" name="q13_a"value="Never"></td>
+                <td><input type="radio" name="q13_a"value="Rarely"></td>
+                <td><input type="radio" name="q13_a"value="Sometimes"></td>
+                <td><input type="radio" name="q13_a"value="Often"></td>
+                <td><input type="radio" name="q13_a"value="Always"></td>
                 </tr>
                 <tr>
                 <td>Visual demonstration / mirroring<br>(therapist shows or performs movement alongside the patient)<br></td>
-                <td><input type="radio" name="q12_b"value="Never"></td>
-                <td><input type="radio" name="q12_b"value="Rarely"></td>
-                <td><input type="radio" name="q12_b"value="Sometimes"></td>
-                <td><input type="radio" name="q12_b"value="Often"></td>
-                <td><input type="radio" name="q12_b"value="Always"></td>
+                <td><input type="radio" name="q13_b"value="Never"></td>
+                <td><input type="radio" name="q13_b"value="Rarely"></td>
+                <td><input type="radio" name="q13_b"value="Sometimes"></td>
+                <td><input type="radio" name="q13_b"value="Often"></td>
+                <td><input type="radio" name="q13_b"value="Always"></td>
                 </tr>
                 <tr>
                 <td>Manual/tactile guidance<br></td>
-                <td><input type="radio" name="q12_c"value="Never"></td>
-                <td><input type="radio" name="q12_c"value="Rarely"></td>
-                <td><input type="radio" name="q12_c"value="Sometimes"></td>
-                <td><input type="radio" name="q12_c"value="Often"></td>
-                <td><input type="radio" name="q12_c"value="Always"></td>
+                <td><input type="radio" name="q13_c"value="Never"></td>
+                <td><input type="radio" name="q13_c"value="Rarely"></td>
+                <td><input type="radio" name="q13_c"value="Sometimes"></td>
+                <td><input type="radio" name="q13_c"value="Often"></td>
+                <td><input type="radio" name="q13_c"value="Always"></td>
                 </tr>
                 <tr>
                 <td>Motivational encouragement<br>(e.g., hand-over-hand assistance, joint facilitation)<br></td>
-                <td><input type="radio" name="q12_d"value="Never"></td>
-                <td><input type="radio" name="q12_d"value="Rarely"></td>
-                <td><input type="radio" name="q12_d"value="Sometimes"></td>
-                <td><input type="radio" name="q12_d"value="Often"></td>
-                <td><input type="radio" name="q12_d"value="Always"></td>
+                <td><input type="radio" name="q13_d"value="Never"></td>
+                <td><input type="radio" name="q13_d"value="Rarely"></td>
+                <td><input type="radio" name="q13_d"value="Sometimes"></td>
+                <td><input type="radio" name="q13_d"value="Often"></td>
+                <td><input type="radio" name="q13_d"value="Always"></td>
                 </tr>
                 <tr>
                 <td>Functional relevance cues<br>(e.g., keep going, almost there!)<br></td>
-                <td><input type="radio" name="q12_e"value="Never"></td>
-                <td><input type="radio" name="q12_e"value="Rarely"></td>
-                <td><input type="radio" name="q12_e"value="Sometimes"></td>
-                <td><input type="radio" name="q12_e"value="Often"></td>
-                <td><input type="radio" name="q12_e"value="Always"></td>
+                <td><input type="radio" name="q13_e"value="Never"></td>
+                <td><input type="radio" name="q13_e"value="Rarely"></td>
+                <td><input type="radio" name="q13_e"value="Sometimes"></td>
+                <td><input type="radio" name="q13_e"value="Often"></td>
+                <td><input type="radio" name="q13_e"value="Always"></td>
                 </tr>
                 <tr>
                 <td>Patient self-reflection prompts<br>(e.g., How did that feel?, What was difficult?)<br></td>
-                <td><input type="radio" name="q12_f"value="Never"></td>
-                <td><input type="radio" name="q12_f"value="Rarely"></td>
-                <td><input type="radio" name="q12_f"value="Sometimes"></td>
-                <td><input type="radio" name="q12_f"value="Often"></td>
-                <td><input type="radio" name="q12_f"value="Always"></td>
+                <td><input type="radio" name="q13_f"value="Never"></td>
+                <td><input type="radio" name="q13_f"value="Rarely"></td>
+                <td><input type="radio" name="q13_f"value="Sometimes"></td>
+                <td><input type="radio" name="q13_f"value="Often"></td>
+                <td><input type="radio" name="q13_f"value="Always"></td>
                 </tr>
                 <tr>
                 <td>Caregiver-inclusive feedback<br>(e.g., progress update, strategies for practice support)<br></td>
-                <td><input type="radio" name="q12_g"value="Never"></td>
-                <td><input type="radio" name="q12_g"value="Rarely"></td>
-                <td><input type="radio" name="q12_g"value="Sometimes"></td>
-                <td><input type="radio" name="q12_g"value="Often"></td>
-                <td><input type="radio" name="q12_g"value="Always"></td>
+                <td><input type="radio" name="q13_g"value="Never"></td>
+                <td><input type="radio" name="q13_g"value="Rarely"></td>
+                <td><input type="radio" name="q13_g"value="Sometimes"></td>
+                <td><input type="radio" name="q13_g"value="Often"></td>
+                <td><input type="radio" name="q13_g"value="Always"></td>
                 </tr>
 
                 
             </table>
             <!-- Button to add more rows -->
-            <button type="button" onclick="addQ12Row()">+ Add Row</button>
+            <button type="button" onclick="addQ13Row()">+ Add Row</button>
             <script>
-            function addQ12Row() {
-            let table = document.getElementById("q12-table");
+            function addQ13Row() {
+            let table = document.getElementById("q13-table");
             let rowCount = table.rows.length;
             let row = table.insertRow(rowCount);
 
@@ -1093,7 +1119,7 @@
             // Radio buttons (grouped per row)
             for (let i = 1; i <= 5; i++) {
                 let cell = row.insertCell(i);
-                cell.innerHTML = '<input type="radio" name="q12_other_' + rowCount + '">';
+                cell.innerHTML = '<input type="radio" name="q13_other_' + rowCount + '">';
             }
             }
             </script>
@@ -1107,9 +1133,9 @@
         <section id="sectionE">
             <h2>SECTION E: Intervention Review</h2>
 
-            <!-- Q13 -->
-            <h3>13.How do you assess progress in therapy?</h3>
-            <table border="1" cellpadding="6" cellspacing="0" id="q13-table" class="alpha-table">
+            <!-- Q14 -->
+            <h3>14.How do you assess progress in therapy?</h3>
+            <table border="1" cellpadding="6" cellspacing="0" id="q14-table" class="alpha-table">
                 <tr>
                 <th>Assessment Methods</th>
                 <th>Never</th>
@@ -1120,50 +1146,50 @@
                 </tr>
                 <tr>
                 <td>Patient self-reports<br>(e.g., fatigue, pain, effort)<br></td>
-                <td><input type="radio" name="q13_3"value="Never"></td>
-                <td><input type="radio" name="q13_3"value="Rarely"></td>
-                <td><input type="radio" name="q13_3"value="Sometimes"></td>
-                <td><input type="radio" name="q13_3"value="Often"></td>
-                <td><input type="radio" name="q13_3"value="Always"></td>
+                <td><input type="radio" name="q14_3"value="Never"></td>
+                <td><input type="radio" name="q14_3"value="Rarely"></td>
+                <td><input type="radio" name="q14_3"value="Sometimes"></td>
+                <td><input type="radio" name="q14_3"value="Often"></td>
+                <td><input type="radio" name="q14_3"value="Always"></td>
                 </tr>
                 <tr>
                 <td>Caregiver feedback</td>
-                <td><input type="radio" name="q13_5"value="Never"></td>
-                <td><input type="radio" name="q13_5"value="Rarely"></td>
-                <td><input type="radio" name="q13_5"value="Sometimes"></td>
-                <td><input type="radio" name="q13_5"value="Often"></td>
-                <td><input type="radio" name="q13_5"value="Always"></td>
+                <td><input type="radio" name="q14_5"value="Never"></td>
+                <td><input type="radio" name="q14_5"value="Rarely"></td>
+                <td><input type="radio" name="q14_5"value="Sometimes"></td>
+                <td><input type="radio" name="q14_5"value="Often"></td>
+                <td><input type="radio" name="q14_5"value="Always"></td>
                 </tr>
                 <tr>
                 <td>Standardized assessments<br>(e.g., FMA-UE, ARAT, Box & Block)<br></td>
-                <td><input type="radio" name="q13_1"value="Never"></td>
-                <td><input type="radio" name="q13_1"value="Rarely"></td>
-                <td><input type="radio" name="q13_1"value="Sometimes"></td>
-                <td><input type="radio" name="q13_1"value="Often"></td>
-                <td><input type="radio" name="q13_1"value="Always"></td>
+                <td><input type="radio" name="q14_1"value="Never"></td>
+                <td><input type="radio" name="q14_1"value="Rarely"></td>
+                <td><input type="radio" name="q14_1"value="Sometimes"></td>
+                <td><input type="radio" name="q14_1"value="Often"></td>
+                <td><input type="radio" name="q14_1"value="Always"></td>
                 </tr>
                 <tr>
                 <td>Observation of task performance<br>(e.g., accuracy, smoothness, completion)<br></td>
-                <td><input type="radio" name="q13_2"value="Never"></td>
-                <td><input type="radio" name="q13_2"value="Rarely"></td>
-                <td><input type="radio" name="q13_2"value="Sometimes"></td>
-                <td><input type="radio" name="q13_2"value="Often"></td>
-                <td><input type="radio" name="q13_2"value="Always"></td>
+                <td><input type="radio" name="q14_2"value="Never"></td>
+                <td><input type="radio" name="q14_2"value="Rarely"></td>
+                <td><input type="radio" name="q14_2"value="Sometimes"></td>
+                <td><input type="radio" name="q14_2"value="Often"></td>
+                <td><input type="radio" name="q14_2"value="Always"></td>
                 </tr>
                 <tr>
                 <td>Task metrics<br>(e.g., number of repetitions, task completion time)<br></td>
-                <td><input type="radio" name="q13_4"value="Never"></td>
-                <td><input type="radio" name="q13_4"value="Rarely"></td>
-                <td><input type="radio" name="q13_4"value="Sometimes"></td>
-                <td><input type="radio" name="q13_4"value="Often"></td>
-                <td><input type="radio" name="q13_4"value="Always"></td>
+                <td><input type="radio" name="q14_4"value="Never"></td>
+                <td><input type="radio" name="q14_4"value="Rarely"></td>
+                <td><input type="radio" name="q14_4"value="Sometimes"></td>
+                <td><input type="radio" name="q14_4"value="Often"></td>
+                <td><input type="radio" name="q14_4"value="Always"></td>
                 </tr>
             </table>
-            <button type="button" onclick="addQ13Row()">+ Add Row</button>
+            <button type="button" onclick="addQ14Row()">+ Add Row</button>
             <!-- Button to add more rows -->
             <script>
-            function addQ13Row() {
-              const table = document.getElementById("q13-table");
+            function addQ14Row() {
+              const table = document.getElementById("q14-table");
               const rowIndex = table.rows.length;
 
               const row = table.insertRow(-1);
@@ -1171,7 +1197,7 @@
               // Text input
               row.insertCell(0).innerHTML = `
                 <input type="text"
-                      name="q13_other_text_${rowIndex}"
+                      name="q14_other_text_${rowIndex}"
                       placeholder="Other assessment method"
                       required>
               `;
@@ -1180,22 +1206,22 @@
               for (let i = 1; i <= 5; i++) {
                 row.insertCell(i).innerHTML = `
                   <input type="radio"
-                        name="q13_other_${rowIndex}"
+                        name="q14_other_${rowIndex}"
                         required>
                 `;
               }
             }
             </script>
 
-            <!-- Q14 -->
-            <h3>14.Which aspects of the patient’s behaviour are important when assessing performance?<br>
+            <!-- Q15 -->
+            <h3>15.Which aspects of the patient’s behaviour are important when assessing performance?<br>
             (Please select all that apply)<br></h3>
 
-            <table id="q14-table" >
+            <table id="q15-table" >
             <tr>
                 <td>
                 <label>
-                    <input type="checkbox" name="q14[]" value="Movement quality">
+                    <input type="checkbox" name="q15[]" value="Movement quality">
                     Movement quality (smoothness, coordination, compensations)
                 </label>
                 </td>
@@ -1204,7 +1230,7 @@
             <tr>
                 <td>
                 <label>
-                    <input type="checkbox" name="q14[]" value="Fatigue signs">
+                    <input type="checkbox" name="q15[]" value="Fatigue signs">
                     Fatigue signs (slowing down, posture slump)
                 </label>
                 </td>
@@ -1213,7 +1239,7 @@
             <tr>
                 <td>
                 <label>
-                    <input type="checkbox" name="q14[]" value="Attention engagement">
+                    <input type="checkbox" name="q15[]" value="Attention engagement">
                     Attention and engagement
                 </label>
                 </td>
@@ -1222,7 +1248,7 @@
             <tr>
                 <td>
                 <label>
-                    <input type="checkbox" name="q14[]" value="Emotional responses">
+                    <input type="checkbox" name="q15[]" value="Emotional responses">
                     Emotional responses (e.g., frustration, motivation)
                 </label>
                 </td>
@@ -1231,7 +1257,7 @@
             <tr>
                 <td>
                 <label>
-                    <input type="checkbox" name="q14[]" value="Assistive strategies">
+                    <input type="checkbox" name="q15[]" value="Assistive strategies">
                     Use of assistive strategies (e.g., one-handed shortcuts, reliance on support)
                 </label>
                 </td>
@@ -1239,23 +1265,23 @@
             <tr>
                 <td>
                 <label>
-                    <input type="checkbox" name="q14[]" value="Safety tools">
+                    <input type="checkbox" name="q15[]" value="Safety tools">
                     Safety in handling therapy tools
                 </label>
                 </td>
             </tr>
             </table>
-            <button type="button" onclick="addQ14Row()">+ Add Row</button>
+            <button type="button" onclick="addQ15Row()">+ Add Row</button>
             <script>
-            function addQ14Row() {
-                const table = document.getElementById("q14-table");
+            function addQ15Row() {
+                const table = document.getElementById("q15-table");
                 const rowIndex = table.rows.length;
                 const row = table.insertRow(-1);
                 row.insertCell(0).innerHTML = `
                     <label>
-                        <input type="checkbox" name="q14[]" value="other_${rowIndex}">
+                        <input type="checkbox" name="q15[]" value="other_${rowIndex}">
                         <input type="text"
-                                name="q14_other_${rowIndex}"
+                                name="q15_other_${rowIndex}"
                                 placeholder="Other behaviour aspect"
                                 style="width:90%; margin-left:8px;">
                     </label>
@@ -1276,60 +1302,60 @@
             <h2>SECTION F: Service Model Across Settings</h2>
             <p><i>Note:This section explores how upper-limb tabletop training is continued in home or community settings without direct therapist supervision.</i></p>
 
-            <!-- Q15 -->
-            <h3>15. How do you currently implement tabletop functional task-oriented training for the upper limb stroke rehabilitation in your absence (e.g., at home)?<br>(Please select all that apply)<br></h3>
-            <table id="q15-table">
+            <!-- Q16 -->
+            <h3>16.How do you currently implement tabletop functional task-oriented training for the upper limb stroke rehabilitation in your absence (e.g., at home)?<br>(Please select all that apply)<br></h3>
+            <table id="q16-table">
             <tr><td>
-            <label><input type="checkbox" name="q15[]" value="Handouts">
+            <label><input type="checkbox" name="q16[]" value="Handouts">
             Home program handouts (Paper with/without illustrations)
             </label>
             </td></tr>
 
             <tr><td>
-            <label><input type="checkbox" name="q15[]" value="Caregiver delivery">
+            <label><input type="checkbox" name="q16[]" value="Caregiver delivery">
             Caregiver-assisted delivery
             </label>
             </td></tr>
 
             <tr><td>
-            <label><input type="checkbox" name="q15[]" value="Video checkins">
+            <label><input type="checkbox" name="q16[]" value="Video checkins">
             Phone/video-based check-ins
             </label>
             </td></tr>
 
             <tr><td>
-            <label><input type="checkbox" name="q15[]" value="Clinic reviews">
+            <label><input type="checkbox" name="q16[]" value="Clinic reviews">
             Periodic in-clinic reviews
             </label>
             </td></tr>
 
             <tr><td>
-            <label><input type="checkbox" name="q15[]" value="Digital monitoring">
+            <label><input type="checkbox" name="q16[]" value="Digital monitoring">
             Use of digital monitoring or reminders
             </label>
             </td></tr>
 
             <tr><td>
-            <label><input type="checkbox" name="q15[]" value="Demo videos">
+            <label><input type="checkbox" name="q16[]" value="Demo videos">
             Therapist-recorded demonstration videos
             </label>
             </td></tr>
             </table>
 
-            <button type="button" onclick="addQ15Row()">+ Add Row</button>
+            <button type="button" onclick="addQ16Row()">+ Add Row</button>
 
             <!-- Button to add more rows -->
             <script>
-                function addQ15Row() {
-                const table = document.getElementById("q15-table");
+                function addQ16Row() {
+                const table = document.getElementById("q16-table");
                 const rowIndex = table.rows.length;
                 const row = table.insertRow(-1);
 
                 row.insertCell(0).innerHTML = `
                     <label>
-                    <input type="checkbox" name="q15[]" value="other_${rowIndex}">
+                    <input type="checkbox" name="q16[]" value="other_${rowIndex}">
                     <input type="text"
-                            name="q15_other_text_${rowIndex}"
+                            name="q16_other_text_${rowIndex}"
                             placeholder="Other implementation method"
                             style="width:90%; margin-left:8px;">
                     </label>
@@ -1338,9 +1364,9 @@
             }
             </script>            
 
-            <!-- Q16 -->
-            <h3>16.To what extent do you face the following challenges in implementing the desired therapy program in your absence?</h3>
-            <table border="1" cellpadding="6" cellspacing="0" id="q16-table" class="alpha-table">
+            <!-- Q17 -->
+            <h3>17.To what extent do you face the following challenges in implementing the desired therapy program in your absence?</h3>
+            <table border="1" cellpadding="6" cellspacing="0" id="q17-table" class="alpha-table">
                 <tr>
                 <th>Challenges</th>
                 <th>Not a challenge</th>
@@ -1350,67 +1376,67 @@
                 </tr>
                 <tr>
                 <td>Caregiver availability or involvement</td>
-                <td><input type="radio" name="q16_1"value="Not a challenge"></td>
-                <td><input type="radio" name="q16_1"value="Minor challenge"></td>
-                <td><input type="radio" name="q16_1"value="Moderate challenge"></td>
-                <td><input type="radio" name="q16_1"value="Major challenge"></td>
+                <td><input type="radio" name="q17_1"value="Not a challenge"></td>
+                <td><input type="radio" name="q17_1"value="Minor challenge"></td>
+                <td><input type="radio" name="q17_1"value="Moderate challenge"></td>
+                <td><input type="radio" name="q17_1"value="Major challenge"></td>
                 </tr>
                 <tr>
                 <td>Lack of patient motivation</td>
-                <td><input type="radio" name="q16_2"value="Not a challenge"></td>
-                <td><input type="radio" name="q16_2"value="Minor challenge"></td>
-                <td><input type="radio" name="q16_2"value="Moderate challenge"></td>
-                <td><input type="radio" name="q16_2"value="Major challenge"></td>
+                <td><input type="radio" name="q17_2"value="Not a challenge"></td>
+                <td><input type="radio" name="q17_2"value="Minor challenge"></td>
+                <td><input type="radio" name="q17_2"value="Moderate challenge"></td>
+                <td><input type="radio" name="q17_2"value="Major challenge"></td>
                 </tr>
                 <tr>
                 <td>Inability to monitor patient progress</td>
-                <td><input type="radio" name="q16_3"value="Not a challenge"></td>
-                <td><input type="radio" name="q16_3"value="Minor challenge"></td>
-                <td><input type="radio" name="q16_3"value="Moderate challenge"></td>
-                <td><input type="radio" name="q16_3"value="Major challenge"></td>
+                <td><input type="radio" name="q17_3"value="Not a challenge"></td>
+                <td><input type="radio" name="q17_3"value="Minor challenge"></td>
+                <td><input type="radio" name="q17_3"value="Moderate challenge"></td>
+                <td><input type="radio" name="q17_3"value="Major challenge"></td>
                 </tr>
                 <tr>
                 <td>Need for someone to guide or sequence tasks properly</td>
-                <td><input type="radio" name="q16_4"value="Not a challenge"></td>
-                <td><input type="radio" name="q16_4"value="Minor challenge"></td>
-                <td><input type="radio" name="q16_4"value="Moderate challenge"></td>
-                <td><input type="radio" name="q16_4"value="Major challenge"></td>
+                <td><input type="radio" name="q17_4"value="Not a challenge"></td>
+                <td><input type="radio" name="q17_4"value="Minor challenge"></td>
+                <td><input type="radio" name="q17_4"value="Moderate challenge"></td>
+                <td><input type="radio" name="q17_4"value="Major challenge"></td>
                 </tr>
                 <tr>
                 <td>Lack of tailored instructions for the home</td>
-                <td><input type="radio" name="q16_5"value="Not a challenge"></td>
-                <td><input type="radio" name="q16_5"value="Minor challenge"></td>
-                <td><input type="radio" name="q16_5"value="Moderate challenge"></td>
-                <td><input type="radio" name="q16_5"value="Major challenge"></td>
+                <td><input type="radio" name="q17_5"value="Not a challenge"></td>
+                <td><input type="radio" name="q17_5"value="Minor challenge"></td>
+                <td><input type="radio" name="q17_5"value="Moderate challenge"></td>
+                <td><input type="radio" name="q17_5"value="Major challenge"></td>
                 </tr>
                 <tr>
                 <td>Limited access to appropriate materials/tools</td>
-                <td><input type="radio" name="q16_6"value="Not a challenge"></td>
-                <td><input type="radio" name="q16_6"value="Minor challenge"></td>
-                <td><input type="radio" name="q16_6"value="Moderate challenge"></td>
-                <td><input type="radio" name="q16_6"value="Major challenge"></td>
+                <td><input type="radio" name="q17_6"value="Not a challenge"></td>
+                <td><input type="radio" name="q17_6"value="Minor challenge"></td>
+                <td><input type="radio" name="q17_6"value="Moderate challenge"></td>
+                <td><input type="radio" name="q17_6"value="Major challenge"></td>
                 </tr>
                 <tr>
                 <td>Safety concerns when unsupervised</td>
-                <td><input type="radio" name="q16_7"value="Not a challenge"></td>
-                <td><input type="radio" name="q16_7"value="Minor challenge"></td>
-                <td><input type="radio" name="q16_7"value="Moderate challenge"></td>
-                <td><input type="radio" name="q16_7"value="Major challenge"></td>
+                <td><input type="radio" name="q17_7"value="Not a challenge"></td>
+                <td><input type="radio" name="q17_7"value="Minor challenge"></td>
+                <td><input type="radio" name="q17_7"value="Moderate challenge"></td>
+                <td><input type="radio" name="q17_7"value="Major challenge"></td>
                 </tr>
                 <tr>
                 <td>Caregiver not confident in giving feedback or adapting tasks</td>
-                <td><input type="radio" name="q16_8"value="Not a challenge"></td>
-                <td><input type="radio" name="q16_8"value="Minor challenge"></td>
-                <td><input type="radio" name="q16_8"value="Moderate challenge"></td>
-                <td><input type="radio" name="q16_8"value="Major challenge"></td>
+                <td><input type="radio" name="q17_8"value="Not a challenge"></td>
+                <td><input type="radio" name="q17_8"value="Minor challenge"></td>
+                <td><input type="radio" name="q17_8"value="Moderate challenge"></td>
+                <td><input type="radio" name="q17_8"value="Major challenge"></td>
                 </tr>
             </table>
-            <button type="button" onclick="addQ16Row()">+ Add Row</button>
+            <button type="button" onclick="addQ17Row()">+ Add Row</button>
 
             <!-- Button to add more rows -->
             <script>
-            function addQ16Row() {
-              const table = document.getElementById("q16-table");
+            function addQ17Row() {
+              const table = document.getElementById("q17-table");
               const rowIndex = table.rows.length;
 
               const row = table.insertRow(-1);
@@ -1418,7 +1444,7 @@
               // Text input
               row.insertCell(0).innerHTML = `
                 <input type="text"
-                      name="q16_other_text_${rowIndex}"
+                      name="q17_other_text_${rowIndex}"
                       placeholder="Other challenges you face"
                       required>
               `;
@@ -1427,20 +1453,20 @@
               for (let i = 1; i <= 4; i++) {
                 row.insertCell(i).innerHTML = `
                   <input type="radio"
-                        name="q16_other_${rowIndex}"
+                        name="q17_other_${rowIndex}"
                         required>
                 `;
               }
             }
             </script>
 
-            <!-- Q17 -->            
+            <!-- Q18 -->            
             <h3>
-            17.If you were to train a person (e.g., caregiver, therapy assistant, etc.) 
+            18.If you were to train a person (e.g., caregiver, therapy assistant, etc.) 
             to administer upper-limb functional task training in your absence, what would you train the person on?<br>
             (Please select all that apply)<br>
             </h3>
-            <table border="1" cellpadding="6" cellspacing="0" id="q17-table">
+            <table border="1" cellpadding="6" cellspacing="0" id="q18-table">
             <tr>
             <th>Training Area</th>
             <th>Note (Optional)</th>
@@ -1448,111 +1474,111 @@
             <tr>
             <td>
                 <label>
-                <input type="checkbox" name="q17[]" value="Fatigue compensation">
+                <input type="checkbox" name="q18[]" value="Fatigue compensation">
                 Identifying signs of fatigue or compensation
                 </label>
             </td>
             <td>
-                <input type="text" name="q17_note_1" data-optional style="width: 95%; box-sizing:border-box;">
+                <input type="text" name="q18_note_1" data-optional style="width: 95%; box-sizing:border-box;">
             </td>
             </tr>
             <tr>
             <td>
                 <label>
-                    <input type="checkbox" name="q17[]" value="Object difficulty">
+                    <input type="checkbox" name="q18[]" value="Object difficulty">
                     Adjusting object difficulty or size                        
                 </label>            
             </td>
             <td>
-                <input type="text" name="q17_note_2" data-optional style="width: 95%; box-sizing:border-box;">
+                <input type="text" name="q18_note_2" data-optional style="width: 95%; box-sizing:border-box;">
             </td>
             </tr>
             <tr>
             <td>
                 <label>
-                    <input type="checkbox" name="q17[]" value="Target position">
+                    <input type="checkbox" name="q18[]" value="Target position">
                     Adjusting the target position
                 </label>           
             </td>
             <td>
-                <input type="text" name="q17_note_3" data-optional style="width: 95%; box-sizing:border-box;">
+                <input type="text" name="q18_note_3" data-optional style="width: 95%; box-sizing:border-box;">
             </td>
             </tr>
             <tr>
             <td>
                 <label>
-                    <input type="checkbox" name="q17[]" value="Physical verbal support">
+                    <input type="checkbox" name="q18[]" value="Physical verbal support">
                     Providing physical or verbal support
                 </label>
             </td>
             <td>
-                <input type="text" name="q17_note_4" data-optional style="width: 95%; box-sizing:border-box;">
+                <input type="text" name="q18_note_4" data-optional style="width: 95%; box-sizing:border-box;">
             </td>
             </tr>
             <tr>
             <td>
                 <label>
-                    <input type="checkbox" name="q17[]" value="Motivational feedback">
+                    <input type="checkbox" name="q18[]" value="Motivational feedback">
                     Giving motivational or instructional feedback
                 </label>         
             </td>
             <td>
-                <input type="text" name="q17_note_5" data-optional style="width: 95%; box-sizing:border-box;">
+                <input type="text" name="q18_note_5" data-optional style="width: 95%; box-sizing:border-box;">
             </td>
             </tr>
             <tr>
             <td>
                 <label>
-                    <input type="checkbox" name="q17[]" value="Tracking progress">
+                    <input type="checkbox" name="q18[]" value="Tracking progress">
                     Tracking patient progress
                 </label>        
             </td>
-            <td><input type="text" name="q17_note_6" data-optional style="width: 95%; box-sizing:border-box;"></td>
+            <td><input type="text" name="q18_note_6" data-optional style="width: 95%; box-sizing:border-box;"></td>
             </tr>
             <tr>
             <td>
                 <label>
-                    <input type="checkbox" name="q17[]" value="Safety setup">
+                    <input type="checkbox" name="q18[]" value="Safety setup">
                     Ensuring safety and proper setup
                 </label>            
             </td>
-            <td><input type="text" name="q17_note_7" data-optional style="width: 95%; box-sizing:border-box;"></td>
+            <td><input type="text" name="q18_note_7" data-optional style="width: 95%; box-sizing:border-box;"></td>
             </tr>
             <tr>
             <td>
                 <label>
-                    <input type="checkbox" name="q17[]" value="Task tailoring">
+                    <input type="checkbox" name="q18[]" value="Task tailoring">
                     Tailoring tasks based on ability or response
                 </label>            
             </td>
-            <td><input type="text" name="q17_note_8" data-optional style="width: 95%; box-sizing:border-box;"></td>
+            <td><input type="text" name="q18_note_8" data-optional style="width: 95%; box-sizing:border-box;"></td>
             </tr>
             <tr>
             <td>
                 <label>
-                    <input type="checkbox" name="q17[]" value="Reporting concerns">
+                    <input type="checkbox" name="q18[]" value="Reporting concerns">
                     Reporting concerns or observations to the therapist when relevant
                 </label>         
             </td>
-            <td><input type="text" name="q17_note_9" data-optional style="width:95%; box-sizing:border-box;"></td>
+            <td><input type="text" name="q18_note_9" data-optional style="width:95%; box-sizing:border-box;"></td>
             </tr>
             </table>
 
-            <button type="button" onclick="addQ17Row()">+ Add Row</button>
+            <button type="button" onclick="addQ18Row()">+ Add Row</button>
 
             <!-- Button to add more rows -->
             <script>
-            function addQ17Row() {
-            const table = document.getElementById("q17-table");
+            function addQ18Row() {
+            const table = document.getElementById("q18-table");
             const rowIndex = table.rows.length;
             const row = table.insertRow(-1);
 
             // Column 1: Checkbox + Text
             row.insertCell(0).innerHTML = `
                 <label>
-                <input type="checkbox" name="q17[]" value="other_${rowIndex}">
+                <input type="checkbox" name="q18[]" value="other_${rowIndex}">
                 <input type="text"
-                        name="q17_other_text_${rowIndex}"
+                        name="q18_other_text_${rowIndex}"
                         placeholder="Other training area"
                         style="width:85%; margin-left:8px;">
                 </label>
@@ -1562,7 +1588,7 @@
             // Column 2: Note
             row.insertCell(1).innerHTML = `
                 <input type="text"
-                    name="q17_note_${rowIndex}"
+                    name="q18_note_${rowIndex}"
                     placeholder="Optional note">
             `;
             }
@@ -1570,6 +1596,7 @@
             <button type="button" onclick="ValidateAndGo('sectionF','submit')">
                 Review & Submit
             </button>
+        
 
         
         </section>
@@ -1607,11 +1634,9 @@
                 <div id="followup_fields" style="display:none; text-align:left;">
                     <label>Email:</label><br>
                     <input type="email" name="followup_email" style="width:300px;">
-                </div>
-
-                <div style="margin-top:10px;">
-                        <label>Phone Number:</label><br>
-                        <input type="text" name="followup_phone" style="width:300px;">
+                    <!-- <label>Phone Number:</label><br> -->
+                    <label style="margin-top:10px;">Phone Number:</label><br>
+                    <input type="text" name="followup_phone" style="width:300px;">
                 </div>
         </div>
             <button type="submit" id="submitBtn" style="padding:10px 20px; font-size:16px; background:#004d66; color:white; border:none; border-radius:6px; cursor:pointer;">
@@ -1629,7 +1654,9 @@
 
             const formData = new FormData(form);
             const scriptURL="https://script.google.com/macros/s/AKfycbyALcZfCrxYBIMqW3dr3pUF5SXzx9yLhwWd2p9_VZMPo0F5o-2O17W1VHsFUK6Bocqx/exec";
-
+            const btn = document.getElementById("submitBtn");
+            btn.disabled = true;
+            btn.innerText = "Submitting...";
             fetch(scriptURL, { method: "POST", body: formData })
                 .then(response => {
                     const consent = document.getElementById("followup_yes").checked;
@@ -1640,7 +1667,11 @@
                     } else {
                         status.innerHTML =
                         "✅ Thank you! Your response has been submitted.";
+                       
+
                     }
+                    btn.disabled = false;
+                    btn.innerText = "Submit";
 
                 // DO NOT reset immediately — let user read message
                 setTimeout(() => {
@@ -1665,24 +1696,10 @@
     <script>
     function startSurvey() {
       const consent = document.getElementById("consentCheck");
-      const email = document.getElementById("respondent_email");
-
       if (!consent.checked) {
         alert("Please provide consent before starting the survey.");
         return;
       }
-
-    //   if (!email.value.trim()) {
-    //     alert("Please enter your email ID before starting the survey.");
-    //     email.focus();
-    //     return;
-    //   }
-
-    //   if (!email.checkValidity()) {
-    //     alert("Please enter a valid email address.");
-    //     email.focus();
-    //     return;
-    //   }
 
       unlockedIndex = 1; // unlock Section A
       goToSection("sectionA");
@@ -1845,38 +1862,6 @@
               }
             }
 
-            
-
-
-            // ---------- Q6 ROW VALIDATION ----------
-            if (currentSectionId === "sectionB") {
-              const q6Rows = document.querySelectorAll("#q6-table tr");
-
-              for (let i = 1; i < q6Rows.length; i++) { // skip header
-                const checkboxes = q6Rows[i].querySelectorAll('input[type="checkbox"]');
-                if (checkboxes.length && !Array.from(checkboxes).some(cb => cb.checked)) {
-                  alert("Please select at least one severity (or Not Used) for each task in Question 6.");
-                  return;
-                }
-              }
-            }
-
-            // Q7 ROW VALIDATION
-            if (currentSectionId === "sectionB") {
-            const q7Rows = document.querySelectorAll("#q7-table tr");
-
-            for (let i = 1; i < q7Rows.length; i++) {
-                const checkboxes = q7Rows[i].querySelectorAll('input[type="checkbox"]');
-                if (checkboxes.length && !Array.from(checkboxes).some(cb => cb.checked)) {
-                alert("Please select at least one role for each task in Question 7.");
-                return;
-                }
-            }
-}
-
-
-
-
             // 4️⃣ Unlock + navigate
             unlockedIndex = Math.max(
               unlockedIndex,
@@ -1887,6 +1872,20 @@
         }
     </script>
 
-    
+    <script>
+    document.addEventListener('input', function(e) {
+        if (e.target.type === 'text') {
+            const row = e.target.closest('tr') || e.target.closest('div');
+            if (!row) return;
+
+            const checkbox = row.querySelector('input[type="checkbox"]');
+            if (checkbox && e.target.value.trim() !== "") {
+            checkbox.checked = true;
+            }
+        }
+    });
+    </script>
+   
 </body>
 </html>
+
