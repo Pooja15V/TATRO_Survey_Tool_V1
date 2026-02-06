@@ -1703,33 +1703,30 @@
             const btn = document.getElementById("submitBtn");
             btn.disabled = true;
             btn.innerText = "Submitting...";
-            fetch(scriptURL, { method: "POST", body: formData })
-                .then(res => res.text())
-                .then(text => {
-                    if (text.includes("Success")) {
-                        const consent = document.getElementById("followup_yes").checked;
+            fetch(scriptURL, {
+                method: "POST",
+                body: formData,
+                mode: "no-cors"   // 👈 important for GitHub Pages
+            })
+            .then(() => {
+                const consent = document.getElementById("followup_yes").checked;
 
-                        if (consent) {
-                            status.innerHTML =
-                            "✅ Thank you! Your response has been submitted. We will get back to you soon.";
-                        } else {
-                            status.innerHTML =
-                            "✅ Thank you! Your response has been submitted.";
-                        }
-                    } else {
-                        status.innerHTML = "❌ Submission failed.";
-                    }
-
-                    btn.disabled = false;
-                    btn.innerText = "Submit";
-                })
+                if (consent) {
+                    status.innerHTML =
+                        "✅ Thank you! Your response has been submitted. We will get back to you soon.";
+                } else {
+                    status.innerHTML =
+                        "✅ Thank you! Your response has been submitted.";
+                }
+                btn.disabled = false;
+                btn.innerText = "Submit";
+            })
             .catch(error => {
                 status.innerHTML = "❌ Network error. Please try again.";
                 btn.disabled = false;
                 btn.innerText = "Submit";
                 console.error(error);
             });
-
         });
         </script>
 
