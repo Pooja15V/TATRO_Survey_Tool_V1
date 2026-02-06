@@ -243,7 +243,26 @@
     #progressText {
         font-size: 13px;
     }
+
+    #reviewContent p {
+        background:#f2f6f8;
+        padding:8px;
+        border-radius:6px;
     }
+
+    #reviewContent section {
+        border:1px solid #ddd;
+        margin-bottom:20px;
+        border-radius:8px;
+        background:#fafafa;
+    }
+
+    #reviewContent span {
+        font-weight:600;
+        color:#004d66;
+    }
+}
+
 </style>
   <script>
     function togglePGQualificationBox() {
@@ -511,25 +530,24 @@
             </tr>
             <script>
             function addq7Row() {
-              const table = document.getElementById("q7-table");
-              const rowIndex = table.rows.length;
+                const table = document.getElementById("q7-table");
+                const rowIndex = table.rows.length;
+                const row = table.insertRow(-1);
 
-              const row = table.insertRow(-1);
+                // Task name cell
+                row.insertCell(0).innerHTML =
+                    `<input type="text" name="q7_task_name_${rowIndex}" placeholder="Enter task name">
+                    <button type="button" onclick="deleteRow(this)">❌</button>`;
 
-              // Task name
-              row.insertCell(0).innerHTML =
-                `<input type="text"
-                        name="q7_task_name_${rowIndex}"
-                        placeholder="Enter task name"
-                        required>`;
+                const levels = ["Mild", "Moderate", "Severe", "Not Used"];
 
-              // Severity radios
-              ["Mild", "Moderate", "Severe", "Not Used"].forEach(level => {
-                row.insertCell(-1).innerHTML =
-                  `<input type="checkbox"
-                          name="q7_task_${rowIndex}[]"
-                          value="${level}" onchange="toggleq7Row(this.closest('tr'), this)">`;
-              });
+                levels.forEach(level => {
+                    row.insertCell(-1).innerHTML =
+                    `<input type="checkbox"
+                            name="q7_other_${rowIndex}[]"
+                            value="${level}"
+                            onchange="toggleq7Row(this.closest('tr'), this)">`;
+                });
             }
             </script>
             <script>
@@ -611,23 +629,22 @@
             </tr>
             <script>
             function addq8Row() {
-              const table = document.getElementById("q8-table");
-              const rowIndex = table.rows.length;
+                const table = document.getElementById("q8-table");
+                const rowIndex = table.rows.length;
+                const row = table.insertRow(-1);
 
-              const row = table.insertRow(-1);
+                row.insertCell(0).innerHTML =
+                    `<input type="text" name="q8_task_${rowIndex}" placeholder="Enter task name">
+                    <button type="button" onclick="deleteRow(this)">❌</button>`;
 
-              row.insertCell(0).innerHTML =
-                `<input type="text"
-                        name="q8_task_${rowIndex}"
-                        placeholder="Enter task name"
-                        required>`;
+                const roles = ["Instruction", "Demonstrate", "Assist", "Train"];
 
-              for (let i = 1; i <= 4; i++) {
-                row.insertCell(-1).innerHTML =
-                  `<input type="checkbox"
-                          name="q8_role_${rowIndex}_${i}">`;
-              }
+                roles.forEach(role => {
+                    row.insertCell(-1).innerHTML =
+                    `<input type="checkbox" name="q8_other_${rowIndex}[]" value="${role}">`;
+                });
             }
+
             </script>
             </table>
             <button type="button" onclick="addq8Row()">+ Add another role</button>
@@ -655,7 +672,7 @@
             </tr>
             <tr>
                 <td>ADL-based items<br>
-                    Cup,Spoon,Towel,Bottle,Comb<br>
+                    [Cup,Spoon,Towel,Bottle,Comb]<br>
                 </td>
                 <td><input type="checkbox" name="adl_mild" value="adl_mild"></td>
                 <td><input type="checkbox" name="adl_moderate" value="adl_moderate"></td>
@@ -663,7 +680,7 @@
             </tr>
             <tr>
                 <td>Therapy-specific tools<br>
-                    Cones,Pegs,Marbles,Therapy putty,Weights<br>
+                    [Cones,Pegs,Marbles,Therapy putty,Weights]<br>
                 </td>
                 <td><input type="checkbox" name="therapy_mild" value="therapy_mild"></td>
                 <td><input type="checkbox" name="therapy_moderate" value="therapy_moderate"></td>
@@ -671,7 +688,7 @@
             </tr>
             <tr>
                 <td>Fine motor/dexterity tools<br>
-                    Coins,Tweezers,Nuts & Bolts,Clips<br>
+                    [Coins,Tweezers,Nuts & Bolts,Clips]<br>
                 </td>
                 <td><input type="checkbox" name="fine_mild" value="fine_mild"></td>
                 <td><input type="checkbox" name="fine_moderate" value="fine_moderate"></td>
@@ -679,7 +696,7 @@
             </tr>
             <tr>
                 <td>Game-based tools<br>(Cognitive motor objects)<br>
-                    Sorting trays, Pattern blocks, and Puzzles<br>
+                    [Sorting trays, Pattern blocks, and Puzzles]<br>
                 </td>
                 <td><input type="checkbox" name="game_mild" value="game_mild"></td>
                 <td><input type="checkbox" name="game_moderate" value="game_moderate"></td>
@@ -688,22 +705,30 @@
 
             <script>
             function addq9Row() {
-              const table = document.getElementById("q9-table");
-              const rowIndex = table.rows.length;
-              const row = table.insertRow(-1);
-              // Category
-              row.insertCell(0).innerHTML =
-                `<input type="text"
+                const table = document.getElementById("q9-table");
+                const rowIndex = table.rows.length;
+                const row = table.insertRow(-1);
+
+                // Category cell
+                row.insertCell(0).innerHTML = `
+                    <input type="text"
                         name="q9_category_${rowIndex}"
-                        placeholder="Material / Tool category"
-                        required>`;
-              // Severity checkboxes
-              for (let i = 1; i <= 3; i++) {
-                row.insertCell(-1).innerHTML =
-                  `<input type="checkbox"
-                          name="q9_level_${rowIndex}_${i}">`;
-              }
-            }
+                        placeholder="Material / Tool category">
+                    <button type="button" onclick="deleteRow(this)">❌</button>
+                `;
+
+                // Mild
+                row.insertCell(1).innerHTML =
+                    `<input type="checkbox" name="q9_other_mild_${rowIndex}">`;
+
+                // Moderate
+                row.insertCell(2).innerHTML =
+                    `<input type="checkbox" name="q9_other_moderate_${rowIndex}">`;
+
+                // Severe
+                row.insertCell(3).innerHTML =
+                    `<input type="checkbox" name="q9_other_severe_${rowIndex}">`;
+                }
             </script>
             </table>
             <button type="button" onclick="addq9Row()">+ Add another material/tool</button>            
@@ -864,7 +889,7 @@
                             placeholder="Other strategy"
                             style="width:90%; margin-left:8px;">
                 </label>
-                <button type="button" onclick="deleteRow(this)"style="margin-left:8px;">❌</button>
+                <button type="button" onclick="deleteRow(this)">❌</button>
             `;
           }
           </script>
@@ -1025,7 +1050,8 @@
                 proxy.id = `q11_other_proxy_${rowIndex}`;
                 proxy.style.display = "none";
                 proxy.setAttribute("data-paired-text", `q11_other_adjustment_${rowIndex}`);
-                row.appendChild(proxy);
+                row.insertCell(7).innerHTML =
+                    `<button type="button" onclick="deleteRow(this)">❌</button>`;
               }
             </script>
 
@@ -1115,6 +1141,7 @@
             // First cell = input box
             let cell1 = row.insertCell(0);
             cell1.innerHTML = '<input type="text" placeholder="Other feedback type">';
+            cell1.innerHTML = '<input type="text"> <button onclick="deleteRow(this)">❌</button>';
 
             // Radio buttons (grouped per row)
             for (let i = 1; i <= 5; i++) {
@@ -1196,18 +1223,15 @@
 
               // Text input
               row.insertCell(0).innerHTML = `
-                <input type="text"
-                      name="q14_other_text_${rowIndex}"
-                      placeholder="Other assessment method"
-                      required>
-              `;
+                <input type="text" name="q14_other_text_${rowIndex}">
+                <button type="button" onclick="deleteRow(this)">❌</button>
+                `;
 
               // Likert radios
               for (let i = 1; i <= 5; i++) {
                 row.insertCell(i).innerHTML = `
                   <input type="radio"
-                        name="q14_other_${rowIndex}"
-                        required>
+                        name="q14_other_${rowIndex}">
                 `;
               }
             }
@@ -1285,7 +1309,7 @@
                                 placeholder="Other behaviour aspect"
                                 style="width:90%; margin-left:8px;">
                     </label>
-                    <button type="button" onclick="deleteRow(this)"style="margin-left:8px;">❌</button>
+                    <button type="button" onclick="deleteRow(this)">❌</button>
                 `;
             }
             </script>
@@ -1359,7 +1383,7 @@
                             placeholder="Other implementation method"
                             style="width:90%; margin-left:8px;">
                     </label>
-                    <button type="button" onclick="deleteRow(this)"style="margin-left:8px;">❌</button>
+                    <button type="button" onclick="deleteRow(this)">❌</button>
                 `;
             }
             </script>            
@@ -1436,28 +1460,37 @@
             <!-- Button to add more rows -->
             <script>
             function addQ17Row() {
-              const table = document.getElementById("q17-table");
-              const rowIndex = table.rows.length;
+                const table = document.getElementById("q17-table");
+                const rowIndex = table.rows.length;
 
-              const row = table.insertRow(-1);
+                const row = table.insertRow(-1);
 
-              // Text input
-              row.insertCell(0).innerHTML = `
-                <input type="text"
-                      name="q17_other_text_${rowIndex}"
-                      placeholder="Other challenges you face"
-                      required>
-              `;
-
-              // Likert radios
-              for (let i = 1; i <= 4; i++) {
-                row.insertCell(i).innerHTML = `
-                  <input type="radio"
-                        name="q17_other_${rowIndex}"
-                        required>
+                // Column 1 – Text + Delete button
+                row.insertCell(0).innerHTML = `
+                    <input type="text"
+                        name="q17_other_text_${rowIndex}"
+                        placeholder="Other challenges you face"
+                        style="width:80%;">
+                    <button type="button" onclick="deleteRow(this)">❌</button>
                 `;
-              }
+
+                // Likert radios
+                const levels = [
+                    "Not a challenge",
+                    "Minor challenge",
+                    "Moderate challenge",
+                    "Major challenge"
+                ];
+
+                levels.forEach(level => {
+                    row.insertCell(-1).innerHTML = `
+                    <input type="radio"
+                            name="q17_other_${rowIndex}"
+                            value="${level}">
+                    `;
+                });
             }
+
             </script>
 
             <!-- Q18 -->            
@@ -1582,7 +1615,7 @@
                         placeholder="Other training area"
                         style="width:85%; margin-left:8px;">
                 </label>
-                <button type="button" onclick="deleteRow(this)"style="margin-left:8px;">❌</button>
+                <button type="button" onclick="deleteRow(this)">❌</button>
             `;
 
             // Column 2: Note
@@ -1593,11 +1626,9 @@
             `;
             }
             </script>
-            <button type="button" onclick="ValidateAndGo('sectionF','submit')">
+            <button type="button" onclick="generateReview()">
                 Review & Submit
-            </button>
-        
-
+            </button>        
         
         </section>
         </div>
@@ -1614,6 +1645,16 @@
             }
         }
         </script>
+
+       
+
+        <section id="review">
+            <h2>Review Answers</h2>
+            <div id="reviewContent"></div>
+            <button onclick="goToSection('submit')">Confirm</button>
+        </section>
+
+
 
 
         <!-- Submit Section -->
@@ -1635,7 +1676,7 @@
                     <label>Email:</label><br>
                     <input type="email" name="followup_email" style="width:300px;">
                     <!-- <label>Phone Number:</label><br> -->
-                    <label style="margin-top:10px;">Phone Number:</label><br>
+                    <label>Phone Number:</label><br>
                     <input type="text" name="followup_phone" style="width:300px;">
                 </div>
         </div>
@@ -1673,14 +1714,6 @@
                     btn.disabled = false;
                     btn.innerText = "Submit";
 
-                // DO NOT reset immediately — let user read message
-                setTimeout(() => {
-                    form.reset();
-                    unlockedIndex = 0;
-                    goToSection("intro");
-                    updateProgress("intro");
-                    status.innerHTML = "";
-                }, 2500);
             })
             .catch(error => {
                 status.innerHTML = "❌ Submission failed. Please try again.";
@@ -1691,7 +1724,6 @@
         </script>
 
     </form>
-
 
     <script>
     function startSurvey() {
@@ -1738,6 +1770,7 @@
             "sectionD",
             "sectionE",
             "sectionF",
+            "review",
             "submit"
         ];
     
@@ -1806,83 +1839,155 @@
     </script>
 
     <script>
-        function ValidateAndGo(currentSectionId, nextSectionId) {
-            const section = document.getElementById(currentSectionId);
+    function ValidateAndGo(currentSectionId, nextSectionId) {
+        const section = document.getElementById(currentSectionId);
 
-          // 1️⃣ Paired "Other" validation
-            const pairedCheckboxes =
-              section.querySelectorAll('input[type="checkbox"][data-paired-text]');
+        // 1️⃣ Paired "Other" validation
+        const pairedCheckboxes =
+            section.querySelectorAll('input[type="checkbox"][data-paired-text]');
 
-            for (let cb of pairedCheckboxes) {
-              const text = document.getElementById(cb.dataset.pairedText);
+        for (let cb of pairedCheckboxes) {
+            const text = document.getElementById(cb.dataset.pairedText);
 
-              if (text && text.value.trim() && !cb.checked) {
+            if (text && text.value.trim() && !cb.checked) {
                 alert("You entered text for 'Other' but did not select the 'Other' option.");
                 text.focus();
                 return;
-              }
+            }
 
-              if (cb.checked && (!text || !text.value.trim())) {
+            if (cb.checked && (!text || !text.value.trim())) {
                 alert("Please specify details for the selected 'Other' option.");
                 if (text) text.focus();
                 return;
-              }
             }
+        }
 
-            // 2️⃣ Radio validation
-            const radioGroups = new Set();
-            section.querySelectorAll('input[type="radio"]').forEach(radio => {
-              // Ignore "other" radios unless explicitly required
-              if (
+        // 2️⃣ Radio validation (section only)
+        const radioGroups = new Set();
+        section.querySelectorAll('input[type="radio"]').forEach(radio => {
+            if (
                 radio.name.includes("other") ||
                 radio.closest('[data-optional]')
-              ) return;
+            ) return;
 
-              radioGroups.add(radio.name);
-            });
+            radioGroups.add(radio.name);
+        });
 
-            for (let groupName of radioGroups) {
-              if (!section.querySelector(`input[name="${groupName}"]:checked`)) {
+        for (let groupName of radioGroups) {
+            if (!section.querySelector(`input[name="${groupName}"]:checked`)) {
                 alert("Please answer all required questions in this section before continuing.");
                 return;
-              }
             }
+        }
 
-            // 3️⃣ Checkbox group validation ([] only)
-            const checkboxGroups = {};
-            section.querySelectorAll('input[type="checkbox"][name$="[]"]').forEach(cb => {
-              checkboxGroups[cb.name] = checkboxGroups[cb.name] || [];
-              checkboxGroups[cb.name].push(cb);
-            });
+        // 3️⃣ Checkbox group validation ([] only)
+        const checkboxGroups = {};
+        section.querySelectorAll('input[type="checkbox"][name$="[]"]').forEach(cb => {
+            checkboxGroups[cb.name] = checkboxGroups[cb.name] || [];
+            checkboxGroups[cb.name].push(cb);
+        });
 
-            for (let group in checkboxGroups) {
-              if (!checkboxGroups[group].some(cb => cb.checked)) {
+        for (let group in checkboxGroups) {
+            // q18 is optional
+            if (group !== "q18[]" && !checkboxGroups[group].some(cb => cb.checked)) {
                 alert("Please answer all questions in this section before continuing.");
                 return;
-              }
             }
-
-            // 4️⃣ Unlock + navigate
-            unlockedIndex = Math.max(
-              unlockedIndex,
-              orderedSections.indexOf(nextSectionId)
-            );
-
-            goToSection(nextSectionId);
         }
+
+        // 4️⃣ EXTRA: Q17 validation ONLY for Section F
+        if (currentSectionId === "sectionF") {
+            const q17Groups = [
+                "q17_1","q17_2","q17_3","q17_4",
+                "q17_5","q17_6","q17_7","q17_8"
+            ];
+
+            for (let group of q17Groups) {
+                const radios = document.querySelectorAll(`input[name="${group}"]`);
+                if (radios.length > 0 &&
+                    !document.querySelector(`input[name="${group}"]:checked`)) {
+                    alert("Please answer all Q17 rows before continuing.");
+                    return;
+                }
+            }
+        }
+
+        // 5️⃣ Unlock + navigate
+        unlockedIndex = Math.max(
+            unlockedIndex,
+            orderedSections.indexOf(nextSectionId)
+        );
+
+        goToSection(nextSectionId);
+    }
     </script>
 
-    <script>
-    document.addEventListener('input', function(e) {
-        if (e.target.type === 'text') {
-            const row = e.target.closest('tr') || e.target.closest('div');
-            if (!row) return;
 
-            const checkbox = row.querySelector('input[type="checkbox"]');
-            if (checkbox && e.target.value.trim() !== "") {
-            checkbox.checked = true;
-            }
-        }
+    <script>
+    function generateReview() {
+        const reviewDiv = document.getElementById("reviewContent");
+        reviewDiv.innerHTML = "";
+
+        const sectionsToReview = [
+            "sectionA",
+            "sectionB",
+            "sectionC",
+            "sectionD",
+            "sectionE",
+            "sectionF"
+        ];
+
+        sectionsToReview.forEach(secId => {
+            const original = document.getElementById(secId);
+            const clone = original.cloneNode(true);
+            clone.querySelectorAll("script").forEach(s => s.remove());
+
+
+            // Remove buttons
+            clone.querySelectorAll("button").forEach(b => b.remove());
+
+            // Replace inputs with selected values
+            clone.querySelectorAll("input, textarea, select").forEach(el => {
+                let value = "";
+
+                if (el.type === "checkbox") {
+                    if (el.checked) value = "✔ " + (el.value || "Selected");
+                }
+                else if (el.type === "radio") {
+                    if (el.checked) value = el.value;
+                }
+                else {
+                    value = el.value;
+                }
+
+                if (value) {
+                    const span = document.createElement("span");
+                    span.innerText = value;
+                    el.parentNode.replaceChild(span, el);
+                } else {
+                    // remove entire label if empty
+                    const label = el.closest("label");
+                    if (label) label.remove();
+                    else el.remove();
+                }
+            });
+
+            reviewDiv.appendChild(clone);
+        });
+
+        unlockedIndex = orderedSections.indexOf("review");
+
+        goToSection("review");
+    }
+    </script>
+
+
+    <script>
+    document.querySelectorAll('#q18-table input[type="text"]').forEach(input => {
+        input.addEventListener('input', function() {
+            const checkbox = this.closest('tr').querySelector('input[type="checkbox"]');
+            if (this.value.trim()) checkbox.checked = true;
+        });
     });
     </script>
    
