@@ -1704,24 +1704,29 @@
             btn.disabled = true;
             btn.innerText = "Submitting...";
             fetch(scriptURL, { method: "POST", body: formData })
-                .then(response => {
-                    const consent = document.getElementById("followup_yes").checked;
+                .then(res => res.text())
+                .then(text => {
+                    if (text.includes("Success")) {
+                        const consent = document.getElementById("followup_yes").checked;
 
-                    if (consent) {
-                        status.innerHTML =
-                        "✅ Thank you! Your response has been submitted. We will get back to you soon.";
+                        if (consent) {
+                            status.innerHTML =
+                            "✅ Thank you! Your response has been submitted. We will get back to you soon.";
+                        } else {
+                            status.innerHTML =
+                            "✅ Thank you! Your response has been submitted.";
+                        }
                     } else {
-                        status.innerHTML =
-                        "✅ Thank you! Your response has been submitted.";
-                       
-
+                        status.innerHTML = "❌ Submission failed.";
                     }
+
                     btn.disabled = false;
                     btn.innerText = "Submit";
-
-            })
+                })
             .catch(error => {
-                status.innerHTML = "❌ Submission failed. Please try again.";
+                status.innerHTML = "❌ Network error. Please try again.";
+                btn.disabled = false;
+                btn.innerText = "Submit";
                 console.error(error);
             });
 
