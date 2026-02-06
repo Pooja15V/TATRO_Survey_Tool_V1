@@ -1651,7 +1651,12 @@
         <section id="review">
             <h2>Review Answers</h2>
             <div id="reviewContent"></div>
-            <button onclick="goToSection('submit')">Confirm</button>
+            <button type="button" onclick="
+            unlockedIndex = orderedSections.length - 1;
+            goToSection('submit');
+            ">
+            Confirm
+            </button>
         </section>
 
 
@@ -1940,13 +1945,14 @@
         sectionsToReview.forEach(secId => {
             const original = document.getElementById(secId);
             const clone = original.cloneNode(true);
+
+            // ADD THESE 2 LINES HERE
+            clone.style.display = "block";
+            clone.classList.add("active");
+
             clone.querySelectorAll("script").forEach(s => s.remove());
 
-
-            // Remove buttons
-            clone.querySelectorAll("button").forEach(b => b.remove());
-
-            // Replace inputs with selected values
+            // Replace inputs with values
             clone.querySelectorAll("input, textarea, select").forEach(el => {
                 let value = "";
 
@@ -1965,7 +1971,6 @@
                     span.innerText = value;
                     el.parentNode.replaceChild(span, el);
                 } else {
-                    // remove entire label if empty
                     const label = el.closest("label");
                     if (label) label.remove();
                     else el.remove();
@@ -1975,22 +1980,21 @@
             reviewDiv.appendChild(clone);
         });
 
-        unlockedIndex = orderedSections.indexOf("review");
-
         goToSection("review");
     }
     </script>
-
 
     <script>
     document.querySelectorAll('#q18-table input[type="text"]').forEach(input => {
         input.addEventListener('input', function() {
             const checkbox = this.closest('tr').querySelector('input[type="checkbox"]');
-            if (this.value.trim()) checkbox.checked = true;
+            if (this.value.trim()) {
+            checkbox.checked = true;
+            }
         });
     });
     </script>
-   
+
 </body>
 </html>
 
