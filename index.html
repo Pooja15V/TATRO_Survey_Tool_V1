@@ -209,6 +209,10 @@
     border-top: 1px solid #ccc;
     text-align: center;
     }
+    .qpage:first-child + .qnav {
+    display: none;
+    }
+
 
     /* ---------- MOBILE ADJUSTMENTS ---------- */
     @media (max-width: 600px) {
@@ -322,10 +326,18 @@
 
 
         <section id="sectionA">
-            <h2>Section A: Therapist Profile & Clinical Context</h2>
+            <!-- <h2>Section A: Therapist Profile & Clinical Context</h2> -->
+
+            
+            <div class="qpage active">
+                <h2>Section A: Therapist Profile & Clinical Context</h2>
+                <p>
+                    Tell us about your professional background and clinical experience.
+                </p>
+            </div>
 
             <!-- Q1 -->
-            <div class="qpage active">
+            <div class="qpage">
                 <div class="question">
                     <label><strong>1.Please indicate your professional background.</strong></label>
                     <div class="options">
@@ -464,9 +476,15 @@
 
         <!-- Section B -->
         <section id="sectionB">
-            <h2>SECTION B:Clinical Use of Tabletop-Tasks</h2>
-            <!-- Q7 -->
             <div class="qpage active">
+                <h2>SECTION B: Clinical Use of Tabletop-Tasks</h2>
+                <p>
+                    Tell us about how you use tabletop functional tasks in therapy.
+                </p>
+            </div>
+            
+            <!-- Q7 -->
+            <div class="qpage">
                 <div class="question">
 
                     <h3>7.For which upper-limb impairment level (based on Fugl Meyer Assessment for Upper Extremity (FMA-UE))do you usually prescribe the following types of tasks?<br>(Please select all that apply)<br></h3>
@@ -641,9 +659,15 @@
         
         <!-- SECTION C -->
         <section id="sectionC">
-            <h2>SECTION C: Activity Materials & Tools</h2>
-            <!-- Q9 -->
+            
             <div class="qpage active">
+                <h2>SECTION C: Activity Materials & Tools</h2>
+                <p>
+                   Tell us about the materials and tools you use for training.
+                </p>
+            </div>
+            <!-- Q9 -->
+            <div class="qpage">
                 <div class="question">
                     <h3>9.What types of activity-based training materials do you commonly employ for upper- limb tabletop task training, and for what levels of impairments are they best suited for?<br>
                         (Please select all that apply)<br>       
@@ -688,7 +712,9 @@
                         <td><input type="checkbox" name="game_moderate" value="game_moderate"></td>
                         <td><input type="checkbox" name="game_severe" value="game_severe"></td>
                     </tr> 
+                    </table>
                 </div>
+                <button type="button" onclick="addq9Row()">+ Add another material/tool</button>            
             </div>
 
             <script>
@@ -718,8 +744,7 @@
                     `<input type="checkbox" name="q9_other_severe_${rowIndex}">`;
                 }
             </script>
-            </table>
-            <button type="button" onclick="addq9Row()">+ Add another material/tool</button>            
+            
             <!-- <button type="button" onclick="ValidateAndGo('sectionC','sectionD')">
                 Next
             </button> -->
@@ -731,9 +756,15 @@
 
         <!-- Section D -->
         <section id="sectionD">
-            <h2>SECTION D: Intervention Plan & Implementation</h2>
+            <div class="qpage active">
+                <h2>SECTION D: Intervention Plan & Implementation</h2>
+                <p>
+                   Tell us about how you plan and adapt your interventions.
+                </p>
+            </div>
+            
             <!-- Q10 -->
-            <div class = "qpage active">
+            <div class = "qpage">
                 <div class="question">
                     <h3>10.How do you adjust (grading) during upper-limb function therapy?<br>
                     (Please select all that apply)<br>
@@ -1114,8 +1145,7 @@
                         <td><input type="radio" name="q13_g"value="Sometimes"></td>
                         <td><input type="radio" name="q13_g"value="Often"></td>
                         <td><input type="radio" name="q13_g"value="Always"></td>
-                        </tr>
-                    
+                        </tr>                    
                     </table>
                 </div>
                 <button type="button" onclick="addQ13Row()">+ Add Row</button>
@@ -1146,9 +1176,15 @@
 
         <!-- Section E -->
         <section id="sectionE">
-            <h2>SECTION E: Intervention Review</h2>
-            <!-- Q14 -->
             <div class="qpage active">
+                <h2>SECTION E: Intervention Review</h2>
+                <p>
+                   Tell us about how you review and assess patient progress.
+                </p>
+            </div>
+            
+            <!-- Q14 -->
+            <div class="qpage">
                 <div class="question">
                     <h3>14.How do you assess progress in therapy?</h3>
                     <table border="1" cellpadding="6" cellspacing="0" id="q14-table" class="alpha-table">
@@ -1313,10 +1349,15 @@
         
         <!-- Section F -->
         <section id="sectionF">
-            <h2>SECTION F: Service Model Across Settings</h2>
-            <p><i>Note:This section explores how upper-limb tabletop training is continued in home or community settings without direct therapist supervision.</i></p>
-            <!-- Q16 -->
+            
             <div class="qpage active">
+                <h2>SECTION F: Service Model Across Settings</h2>
+                <p>
+                   Tell us about how therapy continues without your direct supervision.
+                </p>
+            </div>
+            <!-- Q16 -->
+            <div class="qpage">
                 <div class="question">
                     <h3>16.How do you currently implement tabletop functional task-oriented training for the upper limb stroke rehabilitation in your absence (e.g., at home)?<br>(Please select all that apply)<br></h3>
                     <table id="q16-table">
@@ -1793,6 +1834,7 @@
             if (target) {
                 status.innerHTML = "";   // reset message
                 target.classList.add("active");
+                showQ(0);  
                 updateProgress(sectionId);
                 window.scrollTo(0, 0);
             }
@@ -1808,6 +1850,10 @@
 
     <script>
         function updateProgress(sectionId) {
+            if (sectionId === "review" || sectionId === "submit") {
+            document.getElementById("progressText").innerText = "Complete";
+            document.getElementById("progressBar").style.width = "100%";
+            return;}
             // Intro & submit do not count as content sections
             const contentSections = [
             "sectionA",
@@ -1865,9 +1911,15 @@
         // 2️⃣ Radio validation (section only)
         const radioGroups = new Set();
         section.querySelectorAll('input[type="radio"]').forEach(radio => {
+            // skip dynamic "other" radios
+            if (!radio.name) return;
+
+            // SKIP all dynamic "other" radios
             if (
-                radio.name.includes("other") ||
-                radio.closest('[data-optional]')
+                radio.name.startsWith("q13_other") ||
+                radio.name.startsWith("q11_other") ||
+                radio.name.startsWith("q14_other") ||
+                radio.name.startsWith("q17_other")
             ) return;
 
             radioGroups.add(radio.name);
@@ -2000,13 +2052,49 @@
         return document.querySelectorAll("section.active .qpage");
         }
 
-        function showQ(i) {
-        const pages = getQPages();
-        if (!pages.length) return;
+        let slideTimer = null;
 
-        pages.forEach(p => p.classList.remove("active"));
-        pages[i].classList.add("active");
+        function showQ(i) {
+            const pages = getQPages();
+            if (!pages.length) return;
+
+            const nav = document.querySelector("section.active .qnav");
+            const backBtn = document.querySelector("section.active .qnav button:first-child");
+
+            // clear old timer
+            if (slideTimer) {
+                clearTimeout(slideTimer);
+                slideTimer = null;
+            }
+
+            pages.forEach(p => p.classList.remove("active"));
+            pages[i].classList.add("active");
+
+            // INTRO SLIDE
+            if (i === 0) {
+                if (nav) nav.style.display = "none";
+
+                slideTimer = setTimeout(() => {
+                    qIndex = 1;
+                    showQ(qIndex);
+                }, 5000); // 20 seconds
+            }
+            else {
+                if (nav) nav.style.display = "block";
+                if (backBtn) backBtn.disabled = (i === 1);
+            }
         }
+
+
+        // function showQ(i) {
+        // const pages = getQPages();
+        // if (!pages.length) return;
+
+        // const backBtn = document.querySelector("section.active .qnav button:first-child");
+        // if (backBtn) backBtn.disabled = (i === 0);
+        // pages.forEach(p => p.classList.remove("active"));
+        // pages[i].classList.add("active");
+        // }
 
         function nextQ() {
         const pages = getQPages();
