@@ -193,7 +193,7 @@
     .qpage {
     display: none;
     opacity: 0;
-    transition: 0.3s;
+    transition: 0.1s;
     }
 
     .qpage.active {
@@ -231,21 +231,412 @@
     #progressText {
         font-size: 13px;
     }
-    #reviewContent p {
-        background:#f2f6f8;
-        padding:8px;
-        border-radius:6px;
-    }
-    #reviewContent section {
-        border:1px solid #ddd;
-        margin-bottom:20px;
-        border-radius:8px;
-        background:#fafafa;
-    }
-    #reviewContent span {
-            font-weight:600;
-            color:#004d66;
-        }
+    
+/* Review Page Style --- its test version need to implement it further */ 
+.review-section {
+    background: white;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border: 1px solid #e8e8e8;
+}
+
+.review-section h2 {
+    color: #004d66;
+    border-bottom: 2px solid #004d66;
+    padding-bottom: 15px;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.review-question {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 6px;
+    border-left: 4px solid #004d66;
+}
+
+.review-question h3 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.review-answer {
+    margin-left: 20px;
+}
+
+.answer-item {
+    margin: 8px 0;
+    padding: 10px;
+    background: white;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+}
+
+.empty-review {
+    text-align: center;
+    padding: 50px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.empty-review h3 {
+    color: #004d66;
+    margin-bottom: 15px;
+}
+
+.btn-primary {
+    background: #004d66;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.btn-primary:hover {
+    background: #00334d;
+}
+
+nav a {
+    text-decoration: none;
+    color: #004d66;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    background: rgba(0, 77, 102, 0.1);
+}
+
+nav a:not(.accessible) {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+nav a.accessible {
+    opacity: 1;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+/* Progress indicator for nav */
+nav a.completed::after {
+    content: " ✓";
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+nav a.current {
+    background: rgba(0, 77, 102, 0.2);
+    font-weight: bold;
+}
+
+/* //test */
+.review-section {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    border: 1px solid #e0e0e0;
+}
+
+.review-section h2 {
+    color: #004d66;
+    border-bottom: 3px solid #004d66;
+    padding-bottom: 15px;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 22px;
+}
+
+.review-question {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border-left: 5px solid #004d66;
+    transition: all 0.3s ease;
+}
+
+.review-question:hover {
+    background: #f0f7fb;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.review-question h3 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.review-answers {
+    margin-left: 10px;
+}
+
+/* Option Groups */
+.option-group {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #e8e8e8;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.option-item:hover {
+    background: #f5f9ff;
+}
+
+.option-selected {
+    background: #e8f5e9;
+    border-left: 4px solid #4CAF50;
+}
+
+.option-not-selected {
+    background: #fafafa;
+    border-left: 4px solid #e0e0e0;
+}
+
+.option-marker {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    margin-right: 12px;
+    font-weight: bold;
+    border-radius: 50%;
+}
+
+.option-selected .option-marker {
+    color: #4CAF50;
+    background: white;
+}
+
+.option-not-selected .option-marker {
+    color: #999;
+    background: #f0f0f0;
+}
+
+.option-text {
+    font-size: 15px;
+    color: #333;
+}
+
+.option-selected .option-text {
+    color: #2e7d32;
+    font-weight: 500;
+}
+
+.text-answer {
+    margin: 15px 0;
+    padding: 15px;
+    background: #f0f8ff;
+    border-radius: 6px;
+    border-left: 4px solid #2196F3;
+}
+
+.text-answer strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #1976D2;
+}
+
+.text-value {
+    padding: 10px;
+    background: white;
+    border-radius: 4px;
+    border: 1px solid #bbdefb;
+    font-size: 15px;
+    color: #333;
+}
+.review-table-container {
+    margin: 20px 0;
+    overflow-x: auto;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+}
+
+.review-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 600px;
+}
+
+.review-table thead {
+    background: #e6f2f5;
+}
+
+.review-table th {
+    padding: 14px;
+    border: 1px solid #ccc;
+    font-weight: bold;
+    text-align: left;
+    color: #004d66;
+    font-size: 15px;
+}
+
+.review-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    vertical-align: top;
+}
+
+.review-table .task-name {
+    background: #f9f9f9;
+    font-weight: 600;
+    color: #333;
+}
+
+.table-options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.table-option, .table-option-selected {
+    display: flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+
+.table-option-selected {
+    background: #e8f5e9;
+    border-left: 3px solid #4CAF50;
+}
+
+.table-option {
+    background: #f9f9f9;
+    border-left: 3px solid #e0e0e0;
+}
+
+.table-marker {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    margin-right: 8px;
+    font-weight: bold;
+}
+
+.table-option-selected .table-marker {
+    color: #4CAF50;
+}
+
+.table-option .table-marker {
+    color: #999;
+}
+
+.table-label {
+    font-size: 14px;
+    color: #333;
+}
+
+.table-option-selected .table-label {
+    color: #2e7d32;
+    font-weight: 500;
+}
+
+/* Text in tables */
+.table-text-answer {
+    padding: 8px;
+    background: #f0f8ff;
+    border-radius: 4px;
+    border: 1px solid #bbdefb;
+    color: #1976D2;
+    font-size: 14px;
+}
+
+.empty-cell {
+    color: #999;
+    font-style: italic;
+}
+
+/* Empty State */
+.empty-review {
+    text-align: center;
+    padding: 60px 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    margin: 30px 0;
+}
+
+.empty-review h3 {
+    color: #004d66;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.empty-review p {
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 16px;
+}
+
+.btn-primary {
+    background: #004d66;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #00334d;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 77, 102, 0.2);
+}
+
+.question-valid {
+    border-left: 4px solid #4CAF50;
+    padding-left: 10px;
+    background-color: #f8fff8;
+    margin-bottom: 20px;
+}
+
+.question-invalid {
+    border-left: 4px solid #f44336;
+    padding-left: 10px;
+    background-color: #fff8f8;
+    margin-bottom: 20px;
+}
+
+.validation-msg {
+    font-size: 12px;
+    margin-top: 5px;
+    font-weight: bold;
+}
 
 }
 
@@ -412,8 +803,8 @@
                 const div = document.createElement("div");
                 div.innerHTML = `
                     <label>
-                        <input type="checkbox" name="clinical_setting[]" value="other_${index}">
-                        <input type="text" name="q5_other_text" placeholder="Other setting">
+                        <input type="checkbox" name="clinical_setting[]" value="other_${index}" checked>
+                        <input type="text" name="q5_other_text_${index}" placeholder="Other setting" oninput="this.previousElementSibling.checked = true">
                     </label>
                     <button type="button" onclick="this.parentElement.remove()">❌</button>
                 `;
@@ -896,11 +1287,12 @@
               // Strategy text
               row.insertCell(0).innerHTML = `
                 <label>
-                    <input type="checkbox" name="q10[]" value="other_${rowIndex}">
+                    <input type="checkbox" name="q10[]" value="other_${rowIndex}" checked>
                     <input type="text"
                             name="q10_other_text_${rowIndex}"
                             placeholder="Other strategy"
-                            style="width:90%; margin-left:8px;">
+                            style="width:90%; margin-left:8px;"
+                            oninput="this.previousElementSibling.checked = true">
                 </label>
                 <button type="button" onclick="deleteRow(this)">❌</button>`;
             }
@@ -908,117 +1300,120 @@
 
             <!-- Q11 -->
             <div class="qpage">
-                <h3>11.When do you typically tailor the activity?</h3>
-                <table border="1" cellpadding="6" cellspacing="0" id="q11-table" class="alpha-table">
-                    <tr>
-                    <th>Scenario</th>
-                    <th>Never</th>
-                    <th>Rarely</th>
-                    <th>Sometimes</th>
-                    <th>Often</th>
-                    <th>Always</th>
-                    <th>How do you tailor it?</th>
-                    </tr>
-                    <tr>
-                    <td>Trunk compensation is observed</td>
-                    <td><input type="radio" name="q11_a" value="Never"></td>
-                    <td><input type="radio" name="q11_a" value="Rarely"></td>
-                    <td><input type="radio" name="q11_a" value="Sometimes"></td>
-                    <td><input type="radio" name="q11_a" value="Often"></td>
-                    <td><input type="radio" name="q11_a" value="Always"></td>  
-                    <td> <input type="text" name="q11_a_note" placeholder="How do you tailor?"></td>              
-                    </tr>
-                    <tr>
-                    <td>Delayed or hesitant movement</td>
-                    <td><input type="radio" name="q11_b"value="Never"></td>
-                    <td><input type="radio" name="q11_b"value="Rarely"></td>
-                    <td><input type="radio" name="q11_b"value="Sometimes"></td>
-                    <td><input type="radio" name="q11_b"value="Often"></td>
-                    <td><input type="radio" name="q11_b"value="Always"></td> 
-                    <td> <input type="text" name="q11_b_note" placeholder="How do you tailor?"></td>                             
-                    </tr>
-                    <tr>
-                    <td>Limited shoulder or elbow ROM</td>
-                    <td><input type="radio" name="q11_c"value="Never"></td>
-                    <td><input type="radio" name="q11_c"value="Rarely"></td>
-                    <td><input type="radio" name="q11_c"value="Sometimes"></td>
-                    <td><input type="radio" name="q11_c"value="Often"></td>
-                    <td><input type="radio" name="q11_c"value="Always"></td>    
-                    <td> <input type="text" name="q11_c_note" placeholder="How do you tailor?"></td>                         
-                    </tr>
-                    <tr>
-                    <td>Frequent object drops or slips</td>
-                    <td><input type="radio" name="q11_d"value="Never"></td>
-                    <td><input type="radio" name="q11_d"value="Rarely"></td>
-                    <td><input type="radio" name="q11_d"value="Sometimes"></td>
-                    <td><input type="radio" name="q11_d"value="Often"></td>
-                    <td><input type="radio" name="q11_d"value="Always"></td>    
-                    <td> <input type="text" name="q11_d_note" placeholder="How do you tailor?"></td>                          
-                    </tr>
-                    <tr>
-                    <td>Poor hand pre-shaping</td>
-                    <td><input type="radio" name="q11_e"value="Never"></td>
-                    <td><input type="radio" name="q11_e"value="Rarely"></td>
-                    <td><input type="radio" name="q11_e"value="Sometimes"></td>
-                    <td><input type="radio" name="q11_e"value="Often"></td>
-                    <td><input type="radio" name="q11_e"value="Always"></td>    
-                    <td> <input type="text" name="q11_e_note" placeholder="How do you tailor?"></td>                        
-                    </tr>
-                    <tr>
-                    <td>Difficulty with in-hand manipulation</td>
-                    <td><input type="radio" name="q11_f"value="Never"></td>
-                    <td><input type="radio" name="q11_f"value="Rarely"></td>
-                    <td><input type="radio" name="q11_f"value="Sometimes"></td>
-                    <td><input type="radio" name="q11_f"value="Often"></td>
-                    <td><input type="radio" name="q11_f"value="Always"></td>    
-                    <td> <input type="text" name="q11_f_note" placeholder="How do you tailor?"></td>                         
-                    </tr>
-                    <tr>
-                    <td>Signs of fatigue or pain during activity</td>
-                    <td><input type="radio" name="q11_g"value="Never"></td>
-                    <td><input type="radio" name="q11_g"value="Rarely"></td>
-                    <td><input type="radio" name="q11_g"value="Sometimes"></td>
-                    <td><input type="radio" name="q11_g"value="Often"></td>
-                    <td><input type="radio" name="q11_g"value="Always"></td>    
-                    <td> <input type="text" name="q11_g_note" placeholder="How do you tailor?"></td>                         
-                    </tr>
-                    <tr>
-                    <td>Poor sequencing or disorganized task flow</td>
-                    <td><input type="radio" name="q11_h"value="Never"></td>
-                    <td><input type="radio" name="q11_h"value="Rarely"></td>
-                    <td><input type="radio" name="q11_h"value="Sometimes"></td>
-                    <td><input type="radio" name="q11_h"value="Often"></td>
-                    <td><input type="radio" name="q11_h"value="Always"></td>   
-                    <td> <input type="text" name="q11_h_note" placeholder="How do you tailor?"></td>                           
-                    </tr>
-                    <tr>
-                    <td>Unsafe handling of tools or objects</td>
-                    <td><input type="radio" name="q11_i"value="Never"></td>
-                    <td><input type="radio" name="q11_i"value="Rarely"></td>
-                    <td><input type="radio" name="q11_i"value="Sometimes"></td>
-                    <td><input type="radio" name="q11_i"value="Often"></td>
-                    <td><input type="radio" name="q11_i"value="Always"></td>  
-                    <td> <input type="text" name="q11_i_note" placeholder="How do you tailor?"></td>                           
-                    </tr>
-                    <tr>
-                    <td>Inconsistent reach and grasp timing</td>
-                    <td><input type="radio" name="q11_j"value="Never"></td>
-                    <td><input type="radio" name="q11_j"value="Rarely"></td>
-                    <td><input type="radio" name="q11_j"value="Sometimes"></td>
-                    <td><input type="radio" name="q11_j"value="Often"></td>
-                    <td><input type="radio" name="q11_j"value="Always"></td>     
-                    <td> <input type="text" name="q11_j_note" placeholder="How do you tailor?"></td>                        
-                    </tr>
-                    <tr>
-                    <td>Poor bilateral coordination</td>
-                    <td><input type="radio" name="q11_k"value="Never"></td>
-                    <td><input type="radio" name="q11_k"value="Rarely"></td>
-                    <td><input type="radio" name="q11_k"value="Sometimes"></td>
-                    <td><input type="radio" name="q11_k"value="Often"></td>
-                    <td><input type="radio" name="q11_k"value="Always"></td>
-                    <td> <input type="text" name="q11_k_note" placeholder="How do you tailor?"></td>              
-                    </tr>               
-                </table>
+                <div class="question">
+                    <h3>11.When do you typically tailor the activity?</h3>
+                    <table border="1" cellpadding="6" cellspacing="0" id="q11-table" class="alpha-table">
+                        <tr>
+                        <th>Scenario</th>
+                        <th>Never</th>
+                        <th>Rarely</th>
+                        <th>Sometimes</th>
+                        <th>Often</th>
+                        <th>Always</th>
+                        <th>How do you tailor it?</th>
+                        </tr>
+                        <tr>
+                        <td>Trunk compensation is observed</td>
+                        <td><input type="radio" name="q11_a" value="Never"></td>
+                        <td><input type="radio" name="q11_a" value="Rarely"></td>
+                        <td><input type="radio" name="q11_a" value="Sometimes"></td>
+                        <td><input type="radio" name="q11_a" value="Often"></td>
+                        <td><input type="radio" name="q11_a" value="Always"></td>  
+                        <td> <input type="text" name="q11_a_note" placeholder="How do you tailor?"></td>              
+                        </tr>
+                        <tr>
+                        <td>Delayed or hesitant movement</td>
+                        <td><input type="radio" name="q11_b"value="Never"></td>
+                        <td><input type="radio" name="q11_b"value="Rarely"></td>
+                        <td><input type="radio" name="q11_b"value="Sometimes"></td>
+                        <td><input type="radio" name="q11_b"value="Often"></td>
+                        <td><input type="radio" name="q11_b"value="Always"></td> 
+                        <td> <input type="text" name="q11_b_note" placeholder="How do you tailor?"></td>                             
+                        </tr>
+                        <tr>
+                        <td>Limited shoulder or elbow ROM</td>
+                        <td><input type="radio" name="q11_c"value="Never"></td>
+                        <td><input type="radio" name="q11_c"value="Rarely"></td>
+                        <td><input type="radio" name="q11_c"value="Sometimes"></td>
+                        <td><input type="radio" name="q11_c"value="Often"></td>
+                        <td><input type="radio" name="q11_c"value="Always"></td>    
+                        <td> <input type="text" name="q11_c_note" placeholder="How do you tailor?"></td>                         
+                        </tr>
+                        <tr>
+                        <td>Frequent object drops or slips</td>
+                        <td><input type="radio" name="q11_d"value="Never"></td>
+                        <td><input type="radio" name="q11_d"value="Rarely"></td>
+                        <td><input type="radio" name="q11_d"value="Sometimes"></td>
+                        <td><input type="radio" name="q11_d"value="Often"></td>
+                        <td><input type="radio" name="q11_d"value="Always"></td>    
+                        <td> <input type="text" name="q11_d_note" placeholder="How do you tailor?"></td>                          
+                        </tr>
+                        <tr>
+                        <td>Poor hand pre-shaping</td>
+                        <td><input type="radio" name="q11_e"value="Never"></td>
+                        <td><input type="radio" name="q11_e"value="Rarely"></td>
+                        <td><input type="radio" name="q11_e"value="Sometimes"></td>
+                        <td><input type="radio" name="q11_e"value="Often"></td>
+                        <td><input type="radio" name="q11_e"value="Always"></td>    
+                        <td> <input type="text" name="q11_e_note" placeholder="How do you tailor?"></td>                        
+                        </tr>
+                        <tr>
+                        <td>Difficulty with in-hand manipulation</td>
+                        <td><input type="radio" name="q11_f"value="Never"></td>
+                        <td><input type="radio" name="q11_f"value="Rarely"></td>
+                        <td><input type="radio" name="q11_f"value="Sometimes"></td>
+                        <td><input type="radio" name="q11_f"value="Often"></td>
+                        <td><input type="radio" name="q11_f"value="Always"></td>    
+                        <td> <input type="text" name="q11_f_note" placeholder="How do you tailor?"></td>                         
+                        </tr>
+                        <tr>
+                        <td>Signs of fatigue or pain during activity</td>
+                        <td><input type="radio" name="q11_g"value="Never"></td>
+                        <td><input type="radio" name="q11_g"value="Rarely"></td>
+                        <td><input type="radio" name="q11_g"value="Sometimes"></td>
+                        <td><input type="radio" name="q11_g"value="Often"></td>
+                        <td><input type="radio" name="q11_g"value="Always"></td>    
+                        <td> <input type="text" name="q11_g_note" placeholder="How do you tailor?"></td>                         
+                        </tr>
+                        <tr>
+                        <td>Poor sequencing or disorganized task flow</td>
+                        <td><input type="radio" name="q11_h"value="Never"></td>
+                        <td><input type="radio" name="q11_h"value="Rarely"></td>
+                        <td><input type="radio" name="q11_h"value="Sometimes"></td>
+                        <td><input type="radio" name="q11_h"value="Often"></td>
+                        <td><input type="radio" name="q11_h"value="Always"></td>   
+                        <td> <input type="text" name="q11_h_note" placeholder="How do you tailor?"></td>                           
+                        </tr>
+                        <tr>
+                        <td>Unsafe handling of tools or objects</td>
+                        <td><input type="radio" name="q11_i"value="Never"></td>
+                        <td><input type="radio" name="q11_i"value="Rarely"></td>
+                        <td><input type="radio" name="q11_i"value="Sometimes"></td>
+                        <td><input type="radio" name="q11_i"value="Often"></td>
+                        <td><input type="radio" name="q11_i"value="Always"></td>  
+                        <td> <input type="text" name="q11_i_note" placeholder="How do you tailor?"></td>                           
+                        </tr>
+                        <tr>
+                        <td>Inconsistent reach and grasp timing</td>
+                        <td><input type="radio" name="q11_j"value="Never"></td>
+                        <td><input type="radio" name="q11_j"value="Rarely"></td>
+                        <td><input type="radio" name="q11_j"value="Sometimes"></td>
+                        <td><input type="radio" name="q11_j"value="Often"></td>
+                        <td><input type="radio" name="q11_j"value="Always"></td>     
+                        <td> <input type="text" name="q11_j_note" placeholder="How do you tailor?"></td>                        
+                        </tr>
+                        <tr>
+                        <td>Poor bilateral coordination</td>
+                        <td><input type="radio" name="q11_k"value="Never"></td>
+                        <td><input type="radio" name="q11_k"value="Rarely"></td>
+                        <td><input type="radio" name="q11_k"value="Sometimes"></td>
+                        <td><input type="radio" name="q11_k"value="Often"></td>
+                        <td><input type="radio" name="q11_k"value="Always"></td>
+                        <td> <input type="text" name="q11_k_note" placeholder="How do you tailor?"></td>              
+                        </tr>               
+                    </table>                    
+                </div>
+
                 <!-- Button to add more "Other" rows -->
                 <button type="button" onclick="addq11Row()">+ Add Row</button>
             </div>
@@ -1331,11 +1726,12 @@
                 const row = table.insertRow(-1);
                 row.insertCell(0).innerHTML = `
                     <label>
-                        <input type="checkbox" name="q15[]" value="other_${rowIndex}">
+                        <input type="checkbox" name="q15[]" value="other_${rowIndex}" checked>
                         <input type="text"
                                 name="q15_other_${rowIndex}"
                                 placeholder="Other behaviour aspect"
-                                style="width:90%; margin-left:8px;">
+                                style="width:90%; margin-left:8px;"
+                                oninput="this.previousElementSibling.checked = true">
                     </label>
                     <button type="button" onclick="deleteRow(this)">❌</button>
                 `;
@@ -1406,7 +1802,7 @@
 
                 row.insertCell(0).innerHTML = `
                     <label>
-                    <input type="checkbox" name="q16[]" value="other_${rowIndex}">
+                    <input type="checkbox" name="q16[]" value="other_${rowIndex}" checked>
                     <input type="text"
                             name="q16_other_text_${rowIndex}"
                             placeholder="Other implementation method"
@@ -1645,7 +2041,7 @@
             // Column 1: Checkbox + Text
             row.insertCell(0).innerHTML = `
                 <label>
-                <input type="checkbox" name="q18[]" value="other_${rowIndex}">
+                <input type="checkbox" name="q18[]" value="other_${rowIndex}" checked>
                 <input type="text"
                         name="q18_other_text_${rowIndex}"
                         placeholder="Other training area"
@@ -1663,8 +2059,8 @@
             }
             </script>
             <div class="qnav">
-                <button onclick="prevQ()">Back</button>
-                <button onclick="nextQ()">Next</button>
+                <button type="button" onclick="prevQ()">Back</button>
+                <button type="button" onclick="nextQ()">Next</button>
             </div>
      
         
@@ -1714,8 +2110,8 @@
                     <label>Email:</label><br>
                     <input type="email" name="followup_email" style="width:300px;">
                     <!-- <label>Phone Number:</label><br> -->
-                    <label>Phone Number:</label><br>
-                    <input type="text" name="followup_phone" style="width:300px;">
+                    <!-- <label>Phone Number:</label><br>
+                    <input type="text" name="followup_phone" style="width:300px;"> -->
                 </div>
         </div>
             <button type="submit" id="submitBtn" style="padding:10px 20px; font-size:16px; background:#004d66; color:white; border:none; border-radius:6px; cursor:pointer;">
@@ -1728,401 +2124,1511 @@
         const form = document.getElementById("surveyForm");
         const status = document.getElementById("status");
 
-        form.addEventListener("submit", function(e) {
-            e.preventDefault(); // stop reload
-
-            const formData = new FormData(form);
-            const scriptURL="https://script.google.com/macros/s/AKfycbzlMC21jTnVbLhJBhhGBHghNbLPYcrJMdOK11dqwMgoq2MgT8cREGj-m7ev5DJJPlR_/exec";
-            const btn = document.getElementById("submitBtn");
-            btn.disabled = true;
-            btn.innerText = "Submitting...";
-            fetch(scriptURL, {
-                method: "POST",
-                body: formData, // 👈 important for GitHub Pages
-            })
-            .then(() => {
-                const consent = document.getElementById("followup_yes").checked;
-
-                if (consent) {
-                    status.innerHTML =
-                        "✅ Thank you! Your response has been submitted. We will get back to you soon.";
-                } else {
-                    status.innerHTML =
-                        "✅ Thank you! Your response has been submitted.";
+        // enhanced version- form submission -- please change it if you want store it directly
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();
+                
+                // Collect all final data
+                collectAllFormData();
+                
+                // Create FormData from state
+                const submissionData = new FormData();
+                
+                // Add all answers to FormData
+                Object.entries(surveyState.answers).forEach(([questionId, answer]) => {
+                    if (Array.isArray(answer)) {
+                        answer.forEach(item => {
+                            submissionData.append(questionId, item);
+                        });
+                    } else if (answer) {
+                        submissionData.append(questionId, answer);
+                    }
+                });
+                
+                // Add follow-up info if provided
+                if (document.getElementById('followup_yes').checked) {
+                    submissionData.append('followup_email', document.querySelector('[name="followup_email"]').value);
+                    
                 }
-                btn.disabled = false;
-                btn.innerText = "Submit";
-            })
-            .catch(error => {
-                status.innerHTML = "❌ Network error. Please try again.";
-                btn.disabled = false;
-                btn.innerText = "Submit";
-                console.error(error);
+                
+                const btn = document.getElementById("submitBtn");
+                btn.disabled = true;
+                btn.innerText = "Submitting...";
+                
+                fetch("", {
+                    method: "POST",
+                    body: submissionData,
+                })
+                .then(() => {
+                    // Clear saved state on successful submission
+                    surveyState.clearStorage();
+                    
+                    const consent = document.getElementById("followup_yes").checked;
+                    if (consent) {
+                        status.innerHTML = "✅ Thank you! Your response has been submitted. We will get back to you soon.";
+                    } else {
+                        status.innerHTML = "✅ Thank you! Your response has been submitted.";
+                    }
+                    btn.disabled = false;
+                    btn.innerText = "Submit";
+                })
+                .catch(error => {
+                    status.innerHTML = "❌ Network error. Please try again.";
+                    btn.disabled = false;
+                    btn.innerText = "Submit";
+                    console.error(error);
+                });
             });
-        });
+                    
         </script>
+</form>
+<script>
+let qIndex = 0;
+let slideTimer = null; 
 
-    </form>
 
-    <script>
-    function startSurvey() {
-      const consent = document.getElementById("consentCheck");
-      if (!consent.checked) {
+// Question validation tracking
+let questionValidation = {
+    sectionA: { q1: false, q2: false, q3: false, q4: false, q5: false, q6: false },
+    sectionB: { q7: false, q8: false },
+    sectionC: { q9: false },
+    sectionD: { q10: false, q11: false, q12: false, q13: false },
+    sectionE: { q14: false, q15: false },
+    sectionF: { q16: false, q17: false, q18: false }
+};
+
+let unlockedIndex = 0;
+
+const orderedSections = [
+    "intro",
+    "sectionA",
+    "sectionB",
+    "sectionC",
+    "sectionD",
+    "sectionE",
+    "sectionF",
+    "review",
+    "submit"
+];
+
+function goToSection(sectionId) {
+    // Update current section in state
+    surveyState.currentSection = sectionId;
+    surveyState.saveToStorage();
+    
+    // Check if section is accessible
+    if (sectionId !== 'intro' && sectionId !== 'review' && sectionId !== 'submit') {
+        if (!surveyState.isSectionAccessible(sectionId)) {
+            alert(`Please complete the previous sections before accessing ${sectionId.replace('section', 'Section ')}.`);
+            return;
+        }
+    }
+    
+    // Hide all sections
+    document.querySelectorAll('section').forEach(section => {
+        section.classList.remove("active");
+    });
+    
+    // Show target section
+    const target = document.getElementById(sectionId);
+    if (target) {
+        target.classList.add("active");
+        qIndex = 0;
+        showQ(0);
+        updateProgress(sectionId);
+        window.scrollTo(0, 0);
+    }
+}
+
+// Update header navigation
+function setupNavigation() {
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const text = this.textContent.trim();
+            const sectionMap = {
+                'Introduction': 'intro',
+                'Section A': 'sectionA',
+                'Section B': 'sectionB',
+                'Section C': 'sectionC',
+                'Section D': 'sectionD',
+                'Section E': 'sectionE',
+                'Section F': 'sectionF'
+            };
+            
+            const sectionId = sectionMap[text];
+            if (sectionId) {
+                goToSection(sectionId);
+            }
+        });
+    });
+}
+
+
+function updateProgress(sectionId) {
+    if (sectionId === "review" || sectionId === "submit") {
+        document.getElementById("progressText").innerText = "Complete";
+        document.getElementById("progressBar").style.width = "100%";
+        return;
+    }
+    
+    // Calculate progress based on accessible sections
+    const contentSections = ["sectionA", "sectionB", "sectionC", "sectionD", "sectionE", "sectionF"];
+    const currentIndex = contentSections.indexOf(sectionId);
+    
+    if (currentIndex >= 0) {
+        // Count how many sections are accessible/completed
+        let completedCount = 0;
+        for (let i = 0; i <= currentIndex; i++) {
+            const section = contentSections[i];
+            if (surveyState.isSectionAccessible(section)) {
+                completedCount++;
+            }
+        }
+        
+        const total = contentSections.length;
+        const percent = (completedCount / total) * 100;
+        
+        document.getElementById("progressText").innerText = `Section ${currentIndex + 1} of ${total}`;
+        document.getElementById("progressBar").style.width = percent + "%";
+    }
+}
+
+
+function getQPages() {
+    return document.querySelectorAll("section.active .qpage");
+}
+
+
+function showQ(i) {
+    const pages = getQPages();
+    if (!pages.length) return;
+
+    const nav = document.querySelector("section.active .qnav");
+    const backBtn = nav ? nav.querySelector("button:first-child") : null;
+
+    if (slideTimer) {
+        clearTimeout(slideTimer);
+        slideTimer = null;
+    }
+
+    // Hide all pages, show current
+    pages.forEach(p => p.classList.remove("active"));
+    pages[i].classList.add("active");
+
+    // INTRO SLIDE (first page of each section)
+    if (i === 0) {
+        if (nav) nav.style.display = "none";
+        
+        // Auto-advance after 3 seconds on intro page
+        slideTimer = setTimeout(() => {
+            if (qIndex === 0 && pages.length > 1) {
+                qIndex = 1;
+                showQ(qIndex);
+            }
+        }, 5000);
+    } else {
+        if (nav) nav.style.display = "block";
+        if (backBtn) backBtn.disabled = (i === 1);
+        
+        // Validate the question when showing it
+        setTimeout(validateCurrentQuestion, 100);
+    }
+}
+
+function nextQ() {
+    const pages = getQPages();
+    const currentSectionEl = document.querySelector("section.active");
+    if (!currentSectionEl) return;
+
+    const currentSection = currentSectionEl.id;
+
+    // ---- VALIDATE CURRENT QUESTION ----
+    const isLastPage = qIndex >= pages.length - 1;
+
+    // Only validate if NOT last page OR if your last page actually needs validation
+    if (!isLastPage && !validateCurrentQuestion()) {
+        alert('Please complete this question before proceeding.');
+        return;
+    }
+
+    // ---- MOVE TO NEXT QUESTION IN SAME SECTION ----
+    if (!isLastPage) {
+        qIndex++;
+        showQ(qIndex);
+        return;
+    }
+
+    // ---- LAST QUESTION IN SECTION ----
+    // Mark section complete
+    if (currentSection !== 'intro' && currentSection !== 'review' && currentSection !== 'submit') {
+        surveyState.markSectionComplete(currentSection);
+    }
+
+    // ---- SECTION-SPECIFIC NAVIGATION ----
+    if (currentSection === "sectionF") {
+        goToSection("review"); 
+        // Always go to review from Section F
+        generateReview();
+        return;
+    }
+
+    // ---- NORMAL SECTION FLOW ----
+    const nextSection = surveyState.getNextAccessibleSection();
+    if (nextSection) {
+        goToSection(nextSection);
+    }
+}
+
+
+// Check if section has any answers
+function hasAnswersInSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (!section) return false;
+    
+    // Check for any filled inputs
+    const inputs = section.querySelectorAll('input, textarea, select');
+    for (let input of inputs) {
+        if (input.type === 'checkbox' || input.type === 'radio') {
+            if (input.checked) return true;
+        } else if (input.value && input.value.trim() !== '') {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+// Start survey - mark Section A as accessible
+function startSurvey() {
+    const consent = document.getElementById("consentCheck");
+    if (!consent.checked) {
         alert("Please provide consent before starting the survey.");
         return;
-      }
-
-      unlockedIndex = 1; // unlock Section A
-      goToSection("sectionA");
     }
-    </script>
-
-    <script>
-    function toggleOtherMandatory(checkbox, textInputId) {
-        const textInput = document.getElementById(textInputId);
-        const container = textInput ? textInput.parentElement : null;
-
-        if (!textInput || !container) return;
-
-        if (checkbox.checked) {
-            container.style.display = "block";
-            textInput.removeAttribute("data-optional");
-            textInput.setAttribute("required", "required");
-            textInput.focus();
-        } else {
-            container.style.display = "none";
-            textInput.setAttribute("data-optional", "");
-            textInput.removeAttribute("required");
-            textInput.value = "";
-        }
-        }
-    </script>
-
-
-    <script>
-        let unlockedIndex = 0;
-        const orderedSections = [
-            "intro",
-            "sectionA",
-            "sectionB",
-            "sectionC",
-            "sectionD",
-            "sectionE",
-            "sectionF",
-            "review",
-            "submit"
-        ];
     
-    </script>
+    surveyState.markSectionAccessible('sectionA');
+    unlockedIndex = 1;
+    goToSection("sectionA");
+}
 
-    <script>
-        function goToSection(sectionId) {
-            qIndex = 0; 
-            const targetIndex = orderedSections.indexOf(sectionId);
-
-            if (targetIndex > unlockedIndex) {
-                alert("Please complete the current section before proceeding.");
-                return;
-            }
-
-            orderedSections.forEach(id => {
-                const section = document.getElementById(id);
-                if (section) section.classList.remove("active");
-            });
-
-            const target = document.getElementById(sectionId);
-            if (target) {
-                status.innerHTML = "";   // reset message
-                target.classList.add("active");
-                showQ(0);  
-                updateProgress(sectionId);
-                window.scrollTo(0, 0);
-            }
-        }
-    </script>
-
-    <script>
-        function deleteRow(btn) {
-        const row = btn.closest("tr");
-        if (row) row.remove();
-        }
-    </script>
-
-    <script>
-        function updateProgress(sectionId) {
-            if (sectionId === "review" || sectionId === "submit") {
-            document.getElementById("progressText").innerText = "Complete";
-            document.getElementById("progressBar").style.width = "100%";
-            return;}
-            // Intro & submit do not count as content sections
-            const contentSections = [
-            "sectionA",
-            "sectionB",
-            "sectionC",
-            "sectionD",
-            "sectionE",
-            "sectionF"
-            ];
-
-            const index = contentSections.indexOf(sectionId);
-
-            if (index >= 0) {
-            const current = index + 1;
-            const total = contentSections.length;
-            const percent = (current / total) * 100;
-
-            document.getElementById("progressText").innerText =
-                `Section ${current} of ${total}`;
-
-            document.getElementById("progressBar").style.width =
-                percent + "%";
-            } else {
-            // Intro or submit
-            document.getElementById("progressText").innerText = "";
-            document.getElementById("progressBar").style.width = "0%";
-            }
-        }
-    </script>
-
-    <script>
-    function ValidateAndGo(currentSectionId, nextSectionId) {
-        const section = document.getElementById(currentSectionId);
-
-        // 1️⃣ Paired "Other" validation
-        const pairedCheckboxes =
-            section.querySelectorAll('input[type="checkbox"][data-paired-text]');
-
-        for (let cb of pairedCheckboxes) {
-            const text = document.getElementById(cb.dataset.pairedText);
-
-            if (text && text.value.trim() && !cb.checked) {
-                alert("You entered text for 'Other' but did not select the 'Other' option.");
-                text.focus();
-                return;
-            }
-
-            if (cb.checked && (!text || !text.value.trim())) {
-                alert("Please specify details for the selected 'Other' option.");
-                if (text) text.focus();
-                return;
-            }
-        }
-
-        // 2️⃣ Radio validation (section only)
-        const radioGroups = new Set();
-        section.querySelectorAll('input[type="radio"]').forEach(radio => {
-            // skip dynamic "other" radios
-            if (!radio.name) return;
-
-            // SKIP all dynamic "other" radios
-            if (
-                radio.name.startsWith("q13_other") ||
-                radio.name.startsWith("q11_other") ||
-                radio.name.startsWith("q14_other") ||
-                radio.name.startsWith("q17_other")
-            ) return;
-
-            radioGroups.add(radio.name);
-        });
-
-        for (let groupName of radioGroups) {
-            if (!section.querySelector(`input[name="${groupName}"]:checked`)) {
-                alert("Please answer all required questions in this section before continuing.");
-                return;
-            }
-        }
-
-        // 3️⃣ Checkbox group validation ([] only)
-        const checkboxGroups = {};
-        section.querySelectorAll('input[type="checkbox"][name$="[]"]').forEach(cb => {
-            checkboxGroups[cb.name] = checkboxGroups[cb.name] || [];
-            checkboxGroups[cb.name].push(cb);
-        });
-
-        for (let group in checkboxGroups) {
-            // q18 is optional
-            if (group !== "q18[]" && !checkboxGroups[group].some(cb => cb.checked)) {
-                alert("Please answer all questions in this section before continuing.");
-                return;
-            }
-        }
-
-        // 4️⃣ EXTRA: Q17 validation ONLY for Section F
-        if (currentSectionId === "sectionF") {
-            const q17Groups = [
-                "q17_1","q17_2","q17_3","q17_4",
-                "q17_5","q17_6","q17_7","q17_8"
-            ];
-
-            for (let group of q17Groups) {
-                const radios = document.querySelectorAll(`input[name="${group}"]`);
-                if (radios.length > 0 &&
-                    !document.querySelector(`input[name="${group}"]:checked`)) {
-                    alert("Please answer all Q17 rows before continuing.");
-                    return;
-                }
-            }
-        }
-
-        // 5️⃣ Unlock + navigate
-        unlockedIndex = Math.max(
-            unlockedIndex,
-            orderedSections.indexOf(nextSectionId)
-        );
-
-        goToSection(nextSectionId);
+function prevQ() {
+    if (qIndex > 0) {
+        qIndex--;
+        showQ(qIndex);
     }
-    </script>
+}
 
+function validateCurrentQuestion() {
+    const activeSection = document.querySelector('section.active').id;
+    const pages = document.querySelectorAll('section.active .qpage');
+    const currentPage = document.querySelector('section.active .qpage.active');
+    const currentIndex = Array.from(pages).indexOf(currentPage);
+    
+    // Skip intro page (index 0)
+    if (currentIndex === 0) return true;
+    
+    let isValid = false;
+    
+    // Validate based on current page index and section
+    switch(activeSection) {
+        case 'sectionA':
+            switch(currentIndex) {
+                case 1: // Q1
+                    isValid = !!document.querySelector('input[name="background"]:checked');
+                    questionValidation.sectionA.q1 = isValid;
+                    break;
+                case 2: // Q2
+                    isValid = !!document.querySelector('input[name="experience"]:checked');
+                    questionValidation.sectionA.q2 = isValid;
+                    break;
+                case 3: // Q3
+                    const pgSelected = document.querySelector('input[name="pg"]:checked');
+                    const pgText = document.querySelector('input[name="pg_text"]');
+                    if (pgSelected && pgSelected.id === "pg_yes") {
+                        isValid = pgText && pgText.value.trim() !== "";
+                    } else {
+                        isValid = !!pgSelected;
+                    }
+                    questionValidation.sectionA.q3 = isValid;
+                    break;
+                case 4: // Q4
+                    isValid = !!document.querySelector('input[name="caseload"]:checked');
+                    questionValidation.sectionA.q4 = isValid;
+                    break;
+                case 5: // Q5
+                    isValid = document.querySelectorAll('input[name^="clinical_setting"]:checked').length > 0;
+                    questionValidation.sectionA.q5 = isValid;
+                    break;
+                case 6: // Q6
+                    const acuteChecked = document.querySelector('input[name="acute"]:checked');
+                    const subacuteChecked = document.querySelector('input[name="subacute"]:checked');
+                    const chronicChecked = document.querySelector('input[name="chronic"]:checked');
 
-    <script>
-    function generateReview() {
-        const reviewDiv = document.getElementById("reviewContent");
-        reviewDiv.innerHTML = "";
+                    isValid = acuteChecked && subacuteChecked && chronicChecked;
+                    questionValidation.sectionA.q6 = isValid;
+                    break;
+            }
+            break;
+            
+        case 'sectionB':
+            switch(currentIndex) {
+                case 1: // Q7
+                    const q7Rows = document.querySelectorAll('#q7-table tr:not(:first-child)');
+                    isValid = q7Rows.length > 0 && Array.from(q7Rows).every(row => {
+                        const checkboxes = row.querySelectorAll('input[type="checkbox"]:checked');
+                        const notUsed = row.querySelector('input[value="Not Used"]:checked');
+                        return (checkboxes.length > 0) || notUsed;
+                    });
+                    questionValidation.sectionB.q7 = isValid;
+                    break;
+                case 2: // Q8
+                    // Q8 is optional, so always valid
+                    isValid = true;
+                    questionValidation.sectionB.q8 = isValid;
+                    break;
+            }
+            break;
+            
+        case 'sectionC':
+            if (currentIndex === 1) { // Q9
+                const q9Rows = document.querySelectorAll('#q9-table tr:not(:first-child)');
+                isValid = q9Rows.length > 0 && Array.from(q9Rows).some(row => 
+                    Array.from(row.querySelectorAll('input[type="checkbox"]')).some(cb => cb.checked)
+                );
+                questionValidation.sectionC.q9 = isValid;
+            }
+            break;
+            
+        case 'sectionD':
+            switch(currentIndex) {
+                case 1: // Q10
+                    isValid = document.querySelectorAll('input[name^="q10"]:checked').length > 0;
+                    questionValidation.sectionD.q10 = isValid;
+                    break;
+                case 2: // Q11
+                    const q11Groups = ['q11_a','q11_b','q11_c','q11_d','q11_e', 'q11_f','q11_g','q11_h','q11_i','q11_j','q11_k'];
+                    isValid = q11Groups.every(name =>
+                        document.querySelector(`input[name="${name}"]:checked`)
+                    );
+                    questionValidation.sectionD.q11 = isValid;
+                    break;
+                case 3: // Q12
+                    isValid = document.querySelectorAll('input[name^="q12"]:checked').length > 0;
+                    questionValidation.sectionD.q12 = isValid;
+                    break;
+                case 4: // Q13
+                    const q13Groups = ['q13_a','q13_b','q13_c', 'q13_d','q13_e','q13_f','q13_g'];
+                    isValid = q13Groups.every(name =>
+                        document.querySelector(`input[name="${name}"]:checked`)
+                    );
+                    questionValidation.sectionD.q13 = isValid;
+                    break;
+            }
+            break;
+            
+        case 'sectionE':
+            switch(currentIndex) {
+                case 1: // Q14
+                    const q14Groups = ['q14_1','q14_2','q14_3','q14_4','q14_5'];
+                    isValid = q14Groups.every(name =>
+                        document.querySelector(`input[name="${name}"]:checked`)
+                    );
 
-        const sectionsToReview = [
-            "sectionA",
-            "sectionB",
-            "sectionC",
-            "sectionD",
-            "sectionE",
-            "sectionF"
-        ];
+    questionValidation.sectionE.q14 = isValid;
+    break;
+                case 2: // Q15
+                    isValid = document.querySelectorAll('input[name^="q15"]:checked').length > 0;
+                    questionValidation.sectionE.q15 = isValid;
+                    break;
+            }
+            break;
+            
+        case 'sectionF':
+            switch(currentIndex) {
+                case 1: // Q16
+                    isValid = document.querySelectorAll('input[name^="q16"]:checked').length > 0;
+                    questionValidation.sectionF.q16 = isValid;
+                    break;
+                case 2: // Q17
+                    const q17Groups = ['q17_1','q17_2','q17_3','q17_4','q17_5','q17_6','q17_7','q17_8'];
+                    isValid = q17Groups.every(name =>
+                        document.querySelector(`input[name="${name}"]:checked`)
+                    );
+                    questionValidation.sectionF.q17 = isValid;
+                    break;
+                case 3: // Q18 (optional)
+                    isValid = true;
+                    questionValidation.sectionF.q18 = isValid;
+                    break;
+            }
+            break;
+    }
+    
+    // Update UI
+    updateQuestionUI(activeSection, currentIndex, isValid);
+    
+    return isValid;
+}
 
-        sectionsToReview.forEach(secId => {
-            const original = document.getElementById(secId);
-            const clone = original.cloneNode(true);
+function updateQuestionUI(section, questionIndex, isValid) {
+    const pages = document.querySelectorAll(`#${section} .qpage`);
+    if (questionIndex < pages.length) {
+        const currentPage = pages[questionIndex];
+        const questionDiv = currentPage.querySelector('.question');
+        
+        if (questionDiv) {
+            // Remove existing validation classes
+            questionDiv.classList.remove('question-valid', 'question-invalid');
+            
+            // Add appropriate class
+            if (questionIndex > 0) { // Don't style intro page
+                questionDiv.classList.add(isValid ? 'question-valid' : 'question-invalid');
+            }
+            
+            // Update or create validation message
+            let msg = questionDiv.querySelector('.validation-msg');
+            if (!msg) {
+                msg = document.createElement('div');
+                msg.className = 'validation-msg';
+                questionDiv.appendChild(msg);
+            }
+            
+            msg.textContent = isValid ? '✓ Complete' : '✗ Required';
+            msg.style.color = isValid ? 'green' : 'red';
+            msg.style.fontSize = '12px';
+            msg.style.marginTop = '5px';
+            msg.style.fontWeight = 'bold';
+        }
+    }
+}
 
-            clone.style.display = "block";
-            clone.classList.add("active");
+function updateQuestionValidationUI(questionDiv, isValid) {
+    // Remove existing validation classes
+    questionDiv.classList.remove('question-valid', 'question-invalid');
+    
+    // Add appropriate class
+    questionDiv.classList.add(isValid ? 'question-valid' : 'question-invalid');
+    
+    // Update or create validation message
+    let msg = questionDiv.querySelector('.validation-msg');
+    if (!msg) {
+        msg = document.createElement('div');
+        msg.className = 'validation-msg';
+        questionDiv.appendChild(msg);
+    }
+    
+    msg.textContent = isValid ? '✓ Complete' : '✗ Required';
+    msg.style.color = isValid ? 'green' : 'red';
+    msg.style.fontSize = '12px';
+    msg.style.marginTop = '5px';
+    msg.style.fontWeight = 'bold';
+}
 
-            // ADD THESE 2 LINES HERE
-            clone.querySelectorAll(".qpage").forEach(q => {
-                q.style.display = "block";
-                q.classList.add("active");
+function getAnswersForReview(sectionId) {
+    let html = '';
+    
+    const section = document.getElementById(sectionId);
+    if (!section) return html;
+    
+    // Get all questions in this section
+    const questions = section.querySelectorAll('.qpage .question');
+    
+    questions.forEach((question, index) => {
+        // Skip intro page
+        if (index === 0) return;
+        
+        const questionText = question.querySelector('strong, label, h3')?.textContent || `Question ${index}`;
+        
+        // Start building the question HTML
+        html += `
+            <div class="review-question">
+                <h3>${questionText}</h3>
+                <div class="review-answers">
+        `;
+        
+        // Handle different question types
+        // 0. TABLES
+        const tables = question.querySelectorAll('table');
+        if (tables.length > 0) {
+            html += renderTablesOnly(question);
+
+            html += `
+                </div>
+            </div>
+            `;
+            return; // exits only this question, HTML already closed
+        }
+
+        
+        // 1. RADIO BUTTON QUESTIONS (show all options)
+        const radioGroups = {};
+        question.querySelectorAll('input[type="radio"]').forEach(radio => {
+            const name = radio.name;
+            if (!radioGroups[name]) radioGroups[name] = [];
+            radioGroups[name].push(radio);
+        });
+        
+        Object.keys(radioGroups).forEach(groupName => {
+            const radios = radioGroups[groupName];
+            if (radios.length > 0) {
+                html += `<div class="option-group">`;
+                radios.forEach(radio => {
+                    const label = radio.closest('label');
+                    const labelText = label ? label.textContent.replace('✔', '').trim() : radio.value;
+                    const isChecked = radio.checked;
+                    const optionClass = isChecked ? 'option-selected' : 'option-not-selected';
+                    
+                    html += `
+                        <div class="option-item ${optionClass}">
+                            <span class="option-marker">${isChecked ? '✓' : '○'}</span>
+                            <span class="option-text">${labelText}</span>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+            }
+        });
+        
+        // 2. CHECKBOX QUESTIONS (show all options)
+        const checkboxes = question.querySelectorAll('input[type="checkbox"]:not([name*="other"])');
+        if (checkboxes.length > 0) {
+            html += `<div class="option-group">`;
+            checkboxes.forEach(checkbox => {
+                const label = checkbox.closest('label');
+                // Find text input next to checkbox (for "Other")
+                const textInput = label ? label.querySelector('input[type="text"]') : null;
+                let labelText = label ? label.textContent.replace('✔', '').trim() : checkbox.value;
+
+                if (textInput && textInput.value.trim()) {
+                    labelText = textInput.value.trim();
+                } else if (label) {
+                    labelText = label.textContent.replace('✔', '').trim();
+                }
+                const isChecked = checkbox.checked;
+                const optionClass = isChecked ? 'option-selected' : 'option-not-selected';
+                
+                html += `
+                    <div class="option-item ${optionClass}">
+                        <span class="option-marker">${isChecked ? '✓' : '□'}</span>
+                        <span class="option-text">${labelText}</span>
+                    </div>
+                `;
             });
-
-            clone.querySelectorAll("script").forEach(s => s.remove());
-
-            // Replace inputs with values
-            clone.querySelectorAll("input, textarea, select").forEach(el => {
-                let value = "";
-
-                if (el.type === "checkbox") {
-                    if (el.checked) value = "✔ " + (el.value || "Selected");
+            html += `</div>`;
+        }
+        
+        // 3. TEXT INPUTS (show value if entered)
+        const textInputs = question.querySelectorAll('input[type="text"], input[type="email"], textarea');
+        textInputs.forEach(input => {
+            if (input.value.trim()) {
+                let labelText = 'Answer:';
+                if (input.previousElementSibling && input.previousElementSibling.tagName === 'LABEL') {
+                    labelText = input.previousElementSibling.textContent.trim();
+                } else if (input.closest('label')) {
+                    labelText = input.closest('label').textContent.trim();
                 }
-                else if (el.type === "radio") {
-                    if (el.checked) value = el.value;
-                }
+                
+                html += `
+                    <div class="text-answer">
+                        <strong>${labelText}</strong>
+                        <div class="text-value">${input.value}</div>
+                    </div>
+                `;
+            }
+        });
+
+        
+        html += `
+                </div>
+            </div>
+        `;
+    });
+    
+    return html;
+}
+
+        
+function renderTablesOnly(question, container)
+{
+    // 4. TABLES (show full table with all options and highlight selections)
+    const tables = question.querySelectorAll('table');
+    tables.forEach((table, tableIndex) => {
+        html += `<div class="review-table-container">`;
+        html += `<table class="review-table">`;
+            
+        // Copy header
+        if (table.rows.length > 0) {
+            html += '<thead><tr>';
+            Array.from(table.rows[0].cells).forEach(cell => {
+                html += `<th>${cell.textContent}</th>`;
+            });
+            html += '</tr></thead>';
+        }
+            
+            // Process data rows
+        html += '<tbody>';
+        for (let i = 1; i < table.rows.length; i++) {
+            const row = table.rows[i];
+            html += '<tr>';
+                
+            Array.from(row.cells).forEach((cell, cellIndex) => {
+                // First column (question/task)
+                if (cellIndex === 0) {
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = cell.innerHTML;
+                     tempDiv.querySelectorAll('input, button').forEach(el => el.remove());
+                    html += `<td class="task-name"><strong>${tempDiv.textContent.trim()}</strong></td>`;
+                } 
+                    // Other columns (show all options)
                 else {
-                    value = el.value;
-                }
-                if (value) {
-                    const span = document.createElement("span");
-                    span.innerText = value;
-                    el.parentNode.replaceChild(span, el);
-                } else {
-                    const label = el.closest("label");
-                    if (label) label.remove();
-                    else el.remove();
+                    const cellContent = getTableCellContent(cell);
+                    html += `<td>${cellContent}</td>`;
                 }
             });
-            reviewDiv.appendChild(clone);
+                
+            html += '</tr>';
+        }
+        html += '</tbody>';
+            
+        html += '</table></div>';
+    });
+}
+
+// Helper function to format table cell content
+function getTableCellContent(cell) {
+    let content = '';
+    
+    // Check for radio buttons
+    const radios = cell.querySelectorAll('input[type="radio"]');
+    if (radios.length > 0) {
+        content += '<div class="table-options">';
+        radios.forEach(radio => {
+            const isChecked = radio.checked;
+            const optionClass = isChecked ? 'table-option-selected' : 'table-option';
+            const marker = isChecked ? '✓' : '○';
+            
+            // Get label text (fallback to value)
+            let labelText = radio.value;
+            const radioId = radio.id;
+            if (radioId) {
+                const label = document.querySelector(`label[for="${radioId}"]`);
+                if (label) labelText = label.textContent.trim();
+            }
+            
+            content += `
+                <div class="${optionClass}">
+                    <span class="table-marker">${marker}</span>
+                    <span class="table-label">${labelText}</span>
+                </div>
+            `;
         });
-        unlockedIndex = orderedSections.indexOf("review");
-        goToSection("review");
+        content += '</div>';
+        return content;
     }
-    </script>
-
-    <script>
-        document.querySelectorAll('#q18-table input[type="text"]').forEach(input => {
-            input.addEventListener('input', function() {
-                const checkbox = this.closest('tr').querySelector('input[type="checkbox"]');
-                if (this.value.trim()) {
-                checkbox.checked = true;
-                }
-            });
+    
+    // Check for checkboxes
+    const checkboxes = cell.querySelectorAll('input[type="checkbox"]');
+    if (checkboxes.length > 0) {
+        content += '<div class="table-options">';
+        checkboxes.forEach(checkbox => {
+            const isChecked = checkbox.checked;
+            const optionClass = isChecked ? 'table-option-selected' : 'table-option';
+            const marker = isChecked ? '✓' : '□';
+            
+            // Get label text (fallback to value)
+            let labelText = checkbox.value;
+            const checkboxId = checkbox.id;
+            if (checkboxId) {
+                const label = document.querySelector(`label[for="${checkboxId}"]`);
+                if (label) labelText = label.textContent.trim();
+            }
+            
+            content += `
+                <div class="${optionClass}">
+                    <span class="table-marker">${marker}</span>
+                    <span class="table-label">${labelText}</span>
+                </div>
+            `;
         });
-    </script>
+        content += '</div>';
+        return content;
+    }
+    
+    // Check for text inputs
+    const textInputs = cell.querySelectorAll('input[type="text"]');
+    if (textInputs.length > 0) {
+        let textValue = '';
 
-    <script>
-        let qIndex = 0;
-
-        function getQPages() {
-        return document.querySelectorAll("section.active .qpage");
-        }
-
-        let slideTimer = null;
-
-        function showQ(i) {
-            const pages = getQPages();
-            if (!pages.length) return;
-
-            const nav = document.querySelector("section.active .qnav");
-            const backBtn = document.querySelector("section.active .qnav button:first-child");
-
-            // clear old timer
-            if (slideTimer) {
-                clearTimeout(slideTimer);
-                slideTimer = null;
+        textInputs.forEach(input => {
+            if (input.value.trim()) {
+                if (textValue !== '') textValue += ' | ';
+                textValue += input.value.trim();
             }
+        });
 
-            pages.forEach(p => p.classList.remove("active"));
-            pages[i].classList.add("active");
-
-            // INTRO SLIDE
-            if (i === 0) {
-                if (nav) nav.style.display = "none";
-
-                slideTimer = setTimeout(() => {
-                    qIndex = 1;
-                    showQ(qIndex);
-                }, 5000); // 20 seconds
-            }
-            else {
-                if (nav) nav.style.display = "block";
-                if (backBtn) backBtn.disabled = (i === 1);
-            }
-        }
-
-
-        // function showQ(i) {
-        // const pages = getQPages();
-        // if (!pages.length) return;
-
-        // const backBtn = document.querySelector("section.active .qnav button:first-child");
-        // if (backBtn) backBtn.disabled = (i === 0);
-        // pages.forEach(p => p.classList.remove("active"));
-        // pages[i].classList.add("active");
-        // }
-
-        function nextQ() {
-        const pages = getQPages();
-        if (qIndex < pages.length - 1) {
-            qIndex++;
-            showQ(qIndex);
-        } else {
-            // last question → go section next
-            const currentSection =
-            document.querySelector("section.active").id;
-            if (currentSection === "sectionF") {
-                generateReview();   // 👈 go to review instead of submit
+        if (textValue !== '') {
+            // If content already has checkbox/radio, append note
+            if (content !== '') {
+                content += ` <span class="table-note"> – ${textValue}</span>`;
             } else {
-            const nextSection = orderedSections[orderedSections.indexOf(currentSection) + 1];
-            ValidateAndGo(currentSection, nextSection);
-            }               
-            qIndex = 0;
+                content = `<span class="table-text-answer">${textValue}</span>`;
+            }
         }
-        }
+    
+    // Regular cell content
+    const cellText = cell.textContent.trim();
+    return cellText ? cellText : '<span class="empty-cell">-</span>';
+    }
+}
 
-        function prevQ() {
-        if (qIndex > 0) {
-            qIndex--;
-            showQ(qIndex);
+// ========== ENHANCED REVIEW GENERATION ==========
+function generateReview() {
+    const reviewDiv = document.getElementById("reviewContent");
+    reviewDiv.innerHTML = "";
+    
+    // Check if any sections are completed
+    let hasAnyCompletedSections = false;
+    for (const section in surveyState.completedSections) {
+        if (surveyState.completedSections[section]) {
+            hasAnyCompletedSections = true;
+            break;
         }
-        }
-    </script>
+    }
+    
+    if (!hasAnyCompletedSections) {
+        reviewDiv.innerHTML = `
+            <div class="empty-review">
+                <h3>No Completed Sections Yet</h3>
+                <p>Please complete at least one section before reviewing.</p>
+                <button onclick="goToSection('sectionA')" class="btn-primary">
+                    Go to Section A
+                </button>
+            </div>
+        `;
+        return;
+    }
+    
+    // Generate review for completed sections
+    const sections = [
+        { id: 'sectionA', title: 'Section A: Therapist Profile & Clinical Context' },
+        { id: 'sectionB', title: 'Section B: Clinical Use of Tabletop-Tasks' },
+        { id: 'sectionC', title: 'Section C: Activity Materials & Tools' },
+        { id: 'sectionD', title: 'Section D: Intervention Plan & Implementation' },
+        { id: 'sectionE', title: 'Section E: Intervention Review' },
+        { id: 'sectionF', title: 'Section F: Service Model Across Settings' }
+    ];
+    
+    sections.forEach(section => {
+        if (!surveyState.isSectionComplete(section.id)) return;
+        
+        // Create section container
+        const sectionHTML = `
+            <div class="review-section">
+                <h2>${section.title}</h2>
+        `;
+        
+        reviewDiv.innerHTML += sectionHTML;
+        
+        // Get answers for this section
+        const sectionAnswers = getAnswersForReview(section.id);
+        reviewDiv.innerHTML += sectionAnswers;
+        
+        reviewDiv.innerHTML += `</div>`;
+    });
+    
+    // Mark review as accessible and navigate to it
+    unlockedIndex = Math.max(unlockedIndex, orderedSections.indexOf("review"));
+    goToSection("review");
+}
 
+
+// Helper: Get answers for a specific section
+function getSectionAnswers(sectionId) {
+    const sectionAnswers = {};
+    const questionPrefix = sectionId.replace('section', 'q');
+    
+    Object.entries(surveyState.answers).forEach(([questionId, answer]) => {
+        if (questionId.startsWith(questionPrefix.substring(0, 2))) { // Match q1, q2, etc.
+            sectionAnswers[questionId] = answer;
+        }
+    });
+    
+    return sectionAnswers;
+}
+
+// Helper: Format answer for display
+function formatAnswerForDisplay(answer) {
+    if (Array.isArray(answer)) {
+        return answer.map(item => `<div class="answer-item">✓ ${item}</div>`).join('');
+    }
+    return `<div class="answer-item">${answer}</div>`;
+}
+
+function setupRealTimeValidation() {
+    // Listen to all input changes
+    document.querySelectorAll('input, textarea, select').forEach(input => {
+        input.addEventListener('change', function() {
+            // Small delay to ensure value is updated
+            setTimeout(validateCurrentQuestion, 50);
+        });
+        
+        if (input.type === 'text' || input.type === 'textarea') {
+            input.addEventListener('blur', validateCurrentQuestion);
+        }
+    });
+}
+
+
+// // Function to get formatted answers for review
+// function getAnswersForReview(sectionId) {
+//     let html = '';
+    
+//     // Get the actual section element
+//     const section = document.getElementById(sectionId);
+//     if (!section) return html;
+    
+//     // Get all questions in this section
+//     const questions = section.querySelectorAll('.qpage .question');
+    
+//     questions.forEach((question, index) => {
+//         // Skip if it's the intro page (index 0)
+//         if (index === 0) return;
+        
+//         const questionText = question.querySelector('strong, label, h3')?.textContent || `Question ${index}`;
+//         let answers = [];
+        
+//         // Collect all answers from this question
+//         const inputs = question.querySelectorAll('input, textarea, select');
+        
+//         inputs.forEach(input => {
+//             if (input.type === 'radio' && input.checked) {
+//                 const label = input.closest('label');
+//                 const labelText = label ? label.textContent.replace('✔', '').trim() : input.value;
+//                 answers.push(`✓ ${labelText}`);
+//             } else if (input.type === 'checkbox' && input.checked) {
+//                 const label = input.closest('label');
+//                 const labelText = label ? label.textContent.replace('✔', '').trim() : input.value;
+//                 answers.push(`✓ ${labelText}`);
+//             } else if ((input.type === 'text' || input.type === 'textarea' || input.type === 'email') && input.value.trim()) {
+                
+//                 let labelText = 'Answer';
+//                 if (input.previousElementSibling && input.previousElementSibling.tagName === 'LABEL') {
+//                     labelText = input.previousElementSibling.textContent.trim();
+//                 } else if (input.closest('label')) {
+//                     labelText = input.closest('label').textContent.trim();
+//                 }
+//                 answers.push(`${labelText}: ${input.value}`);
+//             }
+//         });
+        
+//         // Process tables
+//         const tables = question.querySelectorAll('table');
+//         tables.forEach(table => {
+//             let tableHTML = '<div class="review-table"><table>';
+            
+//             // Copy header
+//             if (table.rows.length > 0) {
+//                 tableHTML += '<tr>';
+//                 Array.from(table.rows[0].cells).forEach(cell => {
+//                     tableHTML += `<th>${cell.textContent}</th>`;
+//                 });
+//                 tableHTML += '</tr>';
+//             }
+            
+//             // Process data rows
+//             for (let i = 1; i < table.rows.length; i++) {
+//                 const row = table.rows[i];
+//                 let rowHasSelection = false;
+//                 let rowHTML = '<tr>';
+                
+//                 Array.from(row.cells).forEach((cell, cellIndex) => {
+//                     // First column (question/task)
+//                     if (cellIndex === 0) {
+//                         const tempDiv = document.createElement('div');
+//                         tempDiv.innerHTML = cell.innerHTML;
+//                         tempDiv.querySelectorAll('input, button').forEach(el => el.remove());
+//                         rowHTML += `<td><strong>${tempDiv.textContent.trim()}</strong></td>`;
+//                     } 
+//                     // Other columns (answers)
+//                     else {
+//                         const radios = cell.querySelectorAll('input[type="radio"]:checked');
+//                         const checkboxes = cell.querySelectorAll('input[type="checkbox"]:checked');
+//                         const textInputs = cell.querySelectorAll('input[type="text"]');
+                        
+//                         if (radios.length > 0) {
+//                             rowHasSelection = true;
+//                             rowHTML += `<td><span class="selected-answer">✓ ${radios[0].value}</span></td>`;
+//                         } else if (checkboxes.length > 0) {
+//                             rowHasSelection = true;
+//                             const selected = Array.from(checkboxes).map(cb => cb.value).join(', ');
+//                             rowHTML += `<td><span class="selected-answer">✓ ${selected}</span></td>`;
+//                         } else if (textInputs.length > 0 && textInputs[0].value.trim()) {
+//                             rowHasSelection = true;
+//                             rowHTML += `<td><span class="selected-answer">${textInputs[0].value}</span></td>`;
+//                         } else {
+//                             rowHTML += '<td>-</td>';
+//                         }
+//                     }
+//                 });
+                
+//                 rowHTML += '</tr>';
+                
+//                 // Only include rows with selections
+//                 if (rowHasSelection) {
+//                     tableHTML += rowHTML;
+//                 }
+//             }
+            
+//             tableHTML += '</table></div>';
+            
+//             if (tableHTML.includes('selected-answer')) {
+//                 answers.push(tableHTML);
+//             }
+//         });
+        
+//         if (answers.length > 0) {
+//             html += `
+//                 <div class="review-question">
+//                     <h3>${questionText}</h3>
+//                     <div class="review-answers">
+//                         ${answers.map(answer => `<div class="answer-item">${answer}</div>`).join('')}
+//                     </div>
+//                 </div>
+//             `;
+//         }
+//     });
+    
+//     return html;
+// }
+
+
+function mapInputNameToQuestionId(name) {
+    const mapping = {
+        // Section A
+        'background': 'q1_professional_background',
+        'experience': 'q2_years_experience',
+        'pg': 'q3_postgrad_qualifications',
+        'pg_text': 'q3_postgrad_details',
+        'caseload': 'q4_percentage_caseload',
+        'clinical_setting[]': 'q5_clinical_settings',
+        'acute': 'q6_acute_phase',
+        'subacute': 'q6_subacute_phase',
+        'chronic': 'q6_chronic_phase',
+        
+        // Section B
+        'q7_task1[]': 'q7_task1_levels',
+        'q7_task2[]': 'q7_task2_levels',
+        'q7_task3[]': 'q7_task3_levels',
+        'q7_task4[]': 'q7_task4_levels',
+        'q7_task5[]': 'q7_task5_levels',
+        'role1[]': 'q8_role1',
+        'role2[]': 'q8_role2',
+        'role3[]': 'q8_role3',
+        'role4[]': 'q8_role4',
+        'role5[]': 'q8_role5',
+        
+        // Section C
+        'adl_mild': 'q9_adl_mild',
+        'adl_moderate': 'q9_adl_moderate',
+        'adl_severe': 'q9_adl_severe',
+        'therapy_mild': 'q9_therapy_mild',
+        'therapy_moderate': 'q9_therapy_moderate',
+        'therapy_severe': 'q9_therapy_severe',
+        'fine_mild': 'q9_fine_mild',
+        'fine_moderate': 'q9_fine_moderate',
+        'fine_severe': 'q9_fine_severe',
+        'game_mild': 'q9_game_mild',
+        'game_moderate': 'q9_game_moderate',
+        'game_severe': 'q9_game_severe',
+        
+        // Section D
+        'q10[]': 'q10_adjustment_methods',
+        'q11_a': 'q11_trunk_compensation',
+        'q11_a_note': 'q11_trunk_note',
+        'q11_b': 'q11_delayed_movement',
+        'q11_b_note': 'q11_delayed_note',
+        'q11_c': 'q11_limited_rom',
+        'q11_c_note': 'q11_rom_note',
+        'q11_d': 'q11_object_drops',
+        'q11_d_note': 'q11_drops_note',
+        'q11_e': 'q11_poor_preshape',
+        'q11_e_note': 'q11_preshape_note',
+        'q11_f': 'q11_manipulation_difficulty',
+        'q11_f_note': 'q11_manipulation_note',
+        'q11_g': 'q11_fatigue_pain',
+        'q11_g_note': 'q11_fatigue_note',
+        'q11_h': 'q11_poor_sequencing',
+        'q11_h_note': 'q11_sequencing_note',
+        'q11_i': 'q11_unsafe_handling',
+        'q11_i_note': 'q11_unsafe_note',
+        'q11_j': 'q11_inconsistent_timing',
+        'q11_j_note': 'q11_timing_note',
+        'q11_k': 'q11_poor_coordination',
+        'q11_k_note': 'q11_coordination_note',
+        'q12[]': 'q12_feedback_phases',
+        'q13_a': 'q13_verbal_feedback',
+        'q13_b': 'q13_visual_demonstration',
+        'q13_c': 'q13_manual_guidance',
+        'q13_d': 'q13_motivational_encouragement',
+        'q13_e': 'q13_functional_cues',
+        'q13_f': 'q13_self_reflection',
+        'q13_g': 'q13_caregiver_feedback',
+        
+        // Section E
+        'q14_1': 'q14_standardized_assessments',
+        'q14_2': 'q14_observation',
+        'q14_3': 'q14_patient_reports',
+        'q14_4': 'q14_task_metrics',
+        'q14_5': 'q14_caregiver_feedback',
+        'q15[]': 'q15_performance_aspects',
+        
+        // Section F
+        'q16[]': 'q16_implementation_methods',
+        'q17_1': 'q17_caregiver_availability',
+        'q17_2': 'q17_patient_motivation',
+        'q17_3': 'q17_monitor_progress',
+        'q17_4': 'q17_guide_sequence',
+        'q17_5': 'q17_tailored_instructions',
+        'q17_6': 'q17_materials_access',
+        'q17_7': 'q17_safety_concerns',
+        'q17_8': 'q17_caregiver_confidence',
+        'q18[]': 'q18_training_areas'
+    };
+    
+    return mapping[name] || name;
+}
+
+
+
+
+// Function to map input names to question IDs
+function mapInputNameToQuestionId(name) {
+    const mapping = {
+        // Section A
+        'background': 'q1_professional_background',
+        'experience': 'q2_years_experience',
+        'pg': 'q3_postgrad_qualifications',
+        'pg_text': 'q3_postgrad_details',
+        'caseload': 'q4_percentage_caseload',
+        'clinical_setting[]': 'q5_clinical_settings',
+        'acute': 'q6_acute_phase',
+        'subacute': 'q6_subacute_phase',
+        'chronic': 'q6_chronic_phase',
+        
+        // Section B
+        'q7_task1[]': 'q7_task1_levels',
+        'q7_task2[]': 'q7_task2_levels',
+        'q7_task3[]': 'q7_task3_levels',
+        'q7_task4[]': 'q7_task4_levels',
+        'q7_task5[]': 'q7_task5_levels',
+        'role1[]': 'q8_role1',
+        'role2[]': 'q8_role2',
+        'role3[]': 'q8_role3',
+        'role4[]': 'q8_role4',
+        'role5[]': 'q8_role5',
+        
+        // Section C
+        'adl_mild': 'q9_adl_mild',
+        'adl_moderate': 'q9_adl_moderate',
+        'adl_severe': 'q9_adl_severe',
+        'therapy_mild': 'q9_therapy_mild',
+        'therapy_moderate': 'q9_therapy_moderate',
+        'therapy_severe': 'q9_therapy_severe',
+        'fine_mild': 'q9_fine_mild',
+        'fine_moderate': 'q9_fine_moderate',
+        'fine_severe': 'q9_fine_severe',
+        'game_mild': 'q9_game_mild',
+        'game_moderate': 'q9_game_moderate',
+        'game_severe': 'q9_game_severe',
+        
+        // Section D
+        'q10[]': 'q10_adjustment_methods',
+        'q11_a': 'q11_trunk_compensation',
+        'q11_a_note': 'q11_trunk_note',
+        'q11_b': 'q11_delayed_movement',
+        'q11_b_note': 'q11_delayed_note',
+        'q11_c': 'q11_limited_rom',
+        'q11_c_note': 'q11_rom_note',
+        'q11_d': 'q11_object_drops',
+        'q11_d_note': 'q11_drops_note',
+        'q11_e': 'q11_poor_preshape',
+        'q11_e_note': 'q11_preshape_note',
+        'q11_f': 'q11_manipulation_difficulty',
+        'q11_f_note': 'q11_manipulation_note',
+        'q11_g': 'q11_fatigue_pain',
+        'q11_g_note': 'q11_fatigue_note',
+        'q11_h': 'q11_poor_sequencing',
+        'q11_h_note': 'q11_sequencing_note',
+        'q11_i': 'q11_unsafe_handling',
+        'q11_i_note': 'q11_unsafe_note',
+        'q11_j': 'q11_inconsistent_timing',
+        'q11_j_note': 'q11_timing_note',
+        'q11_k': 'q11_poor_coordination',
+        'q11_k_note': 'q11_coordination_note',
+        'q12[]': 'q12_feedback_phases',
+        'q13_a': 'q13_verbal_feedback',
+        'q13_b': 'q13_visual_demonstration',
+        'q13_c': 'q13_manual_guidance',
+        'q13_d': 'q13_motivational_encouragement',
+        'q13_e': 'q13_functional_cues',
+        'q13_f': 'q13_self_reflection',
+        'q13_g': 'q13_caregiver_feedback',
+        
+        // Section E
+        'q14_1': 'q14_standardized_assessments',
+        'q14_2': 'q14_observation',
+        'q14_3': 'q14_patient_reports',
+        'q14_4': 'q14_task_metrics',
+        'q14_5': 'q14_caregiver_feedback',
+        'q15[]': 'q15_performance_aspects',
+        
+        // Section F
+        'q16[]': 'q16_implementation_methods',
+        'q17_1': 'q17_caregiver_availability',
+        'q17_2': 'q17_patient_motivation',
+        'q17_3': 'q17_monitor_progress',
+        'q17_4': 'q17_guide_sequence',
+        'q17_5': 'q17_tailored_instructions',
+        'q17_6': 'q17_materials_access',
+        'q17_7': 'q17_safety_concerns',
+        'q17_8': 'q17_caregiver_confidence',
+        'q18[]': 'q18_training_areas'
+    };
+    
+    return mapping[name] || name;
+}
+
+// Function to collect all form data
+function collectAllFormData() {
+    const form = document.getElementById('surveyForm');
+    const formData = new FormData(form);
+    
+    // Clear existing answers first
+    if (!surveyState.answers) {
+    surveyState.answers = {};
+    }
+    
+    for (let [name, value] of formData.entries()) {
+        if (!value) continue;
+        
+        const questionId = mapInputNameToQuestionId(name);
+        if (questionId) {
+            // Handle array values (checkboxes)
+            if (name.endsWith('[]')) {
+                if (!surveyState.answers[questionId]) {
+                    surveyState.answers[questionId] = [];
+                }
+                if (Array.isArray(surveyState.answers[questionId])) {
+                    surveyState.answers[questionId].push(value);
+                }
+            } else {
+                surveyState.answers[questionId] = value;
+            }
+        }
+    }
+    
+    // Save to state
+    surveyState.saveToStorage();
+}
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    setupRealTimeValidation();
+    
+       // Initialize state management
+    if (typeof surveyState !== 'undefined' && surveyState.init) {
+        surveyState.init();
+    }
+    
+    // Setup navigation
+    if (typeof setupNavigation !== 'undefined') {
+        setupNavigation();
+    }
+    
+    // Restore to last accessible section
+    const lastSection = surveyState.currentSection;
+    if (lastSection && lastSection !== 'intro' && surveyState.isSectionAccessible(lastSection)) {
+        goToSection(lastSection);
+    } else {
+        // Default to intro
+        goToSection('intro');
+    }
+    
+    
+    // Add CSS for validation
+    const style = document.createElement('style');
+    style.textContent = `
+        .question-valid {
+            border-left: 4px solid #4CAF50;
+            padding-left: 10px;
+            background-color: #f8fff8;
+            margin-bottom: 20px;
+        }
+        
+        .question-invalid {
+            border-left: 4px solid #f44336;
+            padding-left: 10px;
+            background-color: #fff8f8;
+            margin-bottom: 20px;
+        }
+        
+        .validation-msg {
+            font-size: 12px;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+        
+        .qnav {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            padding: 12px;
+            border-top: 1px solid #ccc;
+            text-align: center;
+            z-index: 1000;
+        }
+        
+        .qnav button {
+            min-height: 44px;
+            padding: 12px 18px;
+            cursor: pointer;
+            border-radius: 6px;
+            margin: 0 10px;
+            background: #004d66;
+            color: white;
+            border: none;
+            font-weight: bold;
+        }
+        
+        .qnav button:hover {
+            background: #00334d;
+        }
+        
+        .qnav button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #ccc;
+        }
+    `;
+    document.head.appendChild(style);
+        surveyState.init();
+    
+    showQ(0);
+});
+
+// ---------- UTILITY FUNCTIONS ----------
+function deleteRow(btn) {
+    const row = btn.closest("tr");
+    if (row) row.remove();
+}
+
+
+
+//state management
+const surveyState = {
+    // Track completion status
+    completedSections: {
+        sectionA: false,
+        sectionB: false,
+        sectionC: false,
+        sectionD: false,
+        sectionE: false,
+        sectionF: false
+    },
+    
+    accessibleSections: {
+        sectionA: false,
+        sectionB: false,
+        sectionC: false,
+        sectionD: false,
+        sectionE: false,
+        sectionF: false
+    },
+    
+    // Store all answers
+    answers: {},
+    
+    // Current position
+    currentSection: 'intro',
+    currentQuestion: 0,
+    
+    // Section order
+    sectionOrder: ['sectionA', 'sectionB', 'sectionC', 'sectionD', 'sectionE', 'sectionF'],
+    
+    // Initialize
+    init() {
+        const saved = localStorage.getItem('surveyState');
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            Object.assign(this.completedSections, parsed.completedSections || {});
+            Object.assign(this.accessibleSections, parsed.accessibleSections || {});
+            Object.assign(this.answers, parsed.answers || {});
+            this.currentSection = parsed.currentSection || 'intro';
+            this.currentQuestion = parsed.currentQuestion || 0;
+        }
+        
+        // Always make intro accessible
+        this.accessibleSections.sectionA = true;
+        
+        this.setupAutoSave();
+        this.updateNavigationUI();
+    },
+    
+    // Mark section as started/accessible
+    markSectionAccessible(sectionId) {
+        this.accessibleSections[sectionId] = true;
+        this.saveToStorage();
+        this.updateNavigationUI();
+    },
+    
+    // Mark section as completed
+    markSectionComplete(sectionId) {
+        this.completedSections[sectionId] = true;
+        
+        // Mark next section as accessible
+        const currentIndex = this.sectionOrder.indexOf(sectionId);
+        if (currentIndex < this.sectionOrder.length - 1) {
+            const nextSection = this.sectionOrder[currentIndex + 1];
+            this.markSectionAccessible(nextSection);
+        }
+        
+        this.saveToStorage();
+        this.updateNavigationUI();
+    },
+    
+    // Check if section is accessible
+    isSectionAccessible(sectionId) {
+        return this.accessibleSections[sectionId] || false;
+    },
+    
+    // Check if section is completed
+    isSectionComplete(sectionId) {
+        return this.completedSections[sectionId] || false;
+    },
+    
+    // Get next accessible section
+    getNextAccessibleSection() {
+        const currentIndex = this.sectionOrder.indexOf(this.currentSection);
+        for (let i = currentIndex + 1; i < this.sectionOrder.length; i++) {
+            const section = this.sectionOrder[i];
+            if (this.isSectionAccessible(section)) {
+                return section;
+            }
+        }
+        return 'review'; // If all sections are accessible, go to review
+    },
+    
+    // Update navigation UI (enable/disable links)
+    updateNavigationUI() {
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            const sectionId = this.getSectionIdFromLink(link);
+            if (sectionId && sectionId !== 'intro') {
+                if (this.isSectionAccessible(sectionId)) {
+                    link.style.opacity = '1';
+                    link.style.pointerEvents = 'auto';
+                    link.style.cursor = 'pointer';
+                } else {
+                    link.style.opacity = '0.5';
+                    link.style.pointerEvents = 'none';
+                    link.style.cursor = 'not-allowed';
+                }
+            }
+        });
+    },
+    
+    // Helper: Get section ID from nav link
+    getSectionIdFromLink(link) {
+        const text = link.textContent.trim();
+        const map = {
+            'Introduction': 'intro',
+            'Section A': 'sectionA',
+            'Section B': 'sectionB',
+            'Section C': 'sectionC',
+            'Section D': 'sectionD',
+            'Section E': 'sectionE',
+            'Section F': 'sectionF'
+        };
+        return map[text];
+    },
+    
+    // Save answer
+    saveAnswer(questionId, answer) {
+        this.answers[questionId] = answer;
+        this.saveToStorage();
+    },
+    
+    // Save to localStorage
+    saveToStorage() {
+        localStorage.setItem('surveyState', JSON.stringify({
+            answers: this.answers,
+            completedSections: this.completedSections,
+            accessibleSections: this.accessibleSections,
+            currentSection: this.currentSection,
+            currentQuestion: this.currentQuestion
+        }));
+    },
+    
+    // Clear storage
+    clearStorage() {
+        localStorage.removeItem('surveyState');
+        this.answers = {};
+        this.completedSections = {};
+        this.accessibleSections = {};
+        this.currentSection = 'intro';
+        this.currentQuestion = 0;
+    },
+    
+    // Setup auto-save
+    setupAutoSave() {
+        document.addEventListener('input', (e) => {
+            if (e.target.matches('input, textarea, select')) {
+                const questionId = this.getQuestionId(e.target);
+                if (questionId) {
+                    const answer = this.collectAnswer(e.target);
+                    this.saveAnswer(questionId, answer);
+                    
+                    // Mark current section as started
+                    if (this.currentSection && this.currentSection !== 'intro') {
+                        this.markSectionAccessible(this.currentSection);
+                    }
+                }
+            }
+        });
+    },
+    
+    // Get question ID from input
+    getQuestionId(input) {
+        const name = input.name || input.id;
+        if (!name) return null;
+        
+        // Simple mapping - you can expand this
+        if (name.includes('background')) return 'q1';
+        if (name.includes('experience')) return 'q2';
+        if (name.includes('pg')) return 'q3';
+        if (name.includes('caseload')) return 'q4';
+        if (name.includes('clinical_setting')) return 'q5';
+        if (name.includes('acute') || name.includes('subacute') || name.includes('chronic')) return 'q6';
+        // Add more mappings as needed
+        
+        return name;
+    },
+    
+    // Collect answer from input
+    collectAnswer(input) {
+        if (input.type === 'checkbox') {
+            const name = input.name;
+            const checkboxes = document.querySelectorAll(`input[name="${name}"]:checked`);
+            return Array.from(checkboxes).map(cb => cb.value);
+        } else if (input.type === 'radio') {
+            const radio = document.querySelector(`input[name="${input.name}"]:checked`);
+            return radio ? radio.value : null;
+        } else {
+            return input.value;
+        }
+    }
+};
+
+</script>
 </body>
 </html>
-
