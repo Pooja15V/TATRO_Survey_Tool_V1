@@ -242,6 +242,7 @@
     border: 1px solid #e8e8e8;
 }
 
+
 .review-section h2 {
     color: #004d66;
     border-bottom: 2px solid #004d66;
@@ -710,7 +711,7 @@ nav a.current {
                 </p>
             </div>  
 
-            <button type="button"  onclick="startSurvey()" style="margin-top:20px;">
+            <button type="button"  onclick="unlockSectionAIfConsented()" style="margin-top:20px;">
                 Start Survey
             </button>
         </section>
@@ -756,8 +757,8 @@ nav a.current {
                 <div class="question">
                     <label><strong>3.Have you had any post-graduate qualifications in stroke rehabilitation?</strong></label>
                     <div class="options">
-                        <label><input type="radio" id="pg_yes" name="pg" onclick="togglePGQualificationBox()"> Yes</label>
-                        <label><input type="radio" id="pg_no" name="pg" onclick="togglePGQualificationBox()"> No</label>
+                        <label><input type="radio" id="pg_yes" name="pg" value="Yes" onclick="togglePGQualificationBox()"> Yes</label>
+                        <label><input type="radio" id="pg_no" name="pg" value="No" onclick="togglePGQualificationBox()"> No</label>
                         <div id="pg_text" style="display:none; margin-top:10px;">
                             <input type="text" name="pg_text" placeholder="Please specify...">
                         </div>
@@ -928,24 +929,31 @@ nav a.current {
             </div>
             <script>
             function addq7Row() {
-                const table = document.getElementById("q7-table");
-                const rowIndex = table.rows.length;
-                const row = table.insertRow(-1);
+    const table = document.getElementById("q7-table");
+    const rowIndex = table.rows.length;
+    const row = table.insertRow(-1);
 
-                // Task name cell
-                row.insertCell(0).innerHTML =
-                    `<input type="text" name="q7_task_name_${rowIndex}" placeholder="Enter task name">
-                    <button type="button" onclick="deleteRow(this)">❌</button>`;
-                const levels = ["Mild", "Moderate", "Severe", "Not Used"];
-
-                levels.forEach(level => {
-                    row.insertCell(-1).innerHTML =
-                    `<input type="checkbox"
-                            name="q7_other_${rowIndex}[]"
-                            value="${level}"
-                            onchange="toggleq7Row(this.closest('tr'), this)">`;
-                });
-            }
+    // Task name cell
+    row.insertCell(0).innerHTML = `
+        <input type="text" 
+               name="q7_task_name_${rowIndex}" 
+               id="q7_task_name_${rowIndex}"
+               placeholder="Enter task name"
+               style="width: 90%;">
+        <button type="button" onclick="deleteRow(this)">❌</button>`;
+    
+    const levels = ["Mild", "Moderate", "Severe", "Not Used"];
+    
+    levels.forEach((level, index) => {
+        const cell = row.insertCell(-1);
+        cell.innerHTML = `
+            <input type="checkbox" 
+                   name="q7_dynamic_${rowIndex}[]" 
+                   value="${level}"
+                   onchange="toggleq7Row(this.closest('tr'), this)">
+        `;
+    });
+}
             </script>
             <script>
             function toggleq7Row(row, changedCheckbox) {
@@ -1022,21 +1030,28 @@ nav a.current {
             </div>
             <script>
             function addq8Row() {
-                const table = document.getElementById("q8-table");
-                const rowIndex = table.rows.length;
-                const row = table.insertRow(-1);
+    const table = document.getElementById("q8-table");
+    const rowIndex = table.rows.length;
+    const row = table.insertRow(-1);
 
-                row.insertCell(0).innerHTML =
-                    `<input type="text" name="q8_task_${rowIndex}" placeholder="Enter task name">
-                    <button type="button" onclick="deleteRow(this)">❌</button>`;
+    row.insertCell(0).innerHTML = `
+        <input type="text" 
+               name="q8_task_name_${rowIndex}" 
+               id="q8_task_name_${rowIndex}"
+               placeholder="Enter task name"
+               style="width: 90%;">
+        <button type="button" onclick="deleteRow(this)">❌</button>`;
 
-                const roles = ["Instruction", "Demonstrate", "Assist", "Train"];
+    const roles = ["Instruction", "Demonstrate", "Assist", "Train"];
 
-                roles.forEach(role => {
-                    row.insertCell(-1).innerHTML =
-                    `<input type="checkbox" name="q8_other_${rowIndex}[]" value="${role}">`;
-                });
-            }
+    roles.forEach(role => {
+        row.insertCell(-1).innerHTML = `
+            <input type="checkbox" 
+                   name="q8_dynamic_${rowIndex}[]" 
+                   value="${role}">
+        `;
+    });
+}
             </script>
             <!-- <button type="button" onclick="ValidateAndGo('sectionB','sectionC')">
                 Next
@@ -1110,30 +1125,41 @@ nav a.current {
 
             <script>
             function addq9Row() {
-                const table = document.getElementById("q9-table");
-                const rowIndex = table.rows.length;
-                const row = table.insertRow(-1);
+    const table = document.getElementById("q9-table");
+    const rowIndex = table.rows.length;
+    const row = table.insertRow(-1);
 
-                // Category cell
-                row.insertCell(0).innerHTML = `
-                    <input type="text"
-                        name="q9_category_${rowIndex}"
-                        placeholder="Material / Tool category">
-                    <button type="button" onclick="deleteRow(this)">❌</button>
-                `;
+    // Category cell
+    row.insertCell(0).innerHTML = `
+        <input type="text"
+               name="q9_category_${rowIndex}"
+               id="q9_category_${rowIndex}"
+               placeholder="Material / Tool category"
+               style="width: 90%;">
+        <button type="button" onclick="deleteRow(this)">❌</button>
+    `;
 
-                // Mild
-                row.insertCell(1).innerHTML =
-                    `<input type="checkbox" name="q9_other_mild_${rowIndex}">`;
+    // Mild
+    row.insertCell(1).innerHTML = `
+        <input type="checkbox" 
+               name="q9_dynamic_${rowIndex}[]" 
+               value="Mild">
+    `;
 
-                // Moderate
-                row.insertCell(2).innerHTML =
-                    `<input type="checkbox" name="q9_other_moderate_${rowIndex}">`;
+    // Moderate
+    row.insertCell(2).innerHTML = `
+        <input type="checkbox" 
+               name="q9_dynamic_${rowIndex}[]" 
+               value="Moderate">
+    `;
 
-                // Severe
-                row.insertCell(3).innerHTML =
-                    `<input type="checkbox" name="q9_other_severe_${rowIndex}">`;
-                }
+    // Severe
+    row.insertCell(3).innerHTML = `
+        <input type="checkbox" 
+               name="q9_dynamic_${rowIndex}[]" 
+               value="Severe">
+    `;
+}
             </script>
             
             <!-- <button type="button" onclick="ValidateAndGo('sectionC','sectionD')">
@@ -1431,7 +1457,9 @@ nav a.current {
                           id="q11_other_scenario_${rowIndex}"
                           name="q11_other_scenario_${rowIndex}"
                           placeholder="Other scenario"
-                          data-optional>`;
+                          data-optional>
+                          
+                            <button type="button" onclick="deleteRow(this)" style="padding: 6px 12px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">❌</button>`;
 
                 // Radios
                 const radioValues = ["Never", "Rarely", "Sometimes", "Often", "Always"];
@@ -1456,10 +1484,15 @@ nav a.current {
                 const proxy = document.createElement("input");
                 proxy.type = "checkbox";
                 proxy.id = `q11_other_proxy_${rowIndex}`;
+                proxy.name = `q11_other_proxy_${rowIndex}`;
+                proxy.value = "selected";
                 proxy.style.display = "none";
                 proxy.setAttribute("data-paired-text", `q11_other_adjustment_${rowIndex}`);
-                row.insertCell(7).innerHTML =
-                    `<button type="button" onclick="deleteRow(this)">❌</button>`;
+                const cell = row.insertCell(7);
+                cell.appendChild(proxy);
+                // cell.innerHTML += `<button type="button" onclick="deleteRow(this)">❌</button>`;
+                // row.insertCell(7).innerHTML =
+                //     `<button type="button" onclick="deleteRow(this)">❌</button>`;
               }
             </script>
 
@@ -1548,24 +1581,26 @@ nav a.current {
             <!-- Button to add more rows -->
             <script>
             function addQ13Row() {
-            let table = document.getElementById("q13-table");
-            let rowCount = table.rows.length;
-            let row = table.insertRow(rowCount);
+                let table = document.getElementById("q13-table");
+                let rowCount = table.rows.length;
+                let row = table.insertRow(rowCount);
 
-            // First cell = input box
-            let cell1 = row.insertCell(0);
-            cell1.innerHTML = `<input type="text" name="q13_other_text_${rowCount}" placeholder="Other feedback type"><button type="button" onclick="deleteRow(this)">❌</button>
-            `;
-            // Radio buttons (grouped per row)
-            for (let i = 1; i <= 5; i++) {
-                let cell = row.insertCell(i);
-                cell.innerHTML = '<input type="radio" name="q13_other_text' + rowCount + '">';
-            }
+                // First cell = input box
+                let cell1 = row.insertCell(0);
+                cell1.innerHTML = `<input type="text" name="q13_other_text_${rowCount}" placeholder="Other feedback type"><button type="button" onclick="deleteRow(this)">❌</button>
+                `;
+                // Radio buttons (grouped per row)
+                for (let i = 1; i <= 5; i++) {
+                    let cell = row.insertCell(i);
+                    const labels = ["Never","Rarely","Sometimes","Often","Always"];
+                    cell.innerHTML = `
+                    <input type="radio" name="q13_other_${rowCount}"  value="${labels[i-1]}">`;
+                }
             }
             </script>
             <div class="qnav">
-                <button onclick="prevQ()">Back</button>
-                <button onclick="nextQ()">Next</button>
+                <button type="button" onclick="prevQ()">Back</button>
+                <button type="button" onclick="nextQ()">Next</button>
             </div>
         </section>
 
@@ -1641,6 +1676,7 @@ nav a.current {
             function addQ14Row() {
               const table = document.getElementById("q14-table");
               const rowIndex = table.rows.length;
+              const labels = ["Never","Rarely","Sometimes","Often","Always"];
 
               const row = table.insertRow(-1);
 
@@ -1654,7 +1690,7 @@ nav a.current {
               for (let i = 1; i <= 5; i++) {
                 row.insertCell(i).innerHTML = `
                   <input type="radio"
-                        name="q14_other_${rowIndex}">
+                        name="q14_other_${rowIndex}" value="${labels[i-1]}">
                 `;
               }
             }
@@ -1738,8 +1774,8 @@ nav a.current {
             }
             </script>
            <div class="qnav">
-                <button onclick="prevQ()">Back</button>
-                <button onclick="nextQ()">Next</button>
+                <button type="button" onclick="prevQ()">Back</button>
+                <button type="button" onclick="nextQ()">Next</button>
             </div>
         </section>
         
@@ -1806,7 +1842,8 @@ nav a.current {
                     <input type="text"
                             name="q16_other_text_${rowIndex}"
                             placeholder="Other implementation method"
-                            style="width:90%; margin-left:8px;">
+                            style="width:90%; margin-left:8px;"
+                            oninput="this.previousElementSibling.checked = true">
                     </label>
                     <button type="button" onclick="deleteRow(this)">❌</button>
                 `;
@@ -1939,7 +1976,7 @@ nav a.current {
                     <tr>
                     <td>
                         <label>
-                        <input type="checkbox" name="q18[]" value="Fatigue compensation">
+                        <input type="checkbox" name="q18[]" value="Fatigue compensation"**checked**>
                         Identifying signs of fatigue or compensation
                         </label>
                     </td>
@@ -1950,7 +1987,7 @@ nav a.current {
                     <tr>
                     <td>
                         <label>
-                            <input type="checkbox" name="q18[]" value="Object difficulty">
+                            <input type="checkbox" name="q18[]" value="Object difficulty" **checked**>
                             Adjusting object difficulty or size                        
                         </label>            
                     </td>
@@ -1961,7 +1998,7 @@ nav a.current {
                     <tr>
                     <td>
                         <label>
-                            <input type="checkbox" name="q18[]" value="Target position">
+                            <input type="checkbox" name="q18[]" value="Target position" **checked**>
                             Adjusting the target position
                         </label>           
                     </td>
@@ -1972,7 +2009,7 @@ nav a.current {
                     <tr>
                     <td>
                         <label>
-                            <input type="checkbox" name="q18[]" value="Physical verbal support">
+                            <input type="checkbox" name="q18[]" value="Physical verbal support" **checked**>
                             Providing physical or verbal support
                         </label>
                     </td>
@@ -1983,7 +2020,7 @@ nav a.current {
                     <tr>
                     <td>
                         <label>
-                            <input type="checkbox" name="q18[]" value="Motivational feedback">
+                            <input type="checkbox" name="q18[]" value="Motivational feedback" **checked**>
                             Giving motivational or instructional feedback
                         </label>         
                     </td>
@@ -1994,7 +2031,7 @@ nav a.current {
                     <tr>
                     <td>
                         <label>
-                            <input type="checkbox" name="q18[]" value="Tracking progress">
+                            <input type="checkbox" name="q18[]" value="Tracking progress" **checked**>
                             Tracking patient progress
                         </label>        
                     </td>
@@ -2003,7 +2040,7 @@ nav a.current {
                     <tr>
                     <td>
                         <label>
-                            <input type="checkbox" name="q18[]" value="Safety setup">
+                            <input type="checkbox" name="q18[]" value="Safety setup"**checked**>
                             Ensuring safety and proper setup
                         </label>            
                     </td>
@@ -2033,30 +2070,64 @@ nav a.current {
             </div>
         <!-- Button to add more rows -->
             <script>
-            function addQ18Row() {
-            const table = document.getElementById("q18-table");
-            const rowIndex = table.rows.length;
-            const row = table.insertRow(-1);
+            // function addQ18Row() {
+            // const table = document.getElementById("q18-table");
+            // const rowIndex = table.rows.length;
+            // const row = table.insertRow(-1);
 
-            // Column 1: Checkbox + Text
-            row.insertCell(0).innerHTML = `
-                <label>
-                <input type="checkbox" name="q18[]" value="other_${rowIndex}" checked>
+            // // Column 1: Checkbox + Text
+            // row.insertCell(0).innerHTML = `
+            //     <label>
+            //     <input type="checkbox" name="q18[]" value="other_${rowIndex}" checked>
+            //     <input type="text"
+            //             name="q18_other_text_${rowIndex}"
+            //             oninput="this.previousElementSibling.checked = true"
+            //             placeholder="Other training area"
+            //             style="width:85%; margin-left:8px;">
+            //     </label>
+            //     <button type="button" onclick="deleteRow(this)">❌</button>
+            // `;
+
+            // // Column 2: Note
+            // row.insertCell(1).innerHTML = `
+            //     <input type="text"
+            //         name="q18_note_${rowIndex}"
+            //         placeholder="Optional note">
+            // `;
+            // }
+
+            function addQ18Row() {
+    const table = document.getElementById("q18-table");
+    const rowIndex = table.rows.length;
+    const row = table.insertRow(-1);
+
+    // Column 1: Checkbox + Text (Training Area)
+    const cell1 = row.insertCell(0);
+    cell1.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; width: 100%;">
+            <label style="display: flex; align-items: center; gap: 8px; flex: 1; cursor: pointer;">
+                <input type="checkbox" name="q18[]" value="other_${rowIndex}" checked style="transform: scale(1.2); margin-right: 6px;">
                 <input type="text"
                         name="q18_other_text_${rowIndex}"
+                        oninput="this.previousElementSibling.checked = true"
                         placeholder="Other training area"
-                        style="width:85%; margin-left:8px;">
-                </label>
-                <button type="button" onclick="deleteRow(this)">❌</button>
-            `;
+                        style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+            </label>
+            <button type="button" onclick="deleteRow(this)" style="padding: 6px 12px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">✕ Remove</button>
+        </div>
+    `;
 
-            // Column 2: Note
-            row.insertCell(1).innerHTML = `
-                <input type="text"
-                    name="q18_note_${rowIndex}"
-                    placeholder="Optional note">
-            `;
-            }
+    // Column 2: Note (Optional)
+    const cell2 = row.insertCell(1);
+    cell2.innerHTML = `
+        <input type="text"
+            name="q18_note_${rowIndex}"
+            placeholder="Optional note"
+            data-optional="true"
+            style="width: 95%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; box-sizing:border-box;">
+    `;
+    cell2.style.verticalAlign = 'middle';
+}
             </script>
             <div class="qnav">
                 <button type="button" onclick="prevQ()">Back</button>
@@ -2070,12 +2141,15 @@ nav a.current {
         function toggleFollowupFields() {
             const box = document.getElementById("followup_yes");
             const fields = document.getElementById("followup_fields");
+            const emailInput = document.getElementById("followup_email");
 
             if (box.checked) {
                 fields.style.display = "block";
+                emailInput.required = true;   // <-- important
             } else {
                 fields.style.display = "none";
-                fields.querySelectorAll("input").forEach(i => i.value = "");
+                emailInput.required = false;  // <-- remove requirement
+                emailInput.value = "";
             }
         }
         </script>
@@ -2096,9 +2170,15 @@ nav a.current {
         <div class="question" style="margin-top:30px; text-align:left;">
             <h3>Optional Follow-up Interview</h3>
 
-               <p style="font-size:12px; color:#555;">
-                Three participants will be selected at random to receive an Amazon gift voucher 
-                as a gesture of appreciation. Participation is voluntary.
+               <p style="font-size:14px; color:#555;">
+                By consenting to a follow-up interview, you may be invited for a brief
+                discussion to provide deeper clinical insights that will inform the
+                development of future rehabilitation tools and support systems.
+                </p>
+                <p style="font-size:12px; color:#555;">
+                As a token of appreciation for your time and contribution,
+                selected participants will receive a small gift voucher.
+                Participation is entirely voluntary.
                 </p>
 
                 <label>
@@ -2108,7 +2188,7 @@ nav a.current {
 
                 <div id="followup_fields" style="display:none; text-align:left;">
                     <label>Email:</label><br>
-                    <input type="email" name="followup_email" style="width:300px;">
+                    <input type="email" id="followup_email" name="followup_email" style="width:300px;">
                     <!-- <label>Phone Number:</label><br> -->
                     <!-- <label>Phone Number:</label><br>
                     <input type="text" name="followup_phone" style="width:300px;"> -->
@@ -2125,60 +2205,118 @@ nav a.current {
         const status = document.getElementById("status");
 
         // enhanced version- form submission -- please change it if you want store it directly
-            form.addEventListener("submit", function(e) {
-                e.preventDefault();
-                
-                // Collect all final data
-                collectAllFormData();
-                
-                // Create FormData from state
-                const submissionData = new FormData();
-                
-                // Add all answers to FormData
-                Object.entries(surveyState.answers).forEach(([questionId, answer]) => {
-                    if (Array.isArray(answer)) {
-                        answer.forEach(item => {
-                            submissionData.append(questionId, item);
-                        });
-                    } else if (answer) {
-                        submissionData.append(questionId, answer);
-                    }
-                });
-                
-                // Add follow-up info if provided
-                if (document.getElementById('followup_yes').checked) {
-                    submissionData.append('followup_email', document.querySelector('[name="followup_email"]').value);
-                    
-                }
-                
-                const btn = document.getElementById("submitBtn");
-                btn.disabled = true;
-                btn.innerText = "Submitting...";
-                
-                fetch("", {
-                    method: "POST",
-                    body: submissionData,
-                })
-                .then(() => {
-                    // Clear saved state on successful submission
-                    surveyState.clearStorage();
-                    
-                    const consent = document.getElementById("followup_yes").checked;
-                    if (consent) {
-                        status.innerHTML = "✅ Thank you! Your response has been submitted. We will get back to you soon.";
-                    } else {
-                        status.innerHTML = "✅ Thank you! Your response has been submitted.";
-                    }
-                    btn.disabled = false;
-                    btn.innerText = "Submit";
-                })
-                .catch(error => {
-                    status.innerHTML = "❌ Network error. Please try again.";
-                    btn.disabled = false;
-                    btn.innerText = "Submit";
-                    console.error(error);
-                });
-            });
+
+
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    
+    // FOLLOWUP VALIDATION
+    const followupBox = document.getElementById('followup_yes');
+    const emailField = document.getElementById('followup_email');
+    
+    if (followupBox.checked && !emailField.value.trim()) {
+        alert("Please enter your email ID if you agree for the follow-up interview.");
+        emailField.focus();
+        return;
+    }
+    
+    // Collect all final data
+    collectAllFormData();
+    
+    // MANUALLY build the parameters to ensure arrays are sent correctly
+    const params = new URLSearchParams();
+    
+    // 1. Get ALL form elements
+    const formElements = document.getElementById('surveyForm').elements;
+    
+    // 2. Process each element
+    for (let i = 0; i < formElements.length; i++) {
+        const element = formElements[i];
+        
+        // Skip buttons and disabled fields
+        if (element.type === 'button' || element.type === 'submit' || element.disabled) {
+            continue;
+        }
+        
+        // Handle different input types
+        if (element.type === 'checkbox' || element.type === 'radio') {
+            if (element.checked) {
+                params.append(element.name, element.value);
+                console.log('Added checked:', element.name, element.value); // Debug
+            }
+        } else if (element.type === 'text' || element.type === 'email' || element.tagName === 'TEXTAREA') {
+            if (element.value && element.value.trim() !== '') {
+                params.append(element.name, element.value.trim());
+                console.log('Added text:', element.name, element.value); // Debug
+            }
+        } else if (element.tagName === 'SELECT') {
+            if (element.value && element.value.trim() !== '') {
+                params.append(element.name, element.value);
+            }
+        }
+    }
+    
+    // 3. Add follow-up email if provided
+    if (followupBox.checked) {
+        params.append('followup_email', emailField.value.trim());
+    }
+    
+    // 4. DEBUG: Log all parameters being sent
+    console.log('Sending params:');
+    for (let [key, value] of params.entries()) {
+        console.log(key + ' = ' + value);
+    }
+    
+    const btn = document.getElementById("submitBtn");
+    btn.disabled = true;
+    btn.innerText = "Submitting...";
+    
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxFZ2BUCAWGUTYPkukuBNyVTfrKjBYOidR0J8coS3QY3te36Op_Nq29mdNtfKhhkXfh/exec";
+    
+    fetch(SCRIPT_URL, {
+        method: "POST",
+        body: params.toString(),
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+    .then(res => res.text())
+    .then(text => {
+        console.log('Response:', text); // Debug
+        if (text === "Success") {
+            surveyState.clearStorage();
+            status.innerHTML = "✅ Thank you! Submitted.";
+            btn.innerText = "Submitted ✓";
+            btn.disabled = false;
+        } else {
+            status.innerHTML = "❌ Submission failed: " + text;
+            btn.disabled = false;
+            btn.innerText = "Submit";
+        }
+    })
+    .catch(err => {
+        status.innerHTML = "❌ Network error: " + err.message;
+        console.error('Fetch error:', err);
+        btn.disabled = false;
+        btn.innerText = "Submit";
+    });
+});
+function testFormSubmission() {
+    const params = new URLSearchParams();
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    
+    console.log('=== CHECKBOX DEBUG ===');
+    console.log('Total checked checkboxes:', checkboxes.length);
+    
+    checkboxes.forEach(cb => {
+        console.log(`Name: ${cb.name}, Value: ${cb.value}`);
+        params.append(cb.name, cb.value);
+    });
+    
+    console.log('=== URL PARAMS ===');
+    console.log(params.toString());
+}
                     
         </script>
 </form>
@@ -2264,6 +2402,48 @@ function setupNavigation() {
     });
 }
 
+function unlockSectionAIfConsented() {
+    const consent = document.getElementById("consentCheck");
+
+    if (consent && consent.checked) {
+        surveyState.markSectionAccessible("sectionA");
+        surveyState.currentSection = "sectionA";
+        goToSection("sectionA");
+    } else {
+        alert("Please provide consent to proceed.");
+    }
+}
+
+
+
+// function updateProgress(sectionId) {
+//     if (sectionId === "review" || sectionId === "submit") {
+//         document.getElementById("progressText").innerText = "Complete";
+//         document.getElementById("progressBar").style.width = "100%";
+//         return;
+//     }
+    
+//     // Calculate progress based on accessible sections
+//     const contentSections = ["sectionA", "sectionB", "sectionC", "sectionD", "sectionE", "sectionF"];
+//     const currentIndex = contentSections.indexOf(sectionId);
+    
+//     if (currentIndex >= 0) {
+//         // Count how many sections are accessible/completed
+//         let completedCount = 0;
+//         for (let i = 0; i <= currentIndex; i++) {
+//             const section = contentSections[i];
+//             if (surveyState.isSectionComplete(section)) {
+//                 completedCount++;
+//             }
+//         }
+        
+//         const total = contentSections.length;
+//         const percent = (completedCount / total) * 100;
+        
+//         document.getElementById("progressText").innerText = `Section ${currentIndex + 1} of ${total}`;
+//         document.getElementById("progressBar").style.width = percent + "%";
+//     }
+// }
 
 function updateProgress(sectionId) {
     if (sectionId === "review" || sectionId === "submit") {
@@ -2271,28 +2451,26 @@ function updateProgress(sectionId) {
         document.getElementById("progressBar").style.width = "100%";
         return;
     }
-    
-    // Calculate progress based on accessible sections
+
     const contentSections = ["sectionA", "sectionB", "sectionC", "sectionD", "sectionE", "sectionF"];
-    const currentIndex = contentSections.indexOf(sectionId);
-    
-    if (currentIndex >= 0) {
-        // Count how many sections are accessible/completed
-        let completedCount = 0;
-        for (let i = 0; i <= currentIndex; i++) {
-            const section = contentSections[i];
-            if (surveyState.isSectionAccessible(section)) {
-                completedCount++;
-            }
+    const total = contentSections.length;
+
+    // Count ALL completed sections
+    let completedCount = 0;
+    contentSections.forEach(section => {
+        if (surveyState.isSectionComplete(section)) {
+            completedCount++;
         }
-        
-        const total = contentSections.length;
-        const percent = (completedCount / total) * 100;
-        
-        document.getElementById("progressText").innerText = `Section ${currentIndex + 1} of ${total}`;
-        document.getElementById("progressBar").style.width = percent + "%";
-    }
+    });
+
+    const percent = (completedCount / total) * 100;
+
+    document.getElementById("progressText").innerText =
+        `Progress: ${completedCount} / ${total} Sections`;
+
+    document.getElementById("progressBar").style.width = percent + "%";
 }
+
 
 
 function getQPages() {
@@ -2326,7 +2504,7 @@ function showQ(i) {
                 qIndex = 1;
                 showQ(qIndex);
             }
-        }, 5000);
+        }, 2000);
     } else {
         if (nav) nav.style.display = "block";
         if (backBtn) backBtn.disabled = (i === 1);
@@ -2465,7 +2643,7 @@ function validateCurrentQuestion() {
                     const subacuteChecked = document.querySelector('input[name="subacute"]:checked');
                     const chronicChecked = document.querySelector('input[name="chronic"]:checked');
 
-                    isValid = acuteChecked && subacuteChecked && chronicChecked;
+                    isValid = !!acuteChecked && !!subacuteChecked && !!chronicChecked;
                     questionValidation.sectionA.q6 = isValid;
                     break;
             }
@@ -2475,13 +2653,19 @@ function validateCurrentQuestion() {
             switch(currentIndex) {
                 case 1: // Q7
                     const q7Rows = document.querySelectorAll('#q7-table tr:not(:first-child)');
-                    isValid = q7Rows.length > 0 && Array.from(q7Rows).every(row => {
-                        const checkboxes = row.querySelectorAll('input[type="checkbox"]:checked');
-                        const notUsed = row.querySelector('input[value="Not Used"]:checked');
-                        return (checkboxes.length > 0) || notUsed;
-                    });
+
+                    if (q7Rows.length === 0) {
+                        isValid = false;   // No rows = invalid
+                    } else {
+                        isValid = Array.from(q7Rows).every(row => {
+                            const checkedBoxes = row.querySelectorAll('input[type="checkbox"]:checked');
+                            return checkedBoxes.length > 0;
+                        });
+                    }
+
                     questionValidation.sectionB.q7 = isValid;
                     break;
+
                 case 2: // Q8
                     // Q8 is optional, so always valid
                     isValid = true;
@@ -2492,9 +2676,9 @@ function validateCurrentQuestion() {
             
         case 'sectionC':
             if (currentIndex === 1) { // Q9
-                const q9Rows = document.querySelectorAll('#q9-table tr:not(:first-child)');
-                isValid = q9Rows.length > 0 && Array.from(q9Rows).some(row => 
-                    Array.from(row.querySelectorAll('input[type="checkbox"]')).some(cb => cb.checked)
+                const rows = document.querySelectorAll('#q9-table tr:not(:first-child)');
+                isValid = Array.from(rows).some(row =>
+                    row.querySelector('input[type="checkbox"]:checked')
                 );
                 questionValidation.sectionC.q9 = isValid;
             }
@@ -2625,6 +2809,7 @@ function updateQuestionValidationUI(questionDiv, isValid) {
     msg.style.fontWeight = 'bold';
 }
 
+// Replace your existing getAnswersForReview function with this:
 function getAnswersForReview(sectionId) {
     let html = '';
     
@@ -2636,108 +2821,108 @@ function getAnswersForReview(sectionId) {
     
     questions.forEach((question, index) => {
         // Skip intro page
-        if (index === 0) return;
+        if (!question.querySelector('input, table, textarea')) return;
         
         const questionText = question.querySelector('strong, label, h3')?.textContent || `Question ${index}`;
         
-        // Start building the question HTML
         html += `
             <div class="review-question">
                 <h3>${questionText}</h3>
                 <div class="review-answers">
         `;
         
-        // Handle different question types
-        // 0. TABLES
+        // 1. TABLES - Display full table with all options and highlight selections
         const tables = question.querySelectorAll('table');
         if (tables.length > 0) {
             html += renderTablesOnly(question);
-
-            html += `
-                </div>
-            </div>
-            `;
-            return; // exits only this question, HTML already closed
-        }
-
-        
-        // 1. RADIO BUTTON QUESTIONS (show all options)
-        const radioGroups = {};
-        question.querySelectorAll('input[type="radio"]').forEach(radio => {
-            const name = radio.name;
-            if (!radioGroups[name]) radioGroups[name] = [];
-            radioGroups[name].push(radio);
-        });
-        
-        Object.keys(radioGroups).forEach(groupName => {
-            const radios = radioGroups[groupName];
-            if (radios.length > 0) {
+        } 
+        // 2. ONLY show radio/checkbox options if there's NO table in this question
+        else {
+            // RADIO BUTTONS
+            const radioGroups = {};
+            question.querySelectorAll('input[type="radio"]').forEach(radio => {
+                const name = radio.name;
+                if (!radioGroups[name]) radioGroups[name] = [];
+                radioGroups[name].push(radio);
+            });
+            
+            Object.keys(radioGroups).forEach(groupName => {
+                const radios = radioGroups[groupName];
+                if (radios.length > 0) {
+                    html += `<div class="option-group">`;
+                    radios.forEach(radio => {
+                        const label = radio.closest('label');
+                        const labelText = label ? label.textContent.replace('✔', '').trim() : radio.value;
+                        const isChecked = radio.checked;
+                        const optionClass = isChecked ? 'option-selected' : 'option-not-selected';
+                        
+                        html += `
+                            <div class="option-item ${optionClass}">
+                                <span class="option-marker">${isChecked ? '✓' : '○'}</span>
+                                <span class="option-text">${labelText}</span>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                }
+            });
+            
+            // CHECKBOXES - only for non-table questions
+            const checkboxes = question.querySelectorAll('input[type="checkbox"]');
+            if (checkboxes.length > 0) {
                 html += `<div class="option-group">`;
-                radios.forEach(radio => {
-                    const label = radio.closest('label');
-                    const labelText = label ? label.textContent.replace('✔', '').trim() : radio.value;
-                    const isChecked = radio.checked;
+                checkboxes.forEach(checkbox => {
+                    const label = checkbox.closest('label');
+                    let labelText = '';
+                    
+                    if (checkbox.value.startsWith('other_')) {
+                        const textInput = label ? label.querySelector('input[type="text"]') : null;
+                        if (textInput && textInput.value.trim()) {
+                            labelText = textInput.value.trim();
+                        } else {
+                            return;
+                        }
+                    } else {
+                        labelText = label
+                            ? label.textContent.replace('✔', '').trim()
+                            : checkbox.value;
+                    }
+                    
+                    const isChecked = checkbox.checked;
                     const optionClass = isChecked ? 'option-selected' : 'option-not-selected';
                     
                     html += `
                         <div class="option-item ${optionClass}">
-                            <span class="option-marker">${isChecked ? '✓' : '○'}</span>
+                            <span class="option-marker">${isChecked ? '✓' : '□'}</span>
                             <span class="option-text">${labelText}</span>
                         </div>
                     `;
                 });
                 html += `</div>`;
             }
-        });
-        
-        // 2. CHECKBOX QUESTIONS (show all options)
-        const checkboxes = question.querySelectorAll('input[type="checkbox"]:not([name*="other"])');
-        if (checkboxes.length > 0) {
-            html += `<div class="option-group">`;
-            checkboxes.forEach(checkbox => {
-                const label = checkbox.closest('label');
-                // Find text input next to checkbox (for "Other")
-                const textInput = label ? label.querySelector('input[type="text"]') : null;
-                let labelText = label ? label.textContent.replace('✔', '').trim() : checkbox.value;
-
-                if (textInput && textInput.value.trim()) {
-                    labelText = textInput.value.trim();
-                } else if (label) {
-                    labelText = label.textContent.replace('✔', '').trim();
-                }
-                const isChecked = checkbox.checked;
-                const optionClass = isChecked ? 'option-selected' : 'option-not-selected';
-                
-                html += `
-                    <div class="option-item ${optionClass}">
-                        <span class="option-marker">${isChecked ? '✓' : '□'}</span>
-                        <span class="option-text">${labelText}</span>
-                    </div>
-                `;
-            });
-            html += `</div>`;
         }
         
-        // 3. TEXT INPUTS (show value if entered)
-        const textInputs = question.querySelectorAll('input[type="text"], input[type="email"], textarea');
-        textInputs.forEach(input => {
-            if (input.value.trim()) {
-                let labelText = 'Answer:';
-                if (input.previousElementSibling && input.previousElementSibling.tagName === 'LABEL') {
-                    labelText = input.previousElementSibling.textContent.trim();
-                } else if (input.closest('label')) {
-                    labelText = input.closest('label').textContent.trim();
-                }
+        // 3. TEXT INPUTS (always show if they have values)
+        const textInputs = question.querySelectorAll(
+            'input[type="text"]:not([name^="q5_other_text_"]):not([name^="q10_other_text_"]):not([name^="q15_other_"]):not([name^="q16_other_text_"]):not([name^="q18_other_text_"]), input[type="email"], textarea'
+        );
+        // textInputs.forEach(input => {
+        //     if (input.value.trim()) {
+        //         let labelText = 'Answer:';
+        //         if (input.previousElementSibling && input.previousElementSibling.tagName === 'LABEL') {
+        //             labelText = input.previousElementSibling.textContent.trim();
+        //         } else if (input.closest('label')) {
+        //             labelText = input.closest('label').textContent.trim();
+        //         }
                 
-                html += `
-                    <div class="text-answer">
-                        <strong>${labelText}</strong>
-                        <div class="text-value">${input.value}</div>
-                    </div>
-                `;
-            }
-        });
-
+        //         html += `
+        //             <div class="text-answer">
+        //                 <strong>${labelText}</strong>
+        //                 <div class="text-value">${input.value}</div>
+        //             </div>
+        //         `;
+        //     }
+        // });
         
         html += `
                 </div>
@@ -2748,139 +2933,75 @@ function getAnswersForReview(sectionId) {
     return html;
 }
 
-        
-function renderTablesOnly(question, container)
-{
-    // 4. TABLES (show full table with all options and highlight selections)
+function renderTablesOnly(question) {
+    let html = "";
     const tables = question.querySelectorAll('table');
-    tables.forEach((table, tableIndex) => {
-        html += `<div class="review-table-container">`;
-        html += `<table class="review-table">`;
-            
-        // Copy header
-        if (table.rows.length > 0) {
-            html += '<thead><tr>';
-            Array.from(table.rows[0].cells).forEach(cell => {
-                html += `<th>${cell.textContent}</th>`;
-            });
-            html += '</tr></thead>';
+
+    tables.forEach(table => {
+        html += `<div class="review-table-container" style="margin: 20px 0; overflow-x: auto; background: white; border-radius: 8px; border: 1px solid #e0e0e0; padding: 10px;">`;
+        html += `<table class="review-table" style="width: 100%; border-collapse: collapse; font-size: 14px;">`;
+
+        // Check if this is a single-column table (Q10, Q15, Q16 style)
+        const isSingleColumn = table.rows.length > 0 && table.rows[0].cells.length === 1;
+        
+        if (isSingleColumn) {
+            // For single column tables, just show the content
+            html += '<tbody>';
+            for (let i = 0; i < table.rows.length; i++) {
+                const row = table.rows[i];
+                html += '<tr>';
+                Array.from(row.cells).forEach(cell => {
+                    html += `<td style="padding: 12px; border: 1px solid #ddd; vertical-align: top;">${getTableCellContent(cell)}</td>`;
+                });
+                html += '</tr>';
+            }
+            html += '</tbody>';
+        } else {
+            // Multi-column table with header
+            if (table.rows.length > 0) {
+                html += '<thead><tr>';
+                Array.from(table.rows[0].cells).forEach(cell => {
+                    html += `<th style="padding: 14px; border: 1px solid #ccc; background: #e6f2f5; color: #004d66; font-weight: bold; text-align: left;">${cell.textContent}</th>`;
+                });
+                html += '</tr></thead>';
+            }
+
+            html += '<tbody>';
+            for (let i = 1; i < table.rows.length; i++) {
+                const row = table.rows[i];
+                html += '<tr>';
+
+                Array.from(row.cells).forEach((cell, index) => {
+                    if (index === 0) {
+                        // Handle task name/description
+                        const textInput = cell.querySelector('input[type="text"]');
+                        if (textInput && textInput.value.trim()) {
+                            html += `<td style="padding: 12px; border: 1px solid #ddd; background: #f9f9f9; font-weight: 600;"><strong>${textInput.value.trim()}</strong></td>`;
+                        } else {
+                            const temp = document.createElement('div');
+                            temp.innerHTML = cell.innerHTML;
+                            temp.querySelectorAll('button, input[type="checkbox"], input[type="radio"]').forEach(e => e.remove());
+                            let cellText = temp.textContent.trim();
+                            cellText = cellText.replace(/❌/g, '').trim();
+                            html += `<td style="padding: 12px; border: 1px solid #ddd; background: #f9f9f9; font-weight: 600;"><strong>${cellText || 'Other'}</strong></td>`;
+                        }
+                    } else {
+                        // For other columns, show the checkbox states
+                        html += `<td style="padding: 12px; border: 1px solid #ddd; vertical-align: top;">${getTableCellContent(cell)}</td>`;
+                    }
+                });
+
+                html += '</tr>';
+            }
+            html += '</tbody>';
         }
-            
-            // Process data rows
-        html += '<tbody>';
-        for (let i = 1; i < table.rows.length; i++) {
-            const row = table.rows[i];
-            html += '<tr>';
-                
-            Array.from(row.cells).forEach((cell, cellIndex) => {
-                // First column (question/task)
-                if (cellIndex === 0) {
-                    const tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = cell.innerHTML;
-                     tempDiv.querySelectorAll('input, button').forEach(el => el.remove());
-                    html += `<td class="task-name"><strong>${tempDiv.textContent.trim()}</strong></td>`;
-                } 
-                    // Other columns (show all options)
-                else {
-                    const cellContent = getTableCellContent(cell);
-                    html += `<td>${cellContent}</td>`;
-                }
-            });
-                
-            html += '</tr>';
-        }
-        html += '</tbody>';
-            
+
         html += '</table></div>';
     });
+
+    return html;
 }
 
-// Helper function to format table cell content
-function getTableCellContent(cell) {
-    let content = '';
-    
-    // Check for radio buttons
-    const radios = cell.querySelectorAll('input[type="radio"]');
-    if (radios.length > 0) {
-        content += '<div class="table-options">';
-        radios.forEach(radio => {
-            const isChecked = radio.checked;
-            const optionClass = isChecked ? 'table-option-selected' : 'table-option';
-            const marker = isChecked ? '✓' : '○';
-            
-            // Get label text (fallback to value)
-            let labelText = radio.value;
-            const radioId = radio.id;
-            if (radioId) {
-                const label = document.querySelector(`label[for="${radioId}"]`);
-                if (label) labelText = label.textContent.trim();
-            }
-            
-            content += `
-                <div class="${optionClass}">
-                    <span class="table-marker">${marker}</span>
-                    <span class="table-label">${labelText}</span>
-                </div>
-            `;
-        });
-        content += '</div>';
-        return content;
-    }
-    
-    // Check for checkboxes
-    const checkboxes = cell.querySelectorAll('input[type="checkbox"]');
-    if (checkboxes.length > 0) {
-        content += '<div class="table-options">';
-        checkboxes.forEach(checkbox => {
-            const isChecked = checkbox.checked;
-            const optionClass = isChecked ? 'table-option-selected' : 'table-option';
-            const marker = isChecked ? '✓' : '□';
-            
-            // Get label text (fallback to value)
-            let labelText = checkbox.value;
-            const checkboxId = checkbox.id;
-            if (checkboxId) {
-                const label = document.querySelector(`label[for="${checkboxId}"]`);
-                if (label) labelText = label.textContent.trim();
-            }
-            
-            content += `
-                <div class="${optionClass}">
-                    <span class="table-marker">${marker}</span>
-                    <span class="table-label">${labelText}</span>
-                </div>
-            `;
-        });
-        content += '</div>';
-        return content;
-    }
-    
-    // Check for text inputs
-    const textInputs = cell.querySelectorAll('input[type="text"]');
-    if (textInputs.length > 0) {
-        let textValue = '';
-
-        textInputs.forEach(input => {
-            if (input.value.trim()) {
-                if (textValue !== '') textValue += ' | ';
-                textValue += input.value.trim();
-            }
-        });
-
-        if (textValue !== '') {
-            // If content already has checkbox/radio, append note
-            if (content !== '') {
-                content += ` <span class="table-note"> – ${textValue}</span>`;
-            } else {
-                content = `<span class="table-text-answer">${textValue}</span>`;
-            }
-        }
-    
-    // Regular cell content
-    const cellText = cell.textContent.trim();
-    return cellText ? cellText : '<span class="empty-cell">-</span>';
-    }
-}
 
 // ========== ENHANCED REVIEW GENERATION ==========
 function generateReview() {
@@ -2943,6 +3064,276 @@ function generateReview() {
 }
 
 
+
+function getTableCellContent(cell) {
+    let content = '';
+    
+    // // ---------- SPECIAL HANDLING FOR Q18 (Two-column table with notes) ----------
+    // const table = cell.closest('table');
+    // if (table && table.id === 'q18-table') {
+    //     const cellIndex = cell.cellIndex;
+        
+    //     // Column 1: Training Area with checkboxes
+    //     if (cellIndex === 0) {
+    //         const checkboxItems = cell.querySelectorAll('input[type="checkbox"]');
+            
+    //         if (checkboxItems.length > 0) {
+    //             content += '<div class="table-options" style="display: flex; flex-direction: column; gap: 8px;">';
+                
+    //             checkboxItems.forEach(cb => {
+    //                 if (cb.style.display === 'none' || cb.id?.includes('proxy')) {
+    //                     return;
+    //                 }
+                    
+    //                 const isChecked = cb.checked;
+    //                 const marker = isChecked ? '✓' : '□';
+                    
+    //                 // Get the training area text
+    //                 let labelText = '';
+    //                 const label = cb.closest('label');
+                    
+    //                 if (label) {
+    //                     const textInput = label.querySelector('input[type="text"]');
+    //                     if (textInput && textInput.value.trim()) {
+    //                         labelText = textInput.value.trim();
+    //                     } else {
+    //                         const labelClone = label.cloneNode(true);
+    //                         labelClone.querySelectorAll('input, button').forEach(el => el.remove());
+    //                         labelText = labelClone.textContent.trim();
+    //                     }
+    //                 }
+                    
+    //                 labelText = labelText.replace(/❌/g, '').trim();
+                    
+    //                 if (labelText) {
+    //                     content += `
+    //                         <div style="display: flex; align-items: center; padding: 6px 10px; border-radius: 4px; background: ${isChecked ? '#e8f5e9' : '#f9f9f9'}; border-left: 3px solid ${isChecked ? '#4CAF50' : '#e0e0e0'};">
+    //                             <span style="display: inline-block; width: 20px; height: 20px; line-height: 20px; text-align: center; margin-right: 8px; font-weight: bold; color: ${isChecked ? '#4CAF50' : '#999'};">${marker}</span>
+    //                             <span style="font-size: 14px; color: ${isChecked ? '#2e7d32' : '#333'}; ${isChecked ? 'font-weight: 500;' : ''}">${labelText}</span>
+    //                         </div>
+    //                     `;
+    //                 }
+    //             });
+                
+    //             content += '</div>';
+    //             return content || '<span class="empty-cell">-</span>';
+    //         }
+    //     }
+        
+    //     // Column 2: Note (Optional) - ONLY show text, NO checkboxes, NO markers
+    //     if (cellIndex === 1) {
+    //         const textInputs = cell.querySelectorAll('input[type="text"]');
+    //         textInputs.forEach(input => {
+    //             if (input.value.trim()) {
+    //                 content = `<div class="table-text-answer" style="padding: 8px; background: #f0f8ff; border-radius: 4px; border-left: 4px solid #2196F3;">${input.value.trim()}</div>`;
+    //             }
+    //         });
+    //         return content || '<span class="empty-cell">-</span>';
+    //     }
+    // }
+
+// ---------- SPECIAL HANDLING FOR Q18 (Two-column table with notes) ----------
+const table = cell.closest('table');
+if (table && table.id === 'q18-table') {
+    const cellIndex = cell.cellIndex;
+    
+    // Column 1: Training Area with checkboxes
+    if (cellIndex === 0) {
+        const checkboxItems = cell.querySelectorAll('input[type="checkbox"]');
+        
+        if (checkboxItems.length > 0) {
+            content += '<div class="table-options" style="display: flex; flex-direction: column; gap: 4px;">';
+            
+            // Get stored answers for Q18
+            const storedAnswers = surveyState.answers && surveyState.answers['q18[]'] 
+                ? (Array.isArray(surveyState.answers['q18[]']) ? surveyState.answers['q18[]'] : [surveyState.answers['q18[]']])
+                : [];
+            
+            checkboxItems.forEach(cb => {
+                // Check if this checkbox value is in stored answers
+                const isChecked = storedAnswers.includes(cb.value);
+                
+                // ONLY SHOW SELECTED ITEMS - skip unselected ones
+                if (isChecked) {
+                    const marker = '✓';
+                    
+                    // Get the label text
+                    let labelText = cb.value;
+                    
+                    // Try to get better label text from label
+                    const label = cb.closest('label');
+                    if (label) {
+                        const labelClone = label.cloneNode(true);
+                        labelClone.querySelectorAll('input, button').forEach(el => el.remove());
+                        const text = labelClone.textContent.trim();
+                        if (text) labelText = text;
+                    }
+                    
+                    // For "other" rows
+                    if (cb.value.startsWith('other_')) {
+                        const row = cb.closest('tr');
+                        const textInput = row ? row.querySelector('td:first-child input[type="text"]') : null;
+                        if (textInput && textInput.value.trim()) {
+                            labelText = textInput.value.trim();
+                        }
+                    }
+                    
+                    content += `
+                        <div style="display: flex; align-items: center; padding: 8px 12px; border-radius: 4px; background: #e8f5e9; border-left: 4px solid #4CAF50; margin-bottom: 2px;">
+                            <span style="display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; margin-right: 12px; font-weight: bold; color: #4CAF50; background: white; border-radius: 4px;">${marker}</span>
+                            <span style="font-size: 14px; color: #2e7d32; font-weight: 500; line-height: 1.4;">${labelText}</span>
+                        </div>
+                    `;
+                }
+            });
+            
+            content += '</div>';
+            
+            // If no selected items, show nothing or a message
+            if (content === '<div class="table-options" style="display: flex; flex-direction: column; gap: 4px;"></div>') {
+                return '<span class="empty-cell" style="color: #999; font-style: italic;">No selections</span>';
+            }
+            
+            return content;
+        }
+    }
+    
+    // Column 2: Note (Optional) - only show if there's a note AND the corresponding checkbox is selected
+    if (cellIndex === 1) {
+        const textInputs = cell.querySelectorAll('input[type="text"]');
+        let noteValue = '';
+        textInputs.forEach(input => {
+            if (input.value.trim()) {
+                noteValue = input.value.trim();
+            }
+        });
+        
+        // Only show note if there's a value
+        if (noteValue) {
+            return `<div style="padding: 8px 12px; background: #f0f8ff; border-radius: 4px; border-left: 4px solid #2196F3; font-size: 14px; color: #1976D2;">${noteValue}</div>`;
+        }
+        return '<span class="empty-cell" style="color: #999; font-style: italic;">-</span>';
+    }
+}
+    
+    // ---------- SPECIAL HANDLING FOR Q10, Q15, Q16 (Single column checkbox tables) ----------
+    if (table && (table.id === 'q10-table' || table.id === 'q15-table' || table.id === 'q16-table')) {
+        const checkboxItems = cell.querySelectorAll('input[type="checkbox"]');
+        
+        if (checkboxItems.length > 0) {
+            content += '<div class="table-options" style="display: flex; flex-direction: column; gap: 8px;">';
+            
+            checkboxItems.forEach(cb => {
+                if (cb.style.display === 'none' || cb.id?.includes('proxy')) {
+                    return;
+                }
+                
+                const isChecked = cb.checked;
+                const marker = isChecked ? '✓' : '□';
+                
+                let labelText = '';
+                const label = cb.closest('label');
+                
+                if (label) {
+                    const labelClone = label.cloneNode(true);
+                    labelClone.querySelectorAll('input, button').forEach(el => el.remove());
+                    labelText = labelClone.textContent.trim();
+                    
+                    const textInput = label.querySelector('input[type="text"]');
+                    if (textInput && textInput.value.trim()) {
+                        labelText = textInput.value.trim();
+                    }
+                }
+                
+                labelText = labelText.replace(/❌/g, '').trim();
+                
+                if (labelText && labelText !== 'selected') {
+                    content += `
+                        <div style="display: flex; align-items: center; padding: 6px 10px; border-radius: 4px; background: ${isChecked ? '#e8f5e9' : '#f9f9f9'}; border-left: 3px solid ${isChecked ? '#4CAF50' : '#e0e0e0'};">
+                            <span style="display: inline-block; width: 20px; height: 20px; line-height: 20px; text-align: center; margin-right: 8px; font-weight: bold; color: ${isChecked ? '#4CAF50' : '#999'};">${marker}</span>
+                            <span style="font-size: 14px; color: ${isChecked ? '#2e7d32' : '#333'}; ${isChecked ? 'font-weight: 500;' : ''}">${labelText}</span>
+                        </div>
+                    `;
+                }
+            });
+            
+            content += '</div>';
+            return content || '<span class="empty-cell">-</span>';
+        }
+    }
+    
+    // ---------- FIX FOR Q7, Q8, Q9 (Multi-column checkbox tables) ----------
+    if (table && (table.id === 'q7-table' || table.id === 'q8-table' || table.id === 'q9-table')) {
+        // Get ONLY checkboxes that are DIRECT children of this cell
+        const checkboxes = Array.from(cell.children).filter(el => 
+            el.tagName === 'INPUT' && el.type === 'checkbox'
+        );
+        
+        if (checkboxes.length > 0) {
+            content += '<div class="table-options" style="display: flex; flex-direction: column; gap: 4px;">';
+            
+            checkboxes.forEach(cb => {
+                const isChecked = cb.checked;
+                const marker = isChecked ? '✓' : '□';
+                
+                // Get the value (Mild, Moderate, Severe, Not Used)
+                let labelText = cb.value;
+                
+                content += `
+                    <div style="display: flex; align-items: center; padding: 4px 8px; border-radius: 4px; background: ${isChecked ? '#e8f5e9' : '#f9f9f9'};">
+                        <span style="display: inline-block; width: 20px; height: 20px; line-height: 20px; text-align: center; margin-right: 8px; font-weight: bold; color: ${isChecked ? '#4CAF50' : '#999'};">${marker}</span>
+                        <span style="font-size: 14px; color: ${isChecked ? '#2e7d32' : '#333'}; ${isChecked ? 'font-weight: 500;' : ''}">${labelText}</span>
+                    </div>
+                `;
+            });
+            
+            content += '</div>';
+            return content || '<span class="empty-cell">-</span>';
+        }
+    }
+    
+    // ---------- RADIO BUTTONS (Q11, Q13, Q14, Q17) ----------
+    const radios = Array.from(cell.querySelectorAll('input[type="radio"]')).filter(radio => {
+        return radio.closest('td') === cell;
+    });
+    
+    if (radios.length > 0) {
+        content += '<div class="table-options" style="display: flex; flex-direction: column; gap: 4px;">';
+        radios.forEach(radio => {
+            const isChecked = radio.checked;
+            const marker = isChecked ? '✓' : '○';
+            
+            content += `
+                <div style="display: flex; align-items: center; padding: 4px 8px; border-radius: 4px; background: ${isChecked ? '#e8f5e9' : '#f9f9f9'};">
+                    <span style="display: inline-block; width: 20px; height: 20px; line-height: 20px; text-align: center; margin-right: 8px; font-weight: bold; color: ${isChecked ? '#4CAF50' : '#999'};">${marker}</span>
+                    <span style="font-size: 14px; color: ${isChecked ? '#2e7d32' : '#333'};">${radio.value}</span>
+                </div>
+            `;
+        });
+        content += '</div>';
+        return content;
+    }
+    
+    // ---------- TEXT INPUTS ONLY ----------
+    const textInputs = cell.querySelectorAll('input[type="text"]');
+    if (textInputs.length > 0) {
+        let textValue = '';
+        textInputs.forEach(input => {
+            if (input.value.trim() && !input.name?.includes('proxy')) {
+                if (textValue !== '') textValue += ' | ';
+                textValue += input.value.trim();
+            }
+        });
+        
+        if (textValue !== '') {
+            return `<div class="table-text-answer" style="padding: 8px; background: #f0f8ff; border-radius: 4px; border-left: 4px solid #2196F3;">${textValue}</div>`;
+        }
+    }
+    
+    // ---------- FALLBACK: cell text ----------
+    const cellText = cell.textContent.trim();
+    return cellText ? cellText : '<span class="empty-cell" style="color: #999; font-style: italic;">-</span>';
+}
 // Helper: Get answers for a specific section
 function getSectionAnswers(sectionId) {
     const sectionAnswers = {};
@@ -2980,130 +3371,52 @@ function setupRealTimeValidation() {
 }
 
 
-// // Function to get formatted answers for review
-// function getAnswersForReview(sectionId) {
-//     let html = '';
-    
-//     // Get the actual section element
-//     const section = document.getElementById(sectionId);
-//     if (!section) return html;
-    
-//     // Get all questions in this section
-//     const questions = section.querySelectorAll('.qpage .question');
-    
-//     questions.forEach((question, index) => {
-//         // Skip if it's the intro page (index 0)
-//         if (index === 0) return;
-        
-//         const questionText = question.querySelector('strong, label, h3')?.textContent || `Question ${index}`;
-//         let answers = [];
-        
-//         // Collect all answers from this question
-//         const inputs = question.querySelectorAll('input, textarea, select');
-        
-//         inputs.forEach(input => {
-//             if (input.type === 'radio' && input.checked) {
-//                 const label = input.closest('label');
-//                 const labelText = label ? label.textContent.replace('✔', '').trim() : input.value;
-//                 answers.push(`✓ ${labelText}`);
-//             } else if (input.type === 'checkbox' && input.checked) {
-//                 const label = input.closest('label');
-//                 const labelText = label ? label.textContent.replace('✔', '').trim() : input.value;
-//                 answers.push(`✓ ${labelText}`);
-//             } else if ((input.type === 'text' || input.type === 'textarea' || input.type === 'email') && input.value.trim()) {
-                
-//                 let labelText = 'Answer';
-//                 if (input.previousElementSibling && input.previousElementSibling.tagName === 'LABEL') {
-//                     labelText = input.previousElementSibling.textContent.trim();
-//                 } else if (input.closest('label')) {
-//                     labelText = input.closest('label').textContent.trim();
-//                 }
-//                 answers.push(`${labelText}: ${input.value}`);
-//             }
-//         });
-        
-//         // Process tables
-//         const tables = question.querySelectorAll('table');
-//         tables.forEach(table => {
-//             let tableHTML = '<div class="review-table"><table>';
-            
-//             // Copy header
-//             if (table.rows.length > 0) {
-//                 tableHTML += '<tr>';
-//                 Array.from(table.rows[0].cells).forEach(cell => {
-//                     tableHTML += `<th>${cell.textContent}</th>`;
-//                 });
-//                 tableHTML += '</tr>';
-//             }
-            
-//             // Process data rows
-//             for (let i = 1; i < table.rows.length; i++) {
-//                 const row = table.rows[i];
-//                 let rowHasSelection = false;
-//                 let rowHTML = '<tr>';
-                
-//                 Array.from(row.cells).forEach((cell, cellIndex) => {
-//                     // First column (question/task)
-//                     if (cellIndex === 0) {
-//                         const tempDiv = document.createElement('div');
-//                         tempDiv.innerHTML = cell.innerHTML;
-//                         tempDiv.querySelectorAll('input, button').forEach(el => el.remove());
-//                         rowHTML += `<td><strong>${tempDiv.textContent.trim()}</strong></td>`;
-//                     } 
-//                     // Other columns (answers)
-//                     else {
-//                         const radios = cell.querySelectorAll('input[type="radio"]:checked');
-//                         const checkboxes = cell.querySelectorAll('input[type="checkbox"]:checked');
-//                         const textInputs = cell.querySelectorAll('input[type="text"]');
-                        
-//                         if (radios.length > 0) {
-//                             rowHasSelection = true;
-//                             rowHTML += `<td><span class="selected-answer">✓ ${radios[0].value}</span></td>`;
-//                         } else if (checkboxes.length > 0) {
-//                             rowHasSelection = true;
-//                             const selected = Array.from(checkboxes).map(cb => cb.value).join(', ');
-//                             rowHTML += `<td><span class="selected-answer">✓ ${selected}</span></td>`;
-//                         } else if (textInputs.length > 0 && textInputs[0].value.trim()) {
-//                             rowHasSelection = true;
-//                             rowHTML += `<td><span class="selected-answer">${textInputs[0].value}</span></td>`;
-//                         } else {
-//                             rowHTML += '<td>-</td>';
-//                         }
-//                     }
-//                 });
-                
-//                 rowHTML += '</tr>';
-                
-//                 // Only include rows with selections
-//                 if (rowHasSelection) {
-//                     tableHTML += rowHTML;
-//                 }
-//             }
-            
-//             tableHTML += '</table></div>';
-            
-//             if (tableHTML.includes('selected-answer')) {
-//                 answers.push(tableHTML);
-//             }
-//         });
-        
-//         if (answers.length > 0) {
-//             html += `
-//                 <div class="review-question">
-//                     <h3>${questionText}</h3>
-//                     <div class="review-answers">
-//                         ${answers.map(answer => `<div class="answer-item">${answer}</div>`).join('')}
-//                     </div>
-//                 </div>
-//             `;
-//         }
-//     });
-    
-//     return html;
-// }
+function collectDynamicWithIndex(prefix) {
+    let result = [];
+    const data = surveyState.answers || {};
+
+    Object.keys(data).sort().forEach(key => {
+        if (key.startsWith(prefix) && data[key]) {
+            const index = key.replace(prefix, "");
+            result.push(`Row ${index}: ${data[key]}`);
+        }
+    });
+
+    return result.join(" | ");
+}
 
 
 function mapInputNameToQuestionId(name) {
+
+    // ---------- DYNAMIC / OTHER FIELDS ----------
+    if (name.startsWith("q5_other_text_")) return "q5_clinical_setting_other";
+
+    if (name.startsWith("q7_task_name_")) return "q7_added_tasks";
+    if (name.startsWith("q7_other_")) return "q7_added_tasks";
+
+    if (name.startsWith("q8_task_")) return "q8_added_roles";
+    if (name.startsWith("q8_other_")) return "q8_added_roles";
+
+    if (name.startsWith("q9_category_")) return "q9_added_materials";
+    if (name.startsWith("q9_other_")) return "q9_added_materials";
+
+    if (name.startsWith("q10_other_text_")) return "q10_other_strategies";
+
+    if (name.startsWith("q11_other_scenario_")) return "q11_other_scenarios";
+    if (name.startsWith("q11_other_adjustment_")) return "q11_other_adjustments";
+
+    if (name.startsWith("q13_other_text_")) return "q13_added_feedback";
+
+    if (name.startsWith("q14_other_text_")) return "q14_other_assessment";
+
+    if (name.startsWith("q15_other_")) return "q15_other_behaviour";
+
+    if (name.startsWith("q16_other_text_")) return "q16_other_implementation";
+
+    if (name.startsWith("q17_other_text_")) return "q17_other_challenges";
+
+    if (name.startsWith("q18_other_text_")) return "q18_other_training";
+    if (name.startsWith("q18_note_")) return "q18_notes";
     const mapping = {
         // Section A
         'background': 'q1_professional_background',
@@ -3200,104 +3513,6 @@ function mapInputNameToQuestionId(name) {
 }
 
 
-
-
-// Function to map input names to question IDs
-function mapInputNameToQuestionId(name) {
-    const mapping = {
-        // Section A
-        'background': 'q1_professional_background',
-        'experience': 'q2_years_experience',
-        'pg': 'q3_postgrad_qualifications',
-        'pg_text': 'q3_postgrad_details',
-        'caseload': 'q4_percentage_caseload',
-        'clinical_setting[]': 'q5_clinical_settings',
-        'acute': 'q6_acute_phase',
-        'subacute': 'q6_subacute_phase',
-        'chronic': 'q6_chronic_phase',
-        
-        // Section B
-        'q7_task1[]': 'q7_task1_levels',
-        'q7_task2[]': 'q7_task2_levels',
-        'q7_task3[]': 'q7_task3_levels',
-        'q7_task4[]': 'q7_task4_levels',
-        'q7_task5[]': 'q7_task5_levels',
-        'role1[]': 'q8_role1',
-        'role2[]': 'q8_role2',
-        'role3[]': 'q8_role3',
-        'role4[]': 'q8_role4',
-        'role5[]': 'q8_role5',
-        
-        // Section C
-        'adl_mild': 'q9_adl_mild',
-        'adl_moderate': 'q9_adl_moderate',
-        'adl_severe': 'q9_adl_severe',
-        'therapy_mild': 'q9_therapy_mild',
-        'therapy_moderate': 'q9_therapy_moderate',
-        'therapy_severe': 'q9_therapy_severe',
-        'fine_mild': 'q9_fine_mild',
-        'fine_moderate': 'q9_fine_moderate',
-        'fine_severe': 'q9_fine_severe',
-        'game_mild': 'q9_game_mild',
-        'game_moderate': 'q9_game_moderate',
-        'game_severe': 'q9_game_severe',
-        
-        // Section D
-        'q10[]': 'q10_adjustment_methods',
-        'q11_a': 'q11_trunk_compensation',
-        'q11_a_note': 'q11_trunk_note',
-        'q11_b': 'q11_delayed_movement',
-        'q11_b_note': 'q11_delayed_note',
-        'q11_c': 'q11_limited_rom',
-        'q11_c_note': 'q11_rom_note',
-        'q11_d': 'q11_object_drops',
-        'q11_d_note': 'q11_drops_note',
-        'q11_e': 'q11_poor_preshape',
-        'q11_e_note': 'q11_preshape_note',
-        'q11_f': 'q11_manipulation_difficulty',
-        'q11_f_note': 'q11_manipulation_note',
-        'q11_g': 'q11_fatigue_pain',
-        'q11_g_note': 'q11_fatigue_note',
-        'q11_h': 'q11_poor_sequencing',
-        'q11_h_note': 'q11_sequencing_note',
-        'q11_i': 'q11_unsafe_handling',
-        'q11_i_note': 'q11_unsafe_note',
-        'q11_j': 'q11_inconsistent_timing',
-        'q11_j_note': 'q11_timing_note',
-        'q11_k': 'q11_poor_coordination',
-        'q11_k_note': 'q11_coordination_note',
-        'q12[]': 'q12_feedback_phases',
-        'q13_a': 'q13_verbal_feedback',
-        'q13_b': 'q13_visual_demonstration',
-        'q13_c': 'q13_manual_guidance',
-        'q13_d': 'q13_motivational_encouragement',
-        'q13_e': 'q13_functional_cues',
-        'q13_f': 'q13_self_reflection',
-        'q13_g': 'q13_caregiver_feedback',
-        
-        // Section E
-        'q14_1': 'q14_standardized_assessments',
-        'q14_2': 'q14_observation',
-        'q14_3': 'q14_patient_reports',
-        'q14_4': 'q14_task_metrics',
-        'q14_5': 'q14_caregiver_feedback',
-        'q15[]': 'q15_performance_aspects',
-        
-        // Section F
-        'q16[]': 'q16_implementation_methods',
-        'q17_1': 'q17_caregiver_availability',
-        'q17_2': 'q17_patient_motivation',
-        'q17_3': 'q17_monitor_progress',
-        'q17_4': 'q17_guide_sequence',
-        'q17_5': 'q17_tailored_instructions',
-        'q17_6': 'q17_materials_access',
-        'q17_7': 'q17_safety_concerns',
-        'q17_8': 'q17_caregiver_confidence',
-        'q18[]': 'q18_training_areas'
-    };
-    
-    return mapping[name] || name;
-}
 
 // Function to collect all form data
 function collectAllFormData() {
@@ -3305,9 +3520,9 @@ function collectAllFormData() {
     const formData = new FormData(form);
     
     // Clear existing answers first
-    if (!surveyState.answers) {
+    // if (!surveyState.answers) {
     surveyState.answers = {};
-    }
+    // }
     
     for (let [name, value] of formData.entries()) {
         if (!value) continue;
@@ -3316,12 +3531,13 @@ function collectAllFormData() {
         if (questionId) {
             // Handle array values (checkboxes)
             if (name.endsWith('[]')) {
-                if (!surveyState.answers[questionId]) {
+
+                // 🔹 FIX HERE
+                if (!Array.isArray(surveyState.answers[questionId])) {
                     surveyState.answers[questionId] = [];
                 }
-                if (Array.isArray(surveyState.answers[questionId])) {
-                    surveyState.answers[questionId].push(value);
-                }
+                surveyState.answers[questionId].push(value);
+
             } else {
                 surveyState.answers[questionId] = value;
             }
@@ -3410,9 +3626,7 @@ document.addEventListener('DOMContentLoaded', function() {
             background: #ccc;
         }
     `;
-    document.head.appendChild(style);
-        surveyState.init();
-    
+    document.head.appendChild(style);    
     showQ(0);
 });
 
@@ -3462,13 +3676,14 @@ const surveyState = {
             const parsed = JSON.parse(saved);
             Object.assign(this.completedSections, parsed.completedSections || {});
             Object.assign(this.accessibleSections, parsed.accessibleSections || {});
-            Object.assign(this.answers, parsed.answers || {});
+            // Object.assign(this.answers, parsed.answers || {});
+            this.answers = parsed.answers || {};
             this.currentSection = parsed.currentSection || 'intro';
             this.currentQuestion = parsed.currentQuestion || 0;
         }
         
         // Always make intro accessible
-        this.accessibleSections.sectionA = true;
+        // this.accessibleSections.sectionA = true;
         
         this.setupAutoSave();
         this.updateNavigationUI();
@@ -3573,8 +3788,14 @@ const surveyState = {
     clearStorage() {
         localStorage.removeItem('surveyState');
         this.answers = {};
-        this.completedSections = {};
-        this.accessibleSections = {};
+        this.completedSections = {
+            sectionA:false, sectionB:false, sectionC:false,
+            sectionD:false, sectionE:false, sectionF:false
+        };
+        this.accessibleSections = {
+            sectionA:false, sectionB:false, sectionC:false,
+            sectionD:false, sectionE:false, sectionF:false
+        };
         this.currentSection = 'intro';
         this.currentQuestion = 0;
     },
