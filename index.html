@@ -639,6 +639,30 @@ nav a.current {
     font-weight: bold;
 }
 
+.info-card {
+  background: #f6fafc;
+  border: 1px solid #d9e5ea;
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.info-card h3 {
+  margin-top: 0;
+  color: #0b6c7a;
+}
+.author-list {
+  columns: 2;
+  column-gap: 40px;
+  margin-top: 5px;
+}
+.author-list li {
+  margin-bottom: 4px;
+}
+
+
 }
 
 </style>
@@ -682,6 +706,7 @@ nav a.current {
             </div>
         </div>
 
+
         <section id="intro" class="active">
             <h2>Introduction</h2>
             <p>
@@ -697,6 +722,36 @@ nav a.current {
             <p>
                 We deeply value your input, as it reflects real-world expertise and contributes toward creating clinically relevant, patient-centered solutions to extend rehabilitation access and continuity of care.
             </p>
+
+            <div class="info-card">
+                <h3>Study Information & Contact </h3>
+
+                <p><strong>Study Title:</strong><br>
+                Multi-Perspective Observational Study on Technology Requirements for
+                Home-based Upper-Limb Tabletop Functional Task Training with Minimal Supervision</p>
+
+                <p><strong>Research Team:</strong></p>
+                <ul class="author-list">
+                    <li>Pooja Vinayagamoorthy – IITM & CMC Vellore</li>
+                    <li>Prof.Sivakumar Balasubramanian – CMC Vellore</li>
+                    <li>Manigandan Chockalingam – Univ. of Galway</li>
+                    <li>Dr.Asha Mathew – CMC Vellore</li>
+                    <li>Dr.Varadhan SKM – IITM</li>
+                    <li>Jerome D. P. R. Jones – CMC Vellore</li>
+                    <li>Dr.Judy Ann John – CMC Vellore</li>
+                    <li>Dr.A. T. Prabhakar – CMC Vellore</li>
+                                       
+                </ul>
+                <p><strong>Contact:</strong><br>
+                Prof. Sivakumar Balasubramanian<br>
+                <a href="mailto:siva82kb@cmcvellore.ac.in">siva82kb@cmcvellore.ac.in</a></p>
+
+                <p><strong>Ethics Approval:</strong><br>
+                Institutional Review Board - Christian Medical College Vellore<br>           
+                IRB Min No. 2511113 | 26 Nov 2025</p>
+            </div>
+            <hr style="margin:25px 0; opacity:0.25;">
+
             <div class="question">
                 <label>
                     <input type="checkbox" id="consentCheck" required>
@@ -2272,7 +2327,7 @@ form.addEventListener("submit", function(e) {
     btn.disabled = true;
     btn.innerText = "Submitting...";
     
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxFZ2BUCAWGUTYPkukuBNyVTfrKjBYOidR0J8coS3QY3te36Op_Nq29mdNtfKhhkXfh/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq4FUKO_RA6XTtGDJdh2HMC8B6SL861f2PZz58xZPUq0BDBItkzO3kQ0eVk_QF9iKE/exec";
     
     fetch(SCRIPT_URL, {
         method: "POST",
